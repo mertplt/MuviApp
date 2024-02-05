@@ -6,14 +6,30 @@
 //
 
 import UIKit
+import TinyConstraints
 
 class RootViewController: UIViewController {
+    
+    private let testButton: MaButton = {
+        let button = MaButton()
+        button.buttonTitle = "Login with Apple"
+        button.style = .bigButtun
+         return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.addSubview(testButton)
+        view.backgroundColor = .white
+        
+        testButton.leadingToSuperview().constant = 24
+        testButton.topToSuperview().constant = 50
     }
 
 
+}
+
+#Preview {
+    RootViewController()
 }
 
