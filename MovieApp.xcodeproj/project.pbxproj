@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		410C7DBB2B700100006E3233 /* MaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410C7DBA2B700100006E3233 /* MaButton.swift */; };
 		41B40C012B6E966600F5697C /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C002B6E966600F5697C /* ServiceManager.swift */; };
 		41B40C042B6E966600F5697C /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C032B6E966600F5697C /* Service.swift */; };
 		41B40C072B6E966600F5697C /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C062B6E966600F5697C /* Model.swift */; };
@@ -21,9 +22,11 @@
 		41B40C212B6E966600F5697C /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C202B6E966600F5697C /* RootViewController.swift */; };
 		41B40C272B6E966700F5697C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C262B6E966700F5697C /* Assets.xcassets */; };
 		41B40C2A2B6E966700F5697C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C292B6E966700F5697C /* LaunchScreen.storyboard */; };
+		41C9A9972B70FC3D00CCA223 /* TinyConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = 41C9A9962B70FC3D00CCA223 /* TinyConstraints */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		410C7DBA2B700100006E3233 /* MaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaButton.swift; sourceTree = "<group>"; };
 		41B40BFB2B6E966600F5697C /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41B40C002B6E966600F5697C /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		41B40C032B6E966600F5697C /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -47,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41C9A9972B70FC3D00CCA223 /* TinyConstraints in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +60,7 @@
 		410C7DB92B6FD611006E3233 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				410C7DBA2B700100006E3233 /* MaButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -235,6 +240,9 @@
 			dependencies = (
 			);
 			name = MovieApp;
+			packageProductDependencies = (
+				41C9A9962B70FC3D00CCA223 /* TinyConstraints */,
+			);
 			productName = MovieApp;
 			productReference = 41B40BFB2B6E966600F5697C /* MovieApp.app */;
 			productType = "com.apple.product-type.application";
@@ -263,6 +271,9 @@
 				Base,
 			);
 			mainGroup = 41B40BF22B6E966600F5697C;
+			packageReferences = (
+				41C9A9952B70FC3D00CCA223 /* XCRemoteSwiftPackageReference "TinyConstraints" */,
+			);
 			productRefGroup = 41B40BFC2B6E966600F5697C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -291,6 +302,7 @@
 			files = (
 				41B40C162B6E966600F5697C /* String+Extension.swift in Sources */,
 				41B40C072B6E966600F5697C /* Model.swift in Sources */,
+				410C7DBB2B700100006E3233 /* MaButton.swift in Sources */,
 				41B40C212B6E966600F5697C /* RootViewController.swift in Sources */,
 				41B40C0E2B6E966600F5697C /* ColorManager.swift in Sources */,
 				41B40C182B6E966600F5697C /* UIColor+Extension.swift in Sources */,
@@ -502,6 +514,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		41C9A9952B70FC3D00CCA223 /* XCRemoteSwiftPackageReference "TinyConstraints" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/roberthein/TinyConstraints";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		41C9A9962B70FC3D00CCA223 /* TinyConstraints */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 41C9A9952B70FC3D00CCA223 /* XCRemoteSwiftPackageReference "TinyConstraints" */;
+			productName = TinyConstraints;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 41B40BF32B6E966600F5697C /* Project object */;
 }
