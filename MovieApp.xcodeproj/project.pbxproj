@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		410C7DBB2B700100006E3233 /* MaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410C7DBA2B700100006E3233 /* MaButton.swift */; };
+		4118EBD42B740BD400F9E6C1 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4118EBD32B740BD400F9E6C1 /* OnboardingViewController.swift */; };
 		41B40C012B6E966600F5697C /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C002B6E966600F5697C /* ServiceManager.swift */; };
 		41B40C042B6E966600F5697C /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C032B6E966600F5697C /* Service.swift */; };
 		41B40C072B6E966600F5697C /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C062B6E966600F5697C /* Model.swift */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		410C7DBA2B700100006E3233 /* MaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaButton.swift; sourceTree = "<group>"; };
+		4118EBD32B740BD400F9E6C1 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		41B40BFB2B6E966600F5697C /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41B40C002B6E966600F5697C /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		41B40C032B6E966600F5697C /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 				410C7DBA2B700100006E3233 /* MaButton.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		4118EBD22B740ABA00F9E6C1 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4118EBD32B740BD400F9E6C1 /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		41B40BF22B6E966600F5697C = {
@@ -187,6 +197,7 @@
 		41B40C1E2B6E966600F5697C /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				4118EBD22B740ABA00F9E6C1 /* Onboarding */,
 				41B40C1F2B6E966600F5697C /* Home */,
 			);
 			path = Scene;
@@ -311,6 +322,7 @@
 				41B40C042B6E966600F5697C /* Service.swift in Sources */,
 				41B40C1D2B6E966600F5697C /* SceneDelegate.swift in Sources */,
 				41B40C112B6E966600F5697C /* FontManager.swift in Sources */,
+				4118EBD42B740BD400F9E6C1 /* OnboardingViewController.swift in Sources */,
 				41B40C1B2B6E966600F5697C /* AppDelegate.swift in Sources */,
 				41B40C0B2B6E966600F5697C /* Constant.swift in Sources */,
 			);
