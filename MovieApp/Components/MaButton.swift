@@ -15,11 +15,12 @@ enum MaButtonStyle{
     case smallButtonYellow
     case smallButtonDark
     case bigButtun
+    case tinyButton
 }
 
 class MaButton: UIButton{
     
-    var Icon: UIImage?{
+    var icon: UIImage?{
         didSet{
             configureIcon()
         }
@@ -62,6 +63,8 @@ extension MaButton{
             configureSmallDarkStyle()
         case .bigButtun:
             configureBigStyle()
+        case .tinyButton:
+            configureTinyButtonStyle()
         }
     }
     
@@ -95,7 +98,7 @@ extension MaButton{
         titleLabel?.font = FontManager.paragraphAndButton()
         setTitleColor(ColorManager.surfaceLight, for: .normal)
         self.height(36)
-        self.width(160 )
+        self.width(160)
     }
     private func configureBigStyle(){
         self.backgroundColor = ColorManager.primary
@@ -105,12 +108,23 @@ extension MaButton{
         self.width(335)
     }
     
+    private func configureTinyButtonStyle(){
+        self.backgroundColor = ColorManager.surfaceDark
+        titleLabel?.font = FontManager.paragraphAndButton()
+        setTitleColor(ColorManager.surfaceLight, for: .normal)
+        self.height(44)
+        self.width(44)
+        imageEdgeInsets = UIEdgeInsets.zero
+        imageView?.contentMode = .center
+        
+    }
+    
     private func setButton(){
         self.layer.cornerRadius = 4
     }
     
     private func configureIcon(){
-        if let image = self.Icon{
+        if let image = self.icon{
             self.setImage(image, for: .normal)
             let edgeInset = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 8)
             imageEdgeInsets = edgeInset
