@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		410C7DBB2B700100006E3233 /* MaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410C7DBA2B700100006E3233 /* MaButton.swift */; };
 		4118EBD42B740BD400F9E6C1 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4118EBD32B740BD400F9E6C1 /* OnboardingViewController.swift */; };
+		4118EBD62B742D5D00F9E6C1 /* SwipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4118EBD52B742D5D00F9E6C1 /* SwipeCell.swift */; };
+		4118EBD82B742D8800F9E6C1 /* SwipeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4118EBD72B742D8800F9E6C1 /* SwipeItem.swift */; };
+		416D45532B764A5800D3908A /* MobilliumIntroduction in Frameworks */ = {isa = PBXBuildFile; productRef = 416D45522B764A5800D3908A /* MobilliumIntroduction */; };
+		4186CBE72B79469800E174F2 /* FirstOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4186CBE62B79469800E174F2 /* FirstOnboardingViewController.swift */; };
+		4195036E2B7A49C200BA9C7C /* MaTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4195036D2B7A49C200BA9C7C /* MaTextField.swift */; };
 		41B40C012B6E966600F5697C /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C002B6E966600F5697C /* ServiceManager.swift */; };
 		41B40C042B6E966600F5697C /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C032B6E966600F5697C /* Service.swift */; };
 		41B40C072B6E966600F5697C /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C062B6E966600F5697C /* Model.swift */; };
@@ -24,11 +29,16 @@
 		41B40C272B6E966700F5697C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C262B6E966700F5697C /* Assets.xcassets */; };
 		41B40C2A2B6E966700F5697C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C292B6E966700F5697C /* LaunchScreen.storyboard */; };
 		41C9A9972B70FC3D00CCA223 /* TinyConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = 41C9A9962B70FC3D00CCA223 /* TinyConstraints */; };
+		41E0A38C2B7F664A009BC7BD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E0A38B2B7F664A009BC7BD /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		410C7DBA2B700100006E3233 /* MaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaButton.swift; sourceTree = "<group>"; };
 		4118EBD32B740BD400F9E6C1 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		4118EBD52B742D5D00F9E6C1 /* SwipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCell.swift; sourceTree = "<group>"; };
+		4118EBD72B742D8800F9E6C1 /* SwipeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeItem.swift; sourceTree = "<group>"; };
+		4186CBE62B79469800E174F2 /* FirstOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingViewController.swift; sourceTree = "<group>"; };
+		4195036D2B7A49C200BA9C7C /* MaTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaTextField.swift; sourceTree = "<group>"; };
 		41B40BFB2B6E966600F5697C /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41B40C002B6E966600F5697C /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		41B40C032B6E966600F5697C /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -45,6 +55,7 @@
 		41B40C232B6E966600F5697C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41B40C262B6E966700F5697C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41B40C292B6E966700F5697C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		41E0A38B2B7F664A009BC7BD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +64,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41C9A9972B70FC3D00CCA223 /* TinyConstraints in Frameworks */,
+				416D45532B764A5800D3908A /* MobilliumIntroduction in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				410C7DBA2B700100006E3233 /* MaButton.swift */,
+				4195036D2B7A49C200BA9C7C /* MaTextField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -70,9 +83,20 @@
 		4118EBD22B740ABA00F9E6C1 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				4186CBE62B79469800E174F2 /* FirstOnboardingViewController.swift */,
 				4118EBD32B740BD400F9E6C1 /* OnboardingViewController.swift */,
+				4118EBD52B742D5D00F9E6C1 /* SwipeCell.swift */,
+				4118EBD72B742D8800F9E6C1 /* SwipeItem.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		4142631B2B7EB212000AFDBE /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				41E0A38B2B7F664A009BC7BD /* LoginView.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		41B40BF22B6E966600F5697C = {
@@ -197,6 +221,7 @@
 		41B40C1E2B6E966600F5697C /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				4142631B2B7EB212000AFDBE /* Login */,
 				4118EBD22B740ABA00F9E6C1 /* Onboarding */,
 				41B40C1F2B6E966600F5697C /* Home */,
 			);
@@ -253,6 +278,7 @@
 			name = MovieApp;
 			packageProductDependencies = (
 				41C9A9962B70FC3D00CCA223 /* TinyConstraints */,
+				416D45522B764A5800D3908A /* MobilliumIntroduction */,
 			);
 			productName = MovieApp;
 			productReference = 41B40BFB2B6E966600F5697C /* MovieApp.app */;
@@ -284,6 +310,7 @@
 			mainGroup = 41B40BF22B6E966600F5697C;
 			packageReferences = (
 				41C9A9952B70FC3D00CCA223 /* XCRemoteSwiftPackageReference "TinyConstraints" */,
+				416D45512B764A5800D3908A /* XCRemoteSwiftPackageReference "MobilliumIntroduction" */,
 			);
 			productRefGroup = 41B40BFC2B6E966600F5697C /* Products */;
 			projectDirPath = "";
@@ -312,7 +339,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				41B40C162B6E966600F5697C /* String+Extension.swift in Sources */,
+				4118EBD82B742D8800F9E6C1 /* SwipeItem.swift in Sources */,
 				41B40C072B6E966600F5697C /* Model.swift in Sources */,
+				4118EBD62B742D5D00F9E6C1 /* SwipeCell.swift in Sources */,
 				410C7DBB2B700100006E3233 /* MaButton.swift in Sources */,
 				41B40C212B6E966600F5697C /* RootViewController.swift in Sources */,
 				41B40C0E2B6E966600F5697C /* ColorManager.swift in Sources */,
@@ -320,9 +349,12 @@
 				41B40C012B6E966600F5697C /* ServiceManager.swift in Sources */,
 				41B40C142B6E966600F5697C /* NotificationCenter+Extension.swift in Sources */,
 				41B40C042B6E966600F5697C /* Service.swift in Sources */,
+				4186CBE72B79469800E174F2 /* FirstOnboardingViewController.swift in Sources */,
 				41B40C1D2B6E966600F5697C /* SceneDelegate.swift in Sources */,
+				4195036E2B7A49C200BA9C7C /* MaTextField.swift in Sources */,
 				41B40C112B6E966600F5697C /* FontManager.swift in Sources */,
 				4118EBD42B740BD400F9E6C1 /* OnboardingViewController.swift in Sources */,
+				41E0A38C2B7F664A009BC7BD /* LoginView.swift in Sources */,
 				41B40C1B2B6E966600F5697C /* AppDelegate.swift in Sources */,
 				41B40C0B2B6E966600F5697C /* Constant.swift in Sources */,
 			);
@@ -528,6 +560,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		416D45512B764A5800D3908A /* XCRemoteSwiftPackageReference "MobilliumIntroduction" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mobillium/MobilliumIntroduction.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		41C9A9952B70FC3D00CCA223 /* XCRemoteSwiftPackageReference "TinyConstraints" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/roberthein/TinyConstraints";
@@ -539,6 +579,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		416D45522B764A5800D3908A /* MobilliumIntroduction */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 416D45512B764A5800D3908A /* XCRemoteSwiftPackageReference "MobilliumIntroduction" */;
+			productName = MobilliumIntroduction;
+		};
 		41C9A9962B70FC3D00CCA223 /* TinyConstraints */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 41C9A9952B70FC3D00CCA223 /* XCRemoteSwiftPackageReference "TinyConstraints" */;
