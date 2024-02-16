@@ -14,7 +14,7 @@ enum MaButtonStyle{
     case largeButtonDark
     case smallButtonYellow
     case smallButtonDark
-    case bigButtun
+    case bigButton
 }
 
 class MaButton: UIButton{
@@ -60,7 +60,7 @@ extension MaButton{
             configureSmallYellowStyle()
         case .smallButtonDark:
             configureSmallDarkStyle()
-        case .bigButtun:
+        case .bigButton:
             configureBigStyle()
         }
     }
