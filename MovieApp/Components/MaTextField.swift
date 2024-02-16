@@ -86,17 +86,16 @@ extension MaTextField{
         self.placeholderText = "Email"
         self.textContentType = .emailAddress
         self.setPlaceholderColor(ColorManager.surfaceLight)
-        self.leftIcon = UIImage(named: "emailIcon")
-        self.rightIcon = nil
+        self.rightIcon = .mail
         addIconsToTextField()
     }
+
     
     private func configurePassword(){
         self.placeholderText = "Password"
         self.textContentType = .password
         self.setPlaceholderColor(ColorManager.surfaceLight)
-        self.leftIcon = UIImage(named: "lockIcon")
-        self.rightIcon = UIImage(named: "eyeIcon")
+        self.rightIcon = .eyeOff
         addIconsToTextField()
     }
     
@@ -104,8 +103,7 @@ extension MaTextField{
         self.placeholderText = "Full Name"
         self.textContentType = .name
         self.setPlaceholderColor(ColorManager.surfaceLight)
-        self.leftIcon = UIImage(named: "userIcon")
-        self.rightIcon = nil
+        self.leftIcon = .user
         addIconsToTextField()
     }
     
@@ -114,8 +112,7 @@ extension MaTextField{
         self.isSecureTextEntryValue = false
         self.textContentType = .telephoneNumber
         self.setPlaceholderColor(ColorManager.surfaceLight)
-        self.leftIcon = UIImage(named: "phoneIcon")
-        self.rightIcon = nil
+        self.leftIcon = .phone
         addIconsToTextField()
     }
     

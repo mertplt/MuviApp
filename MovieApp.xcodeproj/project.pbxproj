@@ -12,6 +12,7 @@
 		4118EBD62B742D5D00F9E6C1 /* SwipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4118EBD52B742D5D00F9E6C1 /* SwipeCell.swift */; };
 		4118EBD82B742D8800F9E6C1 /* SwipeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4118EBD72B742D8800F9E6C1 /* SwipeItem.swift */; };
 		416D45532B764A5800D3908A /* MobilliumIntroduction in Frameworks */ = {isa = PBXBuildFile; productRef = 416D45522B764A5800D3908A /* MobilliumIntroduction */; };
+		417B15A92B7F764E000BF1C9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417B15A82B7F764E000BF1C9 /* LoginView.swift */; };
 		4186CBE72B79469800E174F2 /* FirstOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4186CBE62B79469800E174F2 /* FirstOnboardingViewController.swift */; };
 		4195036E2B7A49C200BA9C7C /* MaTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4195036D2B7A49C200BA9C7C /* MaTextField.swift */; };
 		41B40C012B6E966600F5697C /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C002B6E966600F5697C /* ServiceManager.swift */; };
@@ -29,7 +30,6 @@
 		41B40C272B6E966700F5697C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C262B6E966700F5697C /* Assets.xcassets */; };
 		41B40C2A2B6E966700F5697C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C292B6E966700F5697C /* LaunchScreen.storyboard */; };
 		41C9A9972B70FC3D00CCA223 /* TinyConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = 41C9A9962B70FC3D00CCA223 /* TinyConstraints */; };
-		41E0A38C2B7F664A009BC7BD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E0A38B2B7F664A009BC7BD /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +37,7 @@
 		4118EBD32B740BD400F9E6C1 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		4118EBD52B742D5D00F9E6C1 /* SwipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCell.swift; sourceTree = "<group>"; };
 		4118EBD72B742D8800F9E6C1 /* SwipeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeItem.swift; sourceTree = "<group>"; };
+		417B15A82B7F764E000BF1C9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		4186CBE62B79469800E174F2 /* FirstOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingViewController.swift; sourceTree = "<group>"; };
 		4195036D2B7A49C200BA9C7C /* MaTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaTextField.swift; sourceTree = "<group>"; };
 		41B40BFB2B6E966600F5697C /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,7 +56,6 @@
 		41B40C232B6E966600F5697C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41B40C262B6E966700F5697C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41B40C292B6E966700F5697C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		41E0A38B2B7F664A009BC7BD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +94,7 @@
 		4142631B2B7EB212000AFDBE /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				41E0A38B2B7F664A009BC7BD /* LoginView.swift */,
+				417B15A82B7F764E000BF1C9 /* LoginView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -354,7 +354,7 @@
 				4195036E2B7A49C200BA9C7C /* MaTextField.swift in Sources */,
 				41B40C112B6E966600F5697C /* FontManager.swift in Sources */,
 				4118EBD42B740BD400F9E6C1 /* OnboardingViewController.swift in Sources */,
-				41E0A38C2B7F664A009BC7BD /* LoginView.swift in Sources */,
+				417B15A92B7F764E000BF1C9 /* LoginView.swift in Sources */,
 				41B40C1B2B6E966600F5697C /* AppDelegate.swift in Sources */,
 				41B40C0B2B6E966600F5697C /* Constant.swift in Sources */,
 			);
