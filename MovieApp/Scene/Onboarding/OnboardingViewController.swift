@@ -153,7 +153,7 @@ final class OnboardingViewController: UICollectionViewController, UICollectionVi
     func configureViewController() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: view.frame.width, height: 200) 
+        layout.itemSize = CGSize(width: view.frame.width, height: 100)
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 
         collectionView.isPagingEnabled = true
@@ -165,7 +165,7 @@ final class OnboardingViewController: UICollectionViewController, UICollectionVi
         configureBottomStackView()
         
         NSLayoutConstraint.activate([
-            bottomStackView.heightAnchor.constraint(equalToConstant: 100),
+            bottomStackView.heightAnchor.constraint(equalToConstant: 0),
             bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
