@@ -64,7 +64,6 @@ final class FirstOnboardingViewController: UIViewController {
         updateConstraints()
     }
 
-    
     private func updateConstraints() {
         imageView.leadingToSuperview(offset: 68)
         imageView.topToSuperview(offset: 180)
@@ -98,5 +97,4 @@ final class FirstOnboardingViewController: UIViewController {
         LoginV.modalPresentationStyle = .fullScreen
         present(LoginV,animated: true)
     }
-
 }
