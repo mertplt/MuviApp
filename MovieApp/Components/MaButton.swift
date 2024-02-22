@@ -61,7 +61,7 @@ extension MaButton{
             configureSmallYellowStyle()
         case .smallButtonDark:
             configureSmallDarkStyle()
-        case .bigButtun:
+        case .bigButton:
             configureBigStyle()
         case .tinyButton:
             configureTinyButtonStyle()

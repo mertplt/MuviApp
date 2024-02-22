@@ -1,17 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "align-center.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "align-center.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

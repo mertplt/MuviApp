@@ -1,17 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "zoom-in.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "zoom-in.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

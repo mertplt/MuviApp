@@ -13,7 +13,7 @@ class RootViewController: UIViewController {
     private let testButton: MaButton = {
         let button = MaButton()
         button.buttonTitle = "Login with Apple"
-        button.style = .bigButtun
+        button.style = .bigButton
          return button
     }()
 

@@ -1,17 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "sidebar.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "sidebar.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
