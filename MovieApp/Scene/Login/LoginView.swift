@@ -10,6 +10,18 @@ import TinyConstraints
 
 final class LoginView: UIViewController {
     
+    var loginViewModel: LoginViewModel!
+    var router: LoginRouter!
+    
+    init(router: LoginRouter){
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let backgroundImageView : UIImageView = {
        let imageView = UIImageView()
         imageView.image = .loginBackground
@@ -74,7 +86,8 @@ final class LoginView: UIViewController {
          button.setTitle("Sign up now", for: .normal)
          button.backgroundColor = ColorManager.surfaceDark
          button.setTitleColor(ColorManager.primary, for: .normal)
-        button.titleLabel?.font = FontManager.paragraphAndButton()
+         button.titleLabel?.font = FontManager.paragraphAndButton()
+         button.addTarget(self, action: #selector(signUpNowButtonTapped), for: .touchUpInside)
          return button
     }()
     
@@ -184,8 +197,12 @@ final class LoginView: UIViewController {
         registerButton.leadingToTrailing(of: registerLabel,offset: 5)
         registerButton.centerY(to: registerLabel)
     }
+    
+    @objc func signUpNowButtonTapped() {
+        router.placeOnRegisterViewController()
+    }
 }
 
 #Preview {
-    LoginView()
+    LoginView(router: LoginRouter())
 }
