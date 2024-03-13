@@ -10,6 +10,17 @@ import TinyConstraints
 
 final class OnboardingViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    var router: OnboardingRouter
+    
+    init(router: OnboardingRouter) {
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let swipeItems = [
         SwipeItem(image: "", headline: "Enjoy your favourite movie\neverywhere", subheadline: "Browse through our collections and\ndiscover hundreds of movies and series that\nyou’ll love!", screen: 1),
         SwipeItem(image: "App-Preview1", headline: "Welcome to Muvi", subheadline: "Look back and reflect on your memories \n and growth over time.", screen: 2),
