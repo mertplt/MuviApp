@@ -9,6 +9,17 @@ import UIKit
 import TinyConstraints
 
 final class FirstOnboardingViewController: UIViewController {
+    
+    var router: FirstOnboardingRouter
+    
+    init(router: FirstOnboardingRouter) {
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     let signInButton: MaButton = {
        let button = MaButton()
@@ -82,7 +93,8 @@ final class FirstOnboardingViewController: UIViewController {
     }
 
     @objc func watchMovieButtonTapped(_ button: UIButton) {
-        
+//        router.placeOnOnboardingViewController()
+
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let onboardingVC = OnboardingViewController(collectionViewLayout: layout)
@@ -91,10 +103,6 @@ final class FirstOnboardingViewController: UIViewController {
     }
     
     @objc func signInButtonTapped(_ button: UIButton) {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let LoginV = LoginView()
-        LoginV.modalPresentationStyle = .fullScreen
-        present(LoginV,animated: true)
+        router.placeOnLoginViewController()
     }
 }

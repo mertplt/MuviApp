@@ -10,16 +10,16 @@ import TinyConstraints
 
 final class OnboardingViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var router: OnboardingRouter
-    
-    init(router: OnboardingRouter) {
-        self.router = router
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    var router: OnboardingRouter
+//    
+//    init(router: OnboardingRouter) {
+//        self.router = router
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     let swipeItems = [
         SwipeItem(image: "", headline: "Enjoy your favourite movie\neverywhere", subheadline: "Browse through our collections and\ndiscover hundreds of movies and series that\nyou’ll love!", screen: 1),
@@ -188,7 +188,7 @@ final class OnboardingViewController: UICollectionViewController, UICollectionVi
     @objc func getStartedButtonTapped(_ button: UIButton) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        let LoginV = LoginView()
+        let LoginV = LoginView(router: LoginRouter())
         LoginV.modalPresentationStyle = .fullScreen
         present(LoginV,animated: true)
     }
