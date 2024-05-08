@@ -1,19 +1,17 @@
 //
-//  LoginView.swift
+//  RegisterView.swift
 //  MovieApp
 //
-//  Created by mert polat on 16.02.2024.
+//  Created by mert polat on 23.02.2024.
 //
 
 import UIKit
-import TinyConstraints
 
-final class LoginView: UIViewController {
+class RegisterView: UIViewController {
+    var registerViewModel: RegisterViewModel!
+    var router: RegisterRouter
     
-    var loginViewModel: LoginViewModel!
-    var router: LoginRouter!
-    
-    init(router: LoginRouter){
+    init(router: RegisterRouter) {
         self.router = router
         super.init(nibName: nil, bundle: nil)
     }
@@ -22,22 +20,20 @@ final class LoginView: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let backgroundImageView : UIImageView = {
-       let imageView = UIImageView()
-        imageView.image = .loginBackground
-        imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    let mainLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Create Account"
+        label.font = FontManager.headline1()
+        label.textColor = ColorManager.surfaceLight
+        return label
     }()
     
-    let titleLabel : UILabel = {
-       let label = UILabel()
-        label.font = FontManager.headline1()
-        label.text = "Login"
+    let expLabel: UILabel = {
+        let label = UILabel()
+         label.text = "Enter information below or login with social\naccount to get started"
+         label.font = FontManager.paragraphAndButton()
         label.textColor = ColorManager.surfaceLight
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+         return label
     }()
     
     let emailTextField : MaTextField = {
@@ -72,24 +68,30 @@ final class LoginView: UIViewController {
         return view
     }()
     
-    let forgotPasswordButton : UIButton = {
-       let button = UIButton()
-        button.setTitle("Forgot Password?", for: .normal)
-        button.backgroundColor = ColorManager.surfaceDark
-        button.setTitleColor(ColorManager.disabled, for: .normal)
-        button.titleLabel?.font = FontManager.caption()
+    let confirmPasswordTextField : MaTextField = {
+      let textField = MaTextField()
+        textField.style = .password
+        textField.placeholderText = "Confirm Password"
+        return textField
+    }()
+    
+    let confirmPasswordLineView : UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.12)
+
+        view.height(1.5)
+        view.alpha = 0.12
+        view.width(335)
+        return view
+    }()
+    
+    let backButton : UIButton = {
+        let button = UIButton()
+        button.setImage(.arrowLeft, for: .normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
     
-    let registerButton: UIButton = {
-        let button = UIButton()
-         button.setTitle("Sign up now", for: .normal)
-         button.backgroundColor = ColorManager.surfaceDark
-         button.setTitleColor(ColorManager.primary, for: .normal)
-         button.titleLabel?.font = FontManager.paragraphAndButton()
-         button.addTarget(self, action: #selector(signUpNowButtonTapped), for: .touchUpInside)
-         return button
-    }()
     
     let orContinueWithLabel : UILabel = {
         let label = UILabel()
@@ -116,51 +118,50 @@ final class LoginView: UIViewController {
         return button
     }()
     
-    let loginButton : MaButton = {
+    let RegisterButton : MaButton = {
         let button = MaButton()
         button.style = .largeButtonYellow
-        button.buttonTitle = "Login"
+        button.buttonTitle = "Register"
         return button
     }()
     
-    let registerLabel : UILabel = {
-       let label = UILabel()
-        label.text = "Not registered?"
-        label.textColor = ColorManager.disabled
-        label.font = FontManager.paragraphAndButton()
-        return label
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        
+        let backBarButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = backBarButtonItem
+
     }
     
-    private func configureUI(){
+    func configureUI(){
         view.backgroundColor = ColorManager.surfaceDark
-        view.addSubview(backgroundImageView)
-        view.addSubview(titleLabel)
+        
+        view.addSubview(mainLabel)
+        view.addSubview(expLabel)
         view.addSubview(emailTextField)
         view.addSubview(emailLineView)
-        view.addSubview(passwordTextField)
         view.addSubview(passwordLineView)
-        view.addSubview(forgotPasswordButton)
+        view.addSubview(passwordTextField)
+        view.addSubview(confirmPasswordLineView)
+        view.addSubview(confirmPasswordTextField)
+        view.addSubview(backButton)
         view.addSubview(orContinueWithLabel)
         view.addSubview(googleButton)
         view.addSubview(faceBookButton)
-        view.addSubview(loginButton)
-        view.addSubview(registerButton)
-        view.addSubview(registerLabel)
+        view.addSubview(RegisterButton)
         
-        backgroundImageView.topToSuperview(offset: 0)
-        backgroundImageView.leadingToSuperview(offset: 0)
-        backgroundImageView.trailingToSuperview(offset: 0)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+
+        mainLabel.topToSuperview(offset: 127)
+        mainLabel.leftToSuperview(offset: 20)
         
-        titleLabel.leadingToSuperview(offset: 20)
-        titleLabel.topToSuperview(offset: 395)
+        expLabel.topToBottom(of: mainLabel,offset: 9)
+        expLabel.left(to: mainLabel)
         
         emailTextField.leadingToSuperview(offset: 20)
-        emailTextField.topToBottom(of: titleLabel,offset: 25)
+        emailTextField.topToBottom(of: expLabel,offset: 24)
         
         emailLineView.topToBottom(of: emailTextField,offset: 0)
         emailLineView.leading(to: emailTextField)
@@ -174,11 +175,15 @@ final class LoginView: UIViewController {
         passwordLineView.leading(to: passwordTextField)
         passwordLineView.trailing(to: passwordTextField)
         
-        forgotPasswordButton.topToBottom(of: passwordLineView,offset: 16)
-        forgotPasswordButton.trailingToSuperview(offset: 21)
-        forgotPasswordButton.leadingToSuperview(offset: 253)
-                
-        orContinueWithLabel.topToBottom(of: forgotPasswordButton,offset: 16)
+        confirmPasswordTextField.topToBottom(of: passwordLineView,offset: 15)
+        confirmPasswordTextField.leading(to: passwordTextField)
+        confirmPasswordTextField.trailing(to: passwordTextField)
+        
+        confirmPasswordLineView.topToBottom(of: confirmPasswordTextField,offset: 0)
+        confirmPasswordLineView.leading(to: confirmPasswordTextField)
+        confirmPasswordLineView.trailing(to: confirmPasswordTextField)
+        
+        orContinueWithLabel.topToBottom(of: confirmPasswordTextField ,offset: 40)
         orContinueWithLabel.leadingToSuperview(offset: 20)
         
         googleButton.topToBottom(of: orContinueWithLabel,offset: 15)
@@ -187,21 +192,13 @@ final class LoginView: UIViewController {
         faceBookButton.top(to: googleButton)
         faceBookButton.leadingToTrailing(of: googleButton,offset: 16)
         
-        loginButton.bottomToSuperview(offset: -70)
-        loginButton.leadingToSuperview(offset: 20)
-        
-        registerLabel.bottomToSuperview(offset: -35)
-        registerLabel.leadingToSuperview(offset: 100)
-        
-        registerButton.leadingToTrailing(of: registerLabel,offset: 5)
-        registerButton.centerY(to: registerLabel)
+        RegisterButton.bottomToSuperview(offset: -70)
+        RegisterButton.leadingToSuperview(offset: 20)
     }
-    
-    @objc func signUpNowButtonTapped() {
-        router.placeOnRegisterViewController()
+    @objc func backButtonTapped() {
+        router.placeOnLoginViewController()
     }
 }
-
 #Preview {
-    LoginView(router: LoginRouter())
+    RegisterView(router: RegisterRouter())
 }
