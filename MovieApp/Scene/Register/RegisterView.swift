@@ -31,8 +31,10 @@ class RegisterView: UIViewController {
     let expLabel: UILabel = {
         let label = UILabel()
          label.text = "Enter information below or login with social\naccount to get started"
+         label.textAlignment = .left
+         label.numberOfLines = 2
          label.font = FontManager.paragraphAndButton()
-        label.textColor = ColorManager.surfaceLight
+         label.textColor = ColorManager.surfaceLight
          return label
     }()
     
@@ -193,7 +195,7 @@ class RegisterView: UIViewController {
         faceBookButton.leadingToTrailing(of: googleButton,offset: 16)
         
         RegisterButton.bottomToSuperview(offset: -70)
-        RegisterButton.leadingToSuperview(offset: 20)
+        RegisterButton.centerX(to: self.view)
     }
     @objc func backButtonTapped() {
         router.placeOnLoginViewController()

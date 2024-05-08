@@ -78,6 +78,7 @@ final class LoginView: UIViewController {
         button.backgroundColor = ColorManager.surfaceDark
         button.setTitleColor(ColorManager.disabled, for: .normal)
         button.titleLabel?.font = FontManager.caption()
+        button.addTarget(self, action: #selector(forgotPasswordButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -188,8 +189,8 @@ final class LoginView: UIViewController {
         faceBookButton.leadingToTrailing(of: googleButton,offset: 16)
         
         loginButton.bottomToSuperview(offset: -70)
-        loginButton.leadingToSuperview(offset: 20)
-        
+        loginButton.centerX(to: self.view)
+
         registerLabel.bottomToSuperview(offset: -35)
         registerLabel.leadingToSuperview(offset: 100)
         
@@ -200,6 +201,11 @@ final class LoginView: UIViewController {
     @objc func signUpNowButtonTapped() {
         router.placeOnRegisterViewController()
     }
+    
+    @objc func forgotPasswordButtonTapped() {
+        router.pushForgotPasswordViewController()
+    }
+    
 }
 
 #Preview {
