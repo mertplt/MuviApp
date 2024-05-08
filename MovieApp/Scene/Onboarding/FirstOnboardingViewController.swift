@@ -85,7 +85,7 @@ final class FirstOnboardingViewController: UIViewController {
         subHeadlineLabel.leadingToSuperview(offset: 51)
         subHeadlineLabel.topToBottom(of: headlineLabel,offset: 8)
         
-        signInButton.leadingToSuperview(offset: 20)
+        signInButton.centerX(to: self.view)
         signInButton.bottomToSuperview(offset: -50)
         
         watchMovieButton.leading(to: signInButton)
