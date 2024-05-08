@@ -18,9 +18,7 @@ extension RegisterRoute where Self: RouterProtocol {
         let registerViewController = RegisterView(router: router)
         let navigationController = UINavigationController(rootViewController: registerViewController)
         let transition = PlaceOnWindowTransition()
-        
         router.presentingViewController = registerViewController
-        
         open(navigationController, transition: transition)
     }
 }

@@ -10,3 +10,4 @@ import UIKit
 final class LoginRouter: Router, LoginRouter.Routes {
 typealias Routes = RegisterRoute & ForgotPasswordRoute & HomeRoute
 }
+		
