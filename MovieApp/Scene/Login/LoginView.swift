@@ -133,7 +133,6 @@ final class LoginView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "asdas", image: .skipBack, target: self, action: nil)
         configureUI()
     }
     
