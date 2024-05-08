@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct ForgotPasswordModel {
+    var email: String
+}
