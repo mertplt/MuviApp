@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let  window = UIWindow(windowScene: windowScene)
-        let vc = FirstOnboardingViewController()
+        let vc = FirstOnboardingViewController(router: FirstOnboardingRouter())
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let nav = UINavigationController(rootViewController: vc)
