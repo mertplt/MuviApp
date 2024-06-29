@@ -7,16 +7,15 @@
 
 import UIKit
 
-protocol LoginRoute{
+protocol LoginRoute {
     func placeOnLoginViewController()
 }
 
-extension LoginRoute where Self: RouterProtocol{
-    
+extension LoginRoute where Self: RouterProtocol {
     func placeOnLoginViewController() {
-        
         let router = LoginRouter()
-        let loginViewController = LoginView(router: router)
+        let viewModel = LoginViewModel(router: router)
+        let loginViewController = LoginView(viewModel: viewModel, router: router)
         let navigationController = UINavigationController(rootViewController: loginViewController)
         let transition = PlaceOnWindowTransition()
         router.presentingViewController = loginViewController
