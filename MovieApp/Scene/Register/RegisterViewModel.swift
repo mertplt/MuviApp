@@ -5,32 +5,54 @@
 //  Created by mert polat on 2.03.2024.
 //
 
-import UIKit
+import Foundation
 
 class RegisterViewModel {
-//    var loginStatus: Observable<String> = Observable("")
+    var router: RegisterRouter
     
+    init(router: RegisterRouter) {
+        self.router = router
+    }
     
-    func register(loginModel: LoginModel) {
-        // Giriş verilerini doğrulama ve giriş işlemini gerçekleştirme kodları
-        if loginModel.email.isEmpty || loginModel.password.isEmpty {
-//            loginStatus.value = "Username or password cannot be empty"
+    func register(email: String, password: String, confirmPassword: String) {
+        // Validate email and passwords
+        guard isValidEmail(email) else {
+            // Handle invalid email case
             return
         }
         
-//        loginStatus.value = "Logging in..."
+        guard !password.isEmpty, !confirmPassword.isEmpty else {
+            // Handle empty password fields
+            return
+        }
         
-        // Sunucu ile giriş işlemini gerçekleştirme kodları
-        // Bu örnekte basitçe başarılı olduğunu varsayalım
-        let success = true
+        guard password == confirmPassword else {
+            // Handle password mismatch
+            return
+        }
         
-        if success {
-//            loginStatus.value = "Login successful"
-//            // Router ile ana sayfaya yönlendirme kodları
-//            LoginRouter.navigateToRegister()
-        } else {
-//            loginStatus.value = "Login failed"
+        let registerModel = RegisterModel(email: email, password: password, confirmPassword: confirmPassword)
+        
+        registerUser(registerModel) { [weak self] success in
+            if success {
+               
+                self?.router.placeOnHomeViewController()
+            } else {
+               
+            }
         }
     }
+    
+    // Placeholder for registration service call
+    private func registerUser(_ model: RegisterModel, completion: @escaping (Bool) -> Void) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
+            completion(true)
+        }
+    }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Z]{2,64}"
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
 }
-

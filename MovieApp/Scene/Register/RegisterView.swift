@@ -11,7 +11,8 @@ class RegisterView: UIViewController {
     var registerViewModel: RegisterViewModel!
     var router: RegisterRouter
     
-    init(router: RegisterRouter) {
+    init(viewModel: RegisterViewModel, router: RegisterRouter) {
+        self.registerViewModel = viewModel
         self.router = router
         super.init(nibName: nil, bundle: nil)
     }
@@ -47,7 +48,6 @@ class RegisterView: UIViewController {
     let emailLineView : UIView = {
        let view = UIView()
         view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.12)
-
         view.height(1.5)
         view.alpha = 0.12
         view.width(335)
@@ -63,7 +63,6 @@ class RegisterView: UIViewController {
     let passwordLineView : UIView = {
        let view = UIView()
         view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.12)
-
         view.height(1.5)
         view.alpha = 0.12
         view.width(335)
@@ -80,7 +79,6 @@ class RegisterView: UIViewController {
     let confirmPasswordLineView : UIView = {
        let view = UIView()
         view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.12)
-
         view.height(1.5)
         view.alpha = 0.12
         view.width(335)
@@ -93,7 +91,6 @@ class RegisterView: UIViewController {
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
-    
     
     let orContinueWithLabel : UILabel = {
         let label = UILabel()
@@ -120,13 +117,12 @@ class RegisterView: UIViewController {
         return button
     }()
     
-    let RegisterButton : MaButton = {
+    let registerButton : MaButton = {
         let button = MaButton()
         button.style = .largeButtonYellow
         button.buttonTitle = "Register"
         return button
     }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,6 +131,7 @@ class RegisterView: UIViewController {
         let backBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = backBarButtonItem
 
+        registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
     }
     
     func configureUI(){
@@ -152,55 +149,64 @@ class RegisterView: UIViewController {
         view.addSubview(orContinueWithLabel)
         view.addSubview(googleButton)
         view.addSubview(faceBookButton)
-        view.addSubview(RegisterButton)
+        view.addSubview(registerButton)
         
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
 
         mainLabel.topToSuperview(offset: 127)
         mainLabel.leftToSuperview(offset: 20)
         
-        expLabel.topToBottom(of: mainLabel,offset: 9)
+        expLabel.topToBottom(of: mainLabel, offset: 9)
         expLabel.left(to: mainLabel)
         
         emailTextField.leadingToSuperview(offset: 20)
-        emailTextField.topToBottom(of: expLabel,offset: 24)
+        emailTextField.topToBottom(of: expLabel, offset: 24)
         
-        emailLineView.topToBottom(of: emailTextField,offset: 0)
+        emailLineView.topToBottom(of: emailTextField, offset: 0)
         emailLineView.leading(to: emailTextField)
         emailLineView.trailing(to: emailTextField)
         
-        passwordTextField.topToBottom(of: emailLineView,offset: 15)
+        passwordTextField.topToBottom(of: emailLineView, offset: 15)
         passwordTextField.leading(to: emailTextField)
         passwordTextField.trailing(to: emailTextField)
         
-        passwordLineView.topToBottom(of: passwordTextField,offset: 0)
+        passwordLineView.topToBottom(of: passwordTextField, offset: 0)
         passwordLineView.leading(to: passwordTextField)
         passwordLineView.trailing(to: passwordTextField)
         
-        confirmPasswordTextField.topToBottom(of: passwordLineView,offset: 15)
+        confirmPasswordTextField.topToBottom(of: passwordLineView, offset: 15)
         confirmPasswordTextField.leading(to: passwordTextField)
         confirmPasswordTextField.trailing(to: passwordTextField)
         
-        confirmPasswordLineView.topToBottom(of: confirmPasswordTextField,offset: 0)
+        confirmPasswordLineView.topToBottom(of: confirmPasswordTextField, offset: 0)
         confirmPasswordLineView.leading(to: confirmPasswordTextField)
         confirmPasswordLineView.trailing(to: confirmPasswordTextField)
         
-        orContinueWithLabel.topToBottom(of: confirmPasswordTextField ,offset: 40)
+        orContinueWithLabel.topToBottom(of: confirmPasswordTextField, offset: 40)
         orContinueWithLabel.leadingToSuperview(offset: 20)
         
-        googleButton.topToBottom(of: orContinueWithLabel,offset: 15)
+        googleButton.topToBottom(of: orContinueWithLabel, offset: 15)
         googleButton.leading(to: orContinueWithLabel)
         
         faceBookButton.top(to: googleButton)
-        faceBookButton.leadingToTrailing(of: googleButton,offset: 16)
+        faceBookButton.leadingToTrailing(of: googleButton, offset: 16)
         
-        RegisterButton.bottomToSuperview(offset: -70)
-        RegisterButton.centerX(to: self.view)
+        registerButton.bottomToSuperview(offset: -70)
+        registerButton.centerX(to: self.view)
     }
+    
     @objc func backButtonTapped() {
         router.placeOnLoginViewController()
     }
+    
+    @objc func registerButtonTapped() {
+        let email = emailTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        let confirmPassword = confirmPasswordTextField.text ?? ""
+        registerViewModel.register(email: email, password: password, confirmPassword: confirmPassword)
+    }
 }
+
 #Preview {
-    RegisterView(router: RegisterRouter())
+    RegisterView(viewModel: RegisterViewModel(router: RegisterRouter()), router: RegisterRouter())
 }
