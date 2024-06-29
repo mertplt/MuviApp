@@ -10,17 +10,6 @@ import TinyConstraints
 
 final class OnboardingViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-//    var router: OnboardingRouter
-//    
-//    init(router: OnboardingRouter) {
-//        self.router = router
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
     let swipeItems = [
         SwipeItem(image: "", headline: "Enjoy your favourite movie\neverywhere", subheadline: "Browse through our collections and\ndiscover hundreds of movies and series that\nyou’ll love!", screen: 1),
         SwipeItem(image: "App-Preview1", headline: "Welcome to Muvi", subheadline: "Look back and reflect on your memories \n and growth over time.", screen: 2),
@@ -30,14 +19,14 @@ final class OnboardingViewController: UICollectionViewController, UICollectionVi
     let pageControl = UIPageControl()
     let bottomStackView = UIStackView()
     
-    let footerView : UIView = {
-       let UIView = UIView()
-        UIView.backgroundColor = ColorManager.surfaceDark
-        return UIView
+    let footerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = ColorManager.surfaceDark
+        return view
     }()
     
-    let getStartedButton : MaButton = {
-       let button = MaButton()
+    let getStartedButton: MaButton = {
+        let button = MaButton()
         button.buttonTitle = "Get Started"
         button.layer.borderColor = ColorManager.disabled.cgColor
         button.layer.borderWidth = 2
@@ -50,7 +39,6 @@ final class OnboardingViewController: UICollectionViewController, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
-
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -62,72 +50,65 @@ final class OnboardingViewController: UICollectionViewController, UICollectionVi
         let swipeItem = swipeItems[indexPath.item]
         cell.update(image: swipeItem.image ?? "", headline: swipeItem.headline ?? "", subheadline: swipeItem.subheadline ?? "")
         
-        let paragraphStyle = NSMutableParagraphStyle()
         switch swipeItem.screen {
             case 1:
-        cell.backgroundView = UIImageView(image: .fullScreen)
-        cell.peopleImageView.isHidden = true
-        cell.headlineLabel.textColor = ColorManager.surfaceLight
-        cell.headlineLabel.font = FontManager.headline1()
-        cell.headlineLabel.textAlignment = .left
-            cell.headlineLabel.numberOfLines = 0
-            cell.headlineLabel.leadingToSuperview(offset: 20)
-            cell.headlineLabel.topToSuperview(offset: 346)
-            cell.subheadlineLabel.leadingToSuperview(offset: 20)
-            cell.subheadlineLabel.topToBottom(of: cell.headlineLabel,offset: 16)
-            cell.subheadlineLabel.numberOfLines = 0
-            cell.subheadlineLabel.textAlignment = .left
-            cell.subheadlineLabel.font = FontManager.subtitleAndMenu()
-            cell.subheadlineLabel.textColor = ColorManager.surfaceLight
-
-        print(swipeItem.screen)
-
+                cell.backgroundView = UIImageView(image: .fullScreen)
+                cell.peopleImageView.isHidden = true
+                cell.headlineLabel.textColor = ColorManager.surfaceLight
+                cell.headlineLabel.font = FontManager.headline1()
+                cell.headlineLabel.textAlignment = .left
+                cell.headlineLabel.numberOfLines = 0
+                cell.headlineLabel.leadingToSuperview(offset: 20)
+                cell.headlineLabel.topToSuperview(offset: 346)
+                cell.subheadlineLabel.leadingToSuperview(offset: 20)
+                cell.subheadlineLabel.topToBottom(of: cell.headlineLabel, offset: 16)
+                cell.subheadlineLabel.numberOfLines = 0
+                cell.subheadlineLabel.textAlignment = .left
+                cell.subheadlineLabel.font = FontManager.subtitleAndMenu()
+                cell.subheadlineLabel.textColor = ColorManager.surfaceLight
             case 2:
-            cell.backgroundColor = ColorManager.surfaceDark
-            cell.peopleImageView.contentMode = .scaleAspectFit
-            cell.headlineLabel.textColor = ColorManager.surfaceLight
-            cell.subheadlineLabel.textColor = ColorManager.surfaceLight
-            cell.headlineLabel.topToSuperview(offset: 150)
-            cell.headlineLabel.leadingToSuperview(offset: 20)
-            cell.headlineLabel.font = FontManager.headline1()
-            cell.subheadlineLabel.topToBottom(of: cell.headlineLabel,offset: 15)
-            cell.subheadlineLabel.leadingToSuperview(offset: 20)
-            cell.subheadlineLabel.font = FontManager.subtitleAndMenu()
-            cell.peopleImageView.leadingToSuperview(offset: 28)
-            cell.peopleImageView.bottomToSuperview(offset: 0)
-            
+                cell.backgroundColor = ColorManager.surfaceDark
+                cell.peopleImageView.contentMode = .scaleAspectFit
+                cell.headlineLabel.textColor = ColorManager.surfaceLight
+                cell.subheadlineLabel.textColor = ColorManager.surfaceLight
+                cell.headlineLabel.topToSuperview(offset: 150)
+                cell.headlineLabel.leadingToSuperview(offset: 20)
+                cell.headlineLabel.font = FontManager.headline1()
+                cell.subheadlineLabel.topToBottom(of: cell.headlineLabel, offset: 15)
+                cell.subheadlineLabel.leadingToSuperview(offset: 20)
+                cell.subheadlineLabel.font = FontManager.subtitleAndMenu()
+                cell.peopleImageView.leadingToSuperview(offset: 28)
+                cell.peopleImageView.bottomToSuperview(offset: 0)
             case 3:
-            cell.backgroundColor = .orange
-            cell.peopleImageView.contentMode = .scaleAspectFit
-            cell.addSubview(footerView)
-            cell.peopleImageView.bottomToSuperview(offset: -55)
-            cell.peopleImageView.leadingToSuperview(offset: 28)
-            footerView.addSubview(cell.headlineLabel)
-            footerView.addSubview(cell.subheadlineLabel)
-            footerView.addSubview(getStartedButton)
-            footerView.bottomToSuperview(offset: 0)
-            footerView.leadingToSuperview(offset: 0)
-            footerView.trailingToSuperview(offset: 0)
-            footerView.height(280)
-            footerView.layer.cornerRadius = 20
-            cell.subheadlineLabel.bottomToTop(of: getStartedButton,offset: -25)
-            cell.subheadlineLabel.centerXToSuperview()
-            cell.subheadlineLabel.textColor = ColorManager.surfaceLight
-            cell.subheadlineLabel.textAlignment = .center
-            cell.subheadlineLabel.font = FontManager.subtitleAndMenu()
-            cell.headlineLabel.textColor = ColorManager.surfaceLight
-            cell.headlineLabel.textAlignment = .center
-            cell.headlineLabel.font = FontManager.headline1()
-            cell.headlineLabel.bottomToTop(of: cell.subheadlineLabel,offset: -12)
-            cell.headlineLabel.centerXToSuperview()
-            getStartedButton.bottomToSuperview(offset: -100)
-            getStartedButton.centerXToSuperview()
+                cell.backgroundColor = .orange
+                cell.peopleImageView.contentMode = .scaleAspectFit
+                cell.addSubview(footerView)
+                cell.peopleImageView.bottomToSuperview(offset: -55)
+                cell.peopleImageView.leadingToSuperview(offset: 28)
+                footerView.addSubview(cell.headlineLabel)
+                footerView.addSubview(cell.subheadlineLabel)
+                footerView.addSubview(getStartedButton)
+                footerView.bottomToSuperview(offset: 0)
+                footerView.leadingToSuperview(offset: 0)
+                footerView.trailingToSuperview(offset: 0)
+                footerView.height(280)
+                footerView.layer.cornerRadius = 20
+                cell.subheadlineLabel.bottomToTop(of: getStartedButton, offset: -25)
+                cell.subheadlineLabel.centerXToSuperview()
+                cell.subheadlineLabel.textColor = ColorManager.surfaceLight
+                cell.subheadlineLabel.textAlignment = .center
+                cell.subheadlineLabel.font = FontManager.subtitleAndMenu()
+                cell.headlineLabel.textColor = ColorManager.surfaceLight
+                cell.headlineLabel.textAlignment = .center
+                cell.headlineLabel.font = FontManager.headline1()
+                cell.headlineLabel.bottomToTop(of: cell.subheadlineLabel, offset: -12)
+                cell.headlineLabel.centerXToSuperview()
+                getStartedButton.bottomToSuperview(offset: -100)
+                getStartedButton.centerXToSuperview()
             default:
                 cell.backgroundColor = ColorManager.surfaceDark
         }
-        cell.headlineLabel.translatesAutoresizingMaskIntoConstraints = false
-        cell.subheadlineLabel.translatesAutoresizingMaskIntoConstraints = false
-        cell.peopleImageView.translatesAutoresizingMaskIntoConstraints = false
+        
         return cell
     }
     
@@ -146,7 +127,6 @@ final class OnboardingViewController: UICollectionViewController, UICollectionVi
     }
 
     func configureBottomStackView() {
-
         pageControl.currentPage = 0
         pageControl.numberOfPages = swipeItems.count
         pageControl.currentPageIndicatorTintColor = ColorManager.primary
@@ -186,10 +166,9 @@ final class OnboardingViewController: UICollectionViewController, UICollectionVi
     }
 
     @objc func getStartedButtonTapped(_ button: UIButton) {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let LoginV = LoginView(router: LoginRouter())
-        LoginV.modalPresentationStyle = .fullScreen
-        present(LoginV,animated: true)
+        let loginViewModel = LoginViewModel(router: LoginRouter())
+        let loginVC = LoginView(viewModel: loginViewModel, router: LoginRouter())
+        loginVC.modalPresentationStyle = .fullScreen
+        present(loginVC, animated: true)
     }
 }
