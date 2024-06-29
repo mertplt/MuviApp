@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+class HomeViewModel {
+    var router: HomeRouter
+    
+    init(router: HomeRouter) {
+        self.router = router
+    }
+    
+    func testAction() {
+    }
+}

@@ -8,19 +8,18 @@
 import UIKit
 
 protocol HomeRoute {
-    func placeOnMainVC()
+    func placeOnHomeViewController()
 }
 
 extension HomeRoute where Self: RouterProtocol {
-    func placeOnMainVC() {
+    func placeOnHomeViewController() {
         let router = HomeRouter()
-        let mainViewController = HomeView(router: router)
-        let navigationController = UINavigationController(rootViewController: mainViewController)
+        let viewModel = HomeViewModel(router: router)
+        let homeViewController = HomeView(viewModel: viewModel, router: router)
+        let navigationController = UINavigationController(rootViewController: homeViewController)
         let transition = PlaceOnWindowTransition()
-//        mainViewController.notesTableView.reloadData()
-        router.presentingViewController = mainViewController
+        router.presentingViewController = homeViewController
         
         open(navigationController, transition: transition)
-        
     }
 }
