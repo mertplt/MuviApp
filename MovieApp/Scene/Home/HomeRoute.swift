@@ -14,7 +14,7 @@ protocol HomeRoute {
 extension HomeRoute where Self: RouterProtocol {
     func placeOnMainVC() {
         let router = HomeRouter()
-        let mainViewController = RootViewController(router: router)
+        let mainViewController = HomeView(router: router)
         let navigationController = UINavigationController(rootViewController: mainViewController)
         let transition = PlaceOnWindowTransition()
 //        mainViewController.notesTableView.reloadData()

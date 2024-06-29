@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4100646B2BEB82E800A91776 /* ForgotPasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100646A2BEB82E800A91776 /* ForgotPasswordModel.swift */; };
 		4100646D2BEB82F800A91776 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4100646C2BEB82F800A91776 /* ForgotPasswordViewModel.swift */; };
+		410694552BF4E88B0011A683 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410694542BF4E88B0011A683 /* HomeModel.swift */; };
+		410694572BF4E8B40011A683 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410694562BF4E8B40011A683 /* HomeViewModel.swift */; };
 		410C7DBB2B700100006E3233 /* MaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410C7DBA2B700100006E3233 /* MaButton.swift */; };
 		4110569F2B92069E00CA42ED /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4110569E2B92069E00CA42ED /* LoginViewModel.swift */; };
 		411056A12B92231300CA42ED /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411056A02B92231300CA42ED /* LoginModel.swift */; };
@@ -47,7 +49,7 @@
 		41B40C182B6E966600F5697C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C172B6E966600F5697C /* UIColor+Extension.swift */; };
 		41B40C1B2B6E966600F5697C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C1A2B6E966600F5697C /* AppDelegate.swift */; };
 		41B40C1D2B6E966600F5697C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C1C2B6E966600F5697C /* SceneDelegate.swift */; };
-		41B40C212B6E966600F5697C /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C202B6E966600F5697C /* RootViewController.swift */; };
+		41B40C212B6E966600F5697C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B40C202B6E966600F5697C /* HomeView.swift */; };
 		41B40C272B6E966700F5697C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C262B6E966700F5697C /* Assets.xcassets */; };
 		41B40C2A2B6E966700F5697C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C292B6E966700F5697C /* LaunchScreen.storyboard */; };
 		41BC708A2B9340F6005048B0 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70892B9340F6005048B0 /* RegisterViewModel.swift */; };
@@ -62,6 +64,8 @@
 /* Begin PBXFileReference section */
 		4100646A2BEB82E800A91776 /* ForgotPasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordModel.swift; sourceTree = "<group>"; };
 		4100646C2BEB82F800A91776 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
+		410694542BF4E88B0011A683 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		410694562BF4E8B40011A683 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		410C7DBA2B700100006E3233 /* MaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaButton.swift; sourceTree = "<group>"; };
 		4110569E2B92069E00CA42ED /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		411056A02B92231300CA42ED /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -100,7 +104,7 @@
 		41B40C172B6E966600F5697C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		41B40C1A2B6E966600F5697C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41B40C1C2B6E966600F5697C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		41B40C202B6E966600F5697C /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		41B40C202B6E966600F5697C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		41B40C232B6E966600F5697C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41B40C262B6E966700F5697C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41B40C292B6E966700F5697C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -342,7 +346,9 @@
 		41B40C1F2B6E966600F5697C /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				41B40C202B6E966600F5697C /* RootViewController.swift */,
+				410694542BF4E88B0011A683 /* HomeModel.swift */,
+				41B40C202B6E966600F5697C /* HomeView.swift */,
+				410694562BF4E8B40011A683 /* HomeViewModel.swift */,
 				417174E82B98F3050028F2FA /* HomeRoute.swift */,
 				417174F52B98F66A0028F2FA /* HomeRouter.swift */,
 			);
@@ -469,12 +475,14 @@
 				41FAD4082B90B6E300E316C1 /* LoginRouter.swift in Sources */,
 				410C7DBB2B700100006E3233 /* MaButton.swift in Sources */,
 				417174E12B98E12B0028F2FA /* PushTransition.swift in Sources */,
-				41B40C212B6E966600F5697C /* RootViewController.swift in Sources */,
+				41B40C212B6E966600F5697C /* HomeView.swift in Sources */,
+				410694572BF4E8B40011A683 /* HomeViewModel.swift in Sources */,
 				41CBB5BF2B9E263600F15580 /* FirstOnboardingRoute.swift in Sources */,
 				41B40C0E2B6E966600F5697C /* ColorManager.swift in Sources */,
 				417174DD2B98DC350028F2FA /* ModalTransition.swift in Sources */,
 				41B40C182B6E966600F5697C /* UIColor+Extension.swift in Sources */,
 				417174F62B98F66A0028F2FA /* HomeRouter.swift in Sources */,
+				410694552BF4E88B0011A683 /* HomeModel.swift in Sources */,
 				41B40C012B6E966600F5697C /* ServiceManager.swift in Sources */,
 				41B40C142B6E966600F5697C /* NotificationCenter+Extension.swift in Sources */,
 				417174E92B98F3050028F2FA /* HomeRoute.swift in Sources */,

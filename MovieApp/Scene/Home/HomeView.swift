@@ -8,7 +8,7 @@
 import UIKit
 import TinyConstraints
 
-class RootViewController: UIViewController {
+class HomeView: UIViewController {
     
     var router: HomeRouter
     init(router: HomeRouter) {
@@ -39,4 +39,6 @@ class RootViewController: UIViewController {
 
 }
 
-
+#Preview {
+    HomeView(router: HomeRouter())
+}
