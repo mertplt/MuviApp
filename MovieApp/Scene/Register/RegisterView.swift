@@ -204,6 +204,10 @@ class RegisterView: UIViewController {
         let password = passwordTextField.text ?? ""
         let confirmPassword = confirmPasswordTextField.text ?? ""
         registerViewModel.register(email: email, password: password, confirmPassword: confirmPassword)
+        
+        let mainTabBarVC = MainTabBarViewController()
+        mainTabBarVC.modalPresentationStyle = .fullScreen
+        present(mainTabBarVC, animated: true)
     }
 }
 

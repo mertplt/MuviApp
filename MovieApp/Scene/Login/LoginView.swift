@@ -210,6 +210,10 @@ final class LoginView: UIViewController {
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
         viewModel.login(email: email, password: password)
+        
+        let mainTabBarVC = MainTabBarViewController()
+        mainTabBarVC.modalPresentationStyle = .fullScreen
+        present(mainTabBarVC, animated: true)
     }
 }
 

@@ -38,7 +38,7 @@ class HomeView: UIViewController {
     
     func configureUI() {
         view.addSubview(testButton)
-        view.backgroundColor = .white
+        view.backgroundColor = ColorManager.surfaceDark
         
         testButton.leadingToSuperview().constant = 24
         testButton.topToSuperview().constant = 50

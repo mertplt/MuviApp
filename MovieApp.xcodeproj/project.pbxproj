@@ -54,11 +54,13 @@
 		41B40C2A2B6E966700F5697C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C292B6E966700F5697C /* LaunchScreen.storyboard */; };
 		41BC708A2B9340F6005048B0 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70892B9340F6005048B0 /* RegisterViewModel.swift */; };
 		41C9A9972B70FC3D00CCA223 /* TinyConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = 41C9A9962B70FC3D00CCA223 /* TinyConstraints */; };
-		41CBB5B72B9E230700F15580 /* OnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CBB5B62B9E230700F15580 /* OnboardingRouter.swift */; };
-		41CBB5BB2B9E234400F15580 /* OnboardingRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CBB5BA2B9E234400F15580 /* OnboardingRoute.swift */; };
 		41CBB5BD2B9E262C00F15580 /* FirstOnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CBB5BC2B9E262C00F15580 /* FirstOnboardingRouter.swift */; };
 		41CBB5BF2B9E263600F15580 /* FirstOnboardingRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CBB5BE2B9E263600F15580 /* FirstOnboardingRoute.swift */; };
 		41FAD4082B90B6E300E316C1 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAD4072B90B6E300E316C1 /* LoginRouter.swift */; };
+		7C21B0972C316A4C006877E1 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21B0962C316A4C006877E1 /* MainTabBarViewController.swift */; };
+		7C21B0A02C316E06006877E1 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21B09F2C316E06006877E1 /* SearchView.swift */; };
+		7C21B0A22C316E19006877E1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21B0A12C316E19006877E1 /* ProfileView.swift */; };
+		7C21B0A42C316E25006877E1 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C21B0A32C316E25006877E1 /* ListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,11 +111,13 @@
 		41B40C262B6E966700F5697C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41B40C292B6E966700F5697C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		41BC70892B9340F6005048B0 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
-		41CBB5B62B9E230700F15580 /* OnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRouter.swift; sourceTree = "<group>"; };
-		41CBB5BA2B9E234400F15580 /* OnboardingRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRoute.swift; sourceTree = "<group>"; };
 		41CBB5BC2B9E262C00F15580 /* FirstOnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingRouter.swift; sourceTree = "<group>"; };
 		41CBB5BE2B9E263600F15580 /* FirstOnboardingRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingRoute.swift; sourceTree = "<group>"; };
 		41FAD4072B90B6E300E316C1 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
+		7C21B0962C316A4C006877E1 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		7C21B09F2C316E06006877E1 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		7C21B0A12C316E19006877E1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		7C21B0A32C316E25006877E1 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,8 +149,6 @@
 				4118EBD32B740BD400F9E6C1 /* OnboardingViewController.swift */,
 				4118EBD52B742D5D00F9E6C1 /* SwipeCell.swift */,
 				4118EBD72B742D8800F9E6C1 /* SwipeItem.swift */,
-				41CBB5B62B9E230700F15580 /* OnboardingRouter.swift */,
-				41CBB5BA2B9E234400F15580 /* OnboardingRoute.swift */,
 				41CBB5BC2B9E262C00F15580 /* FirstOnboardingRouter.swift */,
 				41CBB5BE2B9E263600F15580 /* FirstOnboardingRoute.swift */,
 			);
@@ -334,11 +336,15 @@
 		41B40C1E2B6E966600F5697C /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				7C21B0962C316A4C006877E1 /* MainTabBarViewController.swift */,
 				417174EC2B98F5300028F2FA /* ForgotPassword */,
 				4179E3022B87F03E00F0FEEE /* Register */,
 				4142631B2B7EB212000AFDBE /* Login */,
 				4118EBD22B740ABA00F9E6C1 /* Onboarding */,
 				41B40C1F2B6E966600F5697C /* Home */,
+				7C21B0982C316C43006877E1 /* Search */,
+				7C21B09A2C316D26006877E1 /* Profile */,
+				7C21B0992C316C5E006877E1 /* Lists */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -377,6 +383,30 @@
 				41B40C292B6E966700F5697C /* LaunchScreen.storyboard */,
 			);
 			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		7C21B0982C316C43006877E1 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				7C21B09F2C316E06006877E1 /* SearchView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		7C21B0992C316C5E006877E1 /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				7C21B0A32C316E25006877E1 /* ListView.swift */,
+			);
+			path = Lists;
+			sourceTree = "<group>";
+		};
+		7C21B09A2C316D26006877E1 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7C21B0A12C316E19006877E1 /* ProfileView.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -462,14 +492,13 @@
 				417174E32B98E57B0028F2FA /* AppRouter.swift in Sources */,
 				4179E3042B87F05400F0FEEE /* RegisterView.swift in Sources */,
 				417174EE2B98F5430028F2FA /* ForgotPasswordRoute.swift in Sources */,
-				41CBB5B72B9E230700F15580 /* OnboardingRouter.swift in Sources */,
 				41CBB5BD2B9E262C00F15580 /* FirstOnboardingRouter.swift in Sources */,
 				417174D62B98D9AF0028F2FA /* Router.swift in Sources */,
-				41CBB5BB2B9E234400F15580 /* OnboardingRoute.swift in Sources */,
 				4110569F2B92069E00CA42ED /* LoginViewModel.swift in Sources */,
 				4118EBD82B742D8800F9E6C1 /* SwipeItem.swift in Sources */,
 				41B40C072B6E966600F5697C /* Model.swift in Sources */,
 				417174D92B98DB450028F2FA /* Transition.swift in Sources */,
+				7C21B0972C316A4C006877E1 /* MainTabBarViewController.swift in Sources */,
 				417174F42B98F5AB0028F2FA /* ForgotPasswordView.swift in Sources */,
 				4118EBD62B742D5D00F9E6C1 /* SwipeCell.swift in Sources */,
 				41FAD4082B90B6E300E316C1 /* LoginRouter.swift in Sources */,
@@ -484,11 +513,13 @@
 				417174F62B98F66A0028F2FA /* HomeRouter.swift in Sources */,
 				410694552BF4E88B0011A683 /* HomeModel.swift in Sources */,
 				41B40C012B6E966600F5697C /* ServiceManager.swift in Sources */,
+				7C21B0A22C316E19006877E1 /* ProfileView.swift in Sources */,
 				41B40C142B6E966600F5697C /* NotificationCenter+Extension.swift in Sources */,
 				417174E92B98F3050028F2FA /* HomeRoute.swift in Sources */,
 				417174DB2B98DBFF0028F2FA /* Animator.swift in Sources */,
 				415FED422BE671B600CA42FC /* RegisterModel.swift in Sources */,
 				417174E52B98F0DA0028F2FA /* LoginRoute.swift in Sources */,
+				7C21B0A42C316E25006877E1 /* ListView.swift in Sources */,
 				411056A12B92231300CA42ED /* LoginModel.swift in Sources */,
 				41B40C042B6E966600F5697C /* Service.swift in Sources */,
 				4186CBE72B79469800E174F2 /* FirstOnboardingViewController.swift in Sources */,
@@ -496,6 +527,7 @@
 				4100646B2BEB82E800A91776 /* ForgotPasswordModel.swift in Sources */,
 				4195036E2B7A49C200BA9C7C /* MaTextField.swift in Sources */,
 				417174EB2B98F3AB0028F2FA /* RegisterRouter.swift in Sources */,
+				7C21B0A02C316E06006877E1 /* SearchView.swift in Sources */,
 				41B40C112B6E966600F5697C /* FontManager.swift in Sources */,
 				41BC708A2B9340F6005048B0 /* RegisterViewModel.swift in Sources */,
 				4118EBD42B740BD400F9E6C1 /* OnboardingViewController.swift in Sources */,
