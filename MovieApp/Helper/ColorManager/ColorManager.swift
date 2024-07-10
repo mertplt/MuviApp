@@ -31,4 +31,9 @@ class ColorManager {
     public static var mediumEmphasis: UIColor = {
         return UIColor.mediumEmphasis
     }()
+    
+    public static var dark: UIColor = {
+        return UIColor.dark
+    }()
+    
 }
