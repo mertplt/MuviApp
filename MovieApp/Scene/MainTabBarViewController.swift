@@ -5,13 +5,6 @@
 //  Created by Mert Polat on 30.06.2024.
 //
 
-//
-//  MainTabBarViewController.swift
-//  MovieApp
-//
-//  Created by Mert Polat on 30.06.2024.
-//
-
 import UIKit
 
 class MainTabBarViewController: UITabBarController {
