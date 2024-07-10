@@ -6,3 +6,19 @@
 //
 
 import Foundation
+
+class ForgotPasswordViewModel {
+    var router: ForgotPasswordRouter
+    
+    init(router: ForgotPasswordRouter) {
+        self.router = router
+    }
+    
+    func resetPassword(email: String?) {
+        guard let email = email, !email.isEmpty else {
+            return
+        }
+        
+        let model = ForgotPasswordModel(email: email)
+    }
+}

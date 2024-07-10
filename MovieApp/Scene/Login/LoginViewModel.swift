@@ -5,30 +5,46 @@
 //  Created by mert polat on 1.03.2024.
 //
 
-import UIKit
+import Foundation
 
 class LoginViewModel {
-//    var loginStatus: Observable<String> = Observable("")
+    var router: LoginRouter
     
-    func login(loginModel: LoginModel) {
-        // Giriş verilerini doğrulama ve giriş işlemini gerçekleştirme kodları
-        if loginModel.email.isEmpty || loginModel.password.isEmpty {
-//            loginStatus.value = "Username or password cannot be empty"
+    init(router: LoginRouter) {
+        self.router = router
+    }
+    
+    func login(email: String, password: String) {
+        guard isValidEmail(email) else {
+            // Handle invalid email case
             return
         }
         
-//        loginStatus.value = "Logging in..."
-        
-        // Sunucu ile giriş işlemini gerçekleştirme kodları
-        // Bu örnekte basitçe başarılı olduğunu varsayalım
-        let success = true
-        
-        if success {
-//            loginStatus.value = "Login successful"
-            // Router ile ana sayfaya yönlendirme kodları
-//            LoginRouter.navigateToRegister()
-        } else {
-//            loginStatus.value = "Login failed"
+        guard !password.isEmpty else {
+            // Handle empty password case
+            return
         }
+        
+        // Create LoginModel
+        let loginModel = LoginModel(email: email, password: password)
+        
+        loginUser(loginModel) { [weak self] success in
+            if success {
+                self?.router.placeOnHomeViewController()
+            } else {
+            }
+        }
+    }
+    
+    private func loginUser(_ model: LoginModel, completion: @escaping (Bool) -> Void) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
+            completion(true)
+        }
+    }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Z]{2,64}"
+        let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
     }
 }

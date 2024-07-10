@@ -8,12 +8,25 @@
 import UIKit
 
 protocol RouterProtocol: AnyObject {
+    var presentingViewController: UIViewController? { get set }
     func open(_ viewController: UIViewController, transition: Transition)
     func close()
+    func push(_ viewController: UIViewController)
+    func present(_ viewController: UIViewController)
+}
+
+extension RouterProtocol {
+    func push(_ viewController: UIViewController) {
+        presentingViewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func present(_ viewController: UIViewController) {
+        presentingViewController?.present(viewController, animated: true, completion: nil)
+    }
 }
 
 class Router: RouterProtocol {
-    weak var presentingViewController : UIViewController?
+    weak var presentingViewController: UIViewController?
     var openTransition: Transition?
     
     func open(_ viewController: UIViewController, transition: Transition) {
@@ -35,5 +48,13 @@ class Router: RouterProtocol {
     
     deinit {
         debugPrint("deinit \(self)")
+    }
+    
+    func push(_ viewController: UIViewController) {
+        presentingViewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func present(_ viewController: UIViewController) {
+        presentingViewController?.present(viewController, animated: true, completion: nil)
     }
 }

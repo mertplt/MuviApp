@@ -1,0 +1,24 @@
+{
+  "originHash" : "21af9c3ff3e39bcb98c9ad329d13d154787f49d081468680c02ddb117546bd9e",
+  "pins" : [
+    {
+      "identity" : "mobilliumintroduction",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mobillium/MobilliumIntroduction.git",
+      "state" : {
+        "revision" : "52f8064d75f076678628063f2e7768439e99a0fe",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "tinyconstraints",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/roberthein/TinyConstraints",
+      "state" : {
+        "revision" : "3262e5c591d4ab6272255df2087a01bbebd138dc",
+        "version" : "4.0.2"
+      }
+    }
+  ],
+  "version" : 3
+}

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "spider.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
