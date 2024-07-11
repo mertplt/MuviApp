@@ -1,6 +1,15 @@
 {
-  "originHash" : "21af9c3ff3e39bcb98c9ad329d13d154787f49d081468680c02ddb117546bd9e",
+  "originHash" : "4569e16e2eb05302cfe130386f0011e530909a9798fcf393339f2ae8264f2128",
   "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "f455c2975872ccd2d9c81594c658af65716e9b9a",
+        "version" : "5.9.1"
+      }
+    },
     {
       "identity" : "mobilliumintroduction",
       "kind" : "remoteSourceControl",

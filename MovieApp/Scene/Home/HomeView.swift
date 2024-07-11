@@ -12,6 +12,10 @@ class HomeView: UIViewController {
 
     var viewModel: HomeViewModel
     var router: HomeRouter
+    let networkManager = NetworkManager()
+    private let apiKey = Config.shared.apiKey
+    
+    private var getPopularMoviesRequest: GetPopularMoviesRequest?
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -105,6 +109,27 @@ class HomeView: UIViewController {
 
     func configureUI() {
         view.backgroundColor = ColorManager.dark
+        
+        guard let apiKey = apiKey else {
+            print("API Key is missing")
+            return
+        }
+        
+        getPopularMoviesRequest = GetPopularMoviesRequest(apiKey: apiKey, page: 1)
+        
+        if let request = getPopularMoviesRequest {
+            networkManager.requestWithAlamofire(for: request) { result in
+                switch result {
+                case .success(let response):
+                    print("Page: \(response.page)")
+                    response.results.forEach { movie in
+                        print("Movie: \(movie.releaseDate)")
+                    }
+                case .failure(let error):
+                    print("Error: \(error.localizedDescription)")
+                }
+            }
+        }
     }
 
 }
