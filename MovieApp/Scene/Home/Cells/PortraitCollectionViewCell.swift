@@ -7,6 +7,7 @@
 
 import UIKit
 import TinyConstraints
+import SDWebImage
 
 final class PortraitCollectionViewCell: UICollectionViewCell {
     private let cellImageView: UIImageView = {
@@ -17,25 +18,14 @@ final class PortraitCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-//    private let cellTitleLbl: UILabel = {
-//        let label = UILabel()
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.textAlignment = .left
-//        return label
-//    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(cellImageView)
         contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
-//        contentView.addSubview(cellTitleLbl)
         cellImageView.clipsToBounds = true
         cellImageView.topToSuperview()
         cellImageView.edgesToSuperview()
-        
-//        cellTitleLbl.topToBottom(of: cellImageView)
-//        cellTitleLbl.edgesToSuperview(excluding: .top)
     }
     
     required init?(coder: NSCoder) {
@@ -43,7 +33,10 @@ final class PortraitCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(_ item: ListItem) {
-        cellImageView.image = UIImage(named: item.image)
-//        cellTitleLbl.text = item.title
+        if let url = URL(string: item.backdrop ?? item.image) {
+            cellImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
+        } else {
+            cellImageView.image = UIImage(named: "placeholder")
+        }
     }
 }

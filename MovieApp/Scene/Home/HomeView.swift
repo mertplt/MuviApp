@@ -12,10 +12,6 @@ class HomeView: UIViewController {
 
     var viewModel: HomeViewModel
     var router: HomeRouter
-    let networkManager = NetworkManager()
-    private let apiKey = Config.shared.apiKey
-    
-    private var getPopularMoviesRequest: GetPopularMoviesRequest?
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -23,8 +19,6 @@ class HomeView: UIViewController {
         collectionView.backgroundColor = ColorManager.surfaceDark
         return collectionView
     }()
-
-    private let sections = MockData.shared.pageData
 
     init(viewModel: HomeViewModel, router: HomeRouter) {
         self.viewModel = viewModel
@@ -48,17 +42,24 @@ class HomeView: UIViewController {
         collectionView.register(StoryCollectionViewCell.self, forCellWithReuseIdentifier: "StoryCollectionViewCell")
         collectionView.register(PortraitCollectionViewCell.self, forCellWithReuseIdentifier: "PortraitCollectionViewCell")
         collectionView.register(LandscapeCollectionViewCell.self, forCellWithReuseIdentifier: "LandscapeCollectionViewCell")
-        collectionView.register(mediumCollectionViewCell.self, forCellWithReuseIdentifier: "mediumCollectionViewCell")
+        collectionView.register(MediumCollectionViewCell.self, forCellWithReuseIdentifier: "MediumCollectionViewCell")
         collectionView.register(CollectionViewHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeaderReusableView")
 
         collectionView.collectionViewLayout = createLayout()
         configureUI()
+        
+        viewModel.updateHandler = { [weak self] in
+            self?.collectionView.reloadData()
+        }
+        
+        viewModel.fetchPopularMovies()
+        viewModel.fetchPopularTVShows()
     }
 
     private func createLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
             guard let self = self else { return nil }
-            let section = self.sections[sectionIndex]
+            let section = self.viewModel.model.sections[sectionIndex]
             switch section {
             case .stories:
                 let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
@@ -92,59 +93,38 @@ class HomeView: UIViewController {
                 return section
             case .upcoming:
                 let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(240), heightDimension: .absolute(136)), subitems: [item])
-                    let section = NSCollectionLayoutSection(group: group)
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(240), heightDimension: .absolute(136)), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
-                    section.interGroupSpacing = 10
-                    section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
-                    section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                    section.supplementariesFollowContentInsets = false
+                section.interGroupSpacing = 10
+                section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
+                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
+                section.supplementariesFollowContentInsets = false
                 return section
             }
         }
     }
+
     private func supplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
         .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
     }
 
     func configureUI() {
         view.backgroundColor = ColorManager.dark
-        
-        guard let apiKey = apiKey else {
-            print("API Key is missing")
-            return
-        }
-        
-        getPopularMoviesRequest = GetPopularMoviesRequest(apiKey: apiKey, page: 1)
-        
-        if let request = getPopularMoviesRequest {
-            networkManager.requestWithAlamofire(for: request) { result in
-                switch result {
-                case .success(let response):
-                    print("Page: \(response.page)")
-                    response.results.forEach { movie in
-                        print("Movie: \(movie.releaseDate)")
-                    }
-                case .failure(let error):
-                    print("Error: \(error.localizedDescription)")
-                }
-            }
-        }
     }
-
 }
 
 extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
+        return viewModel.model.sections.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sections[section].count
+        return viewModel.model.sections[section].count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch sections[indexPath.section] {
+        switch viewModel.model.sections[indexPath.section] {
         case .stories(let items):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StoryCollectionViewCell", for: indexPath) as! StoryCollectionViewCell
             cell.setup(items[indexPath.row])
@@ -158,7 +138,7 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.setup(items[indexPath.row])
             return cell
         case .upcoming(let items):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mediumCollectionViewCell", for: indexPath) as! mediumCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediumCollectionViewCell", for: indexPath) as! MediumCollectionViewCell
             cell.setup(items[indexPath.row])
             return cell
         }
@@ -168,7 +148,7 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CollectionViewHeaderReusableView", for: indexPath) as! CollectionViewHeaderReusableView
-            header.setup(sections[indexPath.section].title)
+            header.setup(viewModel.model.sections[indexPath.section].title)
             return header
         default:
             return UICollectionReusableView()
