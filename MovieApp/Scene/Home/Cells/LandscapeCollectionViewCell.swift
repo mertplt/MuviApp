@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 import TinyConstraints
 
 final class LandscapeCollectionViewCell: UICollectionViewCell {
@@ -29,6 +30,10 @@ final class LandscapeCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(_ item: ListItem) {
-        cellImageView.image = UIImage(named: item.image)
+        if let url = URL(string: item.backdrop ?? item.image) {
+            cellImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
+        } else {
+            cellImageView.image = UIImage(named: "placeholder")
+        }
     }
 }

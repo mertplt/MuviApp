@@ -16,9 +16,9 @@ enum ListSection {
     var items: [ListItem] {
         switch self {
         case .stories(let items),
-                .popular(let items),
-                .comingSoon(let items),
-                .upcoming(let items):
+             .popular(let items),
+             .comingSoon(let items),
+             .upcoming(let items):
             return items
         }
     }

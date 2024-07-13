@@ -8,4 +8,5 @@
 import Foundation
 
 struct HomeModel {
+    var sections: [ListSection]
 }
