@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SDWebImage
 
-class mediumCollectionViewCell: UICollectionViewCell {
+class MediumCollectionViewCell: UICollectionViewCell {
     private let cellImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +23,6 @@ class mediumCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
         cellImageView.clipsToBounds = true
-        cellImageView.topToSuperview()
         cellImageView.edgesToSuperview()
     }
     
@@ -31,6 +31,10 @@ class mediumCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(_ item: ListItem) {
-        cellImageView.image = UIImage(named: item.image)
+        if let url = URL(string: item.backdrop ?? item.image) {
+            cellImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
+        } else {
+            cellImageView.image = UIImage(named: "placeholder")
+        }
     }
 }
