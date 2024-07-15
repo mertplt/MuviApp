@@ -19,6 +19,8 @@ class HomeView: UIViewController {
         collectionView.backgroundColor = ColorManager.surfaceDark
         return collectionView
     }()
+    
+    private let customHeaderElementKind = "customHeaderElementKind"  // Custom element kind
 
     init(viewModel: HomeViewModel, router: HomeRouter) {
         self.viewModel = viewModel
@@ -44,6 +46,7 @@ class HomeView: UIViewController {
         collectionView.register(LandscapeCollectionViewCell.self, forCellWithReuseIdentifier: "LandscapeCollectionViewCell")
         collectionView.register(MediumCollectionViewCell.self, forCellWithReuseIdentifier: "MediumCollectionViewCell")
         collectionView.register(CollectionViewHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeaderReusableView")
+        collectionView.register(CustomHeaderReusableView.self, forSupplementaryViewOfKind: customHeaderElementKind, withReuseIdentifier: "CustomHeaderReusableView")
 
         collectionView.collectionViewLayout = createLayout()
         configureUI()
@@ -62,47 +65,66 @@ class HomeView: UIViewController {
             let section = self.viewModel.model.sections[sectionIndex]
             switch section {
             case .stories:
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(104), heightDimension: .absolute(40)), subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
-                section.interGroupSpacing = 0
-                section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
-                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                section.supplementariesFollowContentInsets = false
-                return section
+                return self.createStoriesSection()
             case .popular:
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(335), heightDimension: .absolute(189)), subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .groupPagingCentered
-                section.interGroupSpacing = 10
-                section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
-                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                section.supplementariesFollowContentInsets = false
-                return section
+                return self.createPopularSection()
             case .comingSoon:
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(240), heightDimension: .absolute(135)), subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
-                section.interGroupSpacing = 10
-                section.contentInsets = .init(top: 0, leading: 20, bottom: 55, trailing: 20)
-                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                section.supplementariesFollowContentInsets = false
-                return section
+                return self.createComingSoonSection()
             case .upcoming:
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(240), heightDimension: .absolute(136)), subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
-                section.interGroupSpacing = 10
-                section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
-                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                section.supplementariesFollowContentInsets = false
-                return section
+                return self.createUpcomingSection()
             }
         }
+    }
+
+    private func createStoriesSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(104), heightDimension: .absolute(40)), subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 0
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+        
+
+        let supplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(259)), elementKind: customHeaderElementKind, alignment: .bottom)
+        section.boundarySupplementaryItems = [supplementaryItem]
+        section.supplementariesFollowContentInsets = false
+        return section
+    }
+
+    private func createPopularSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(335), heightDimension: .absolute(189)), subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPagingCentered
+        section.interGroupSpacing = 10
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
+        section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
+        section.supplementariesFollowContentInsets = false
+        return section
+    }
+
+    private func createComingSoonSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(240), heightDimension: .absolute(135)), subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 10
+        section.contentInsets = .init(top: 0, leading: 20, bottom: 55, trailing: 20)
+        section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
+        section.supplementariesFollowContentInsets = false
+        return section
+    }
+
+    private func createUpcomingSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(240), heightDimension: .absolute(136)), subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 10
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
+        section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
+        section.supplementariesFollowContentInsets = false
+        return section
     }
 
     private func supplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
@@ -145,17 +167,18 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
+        if kind == customHeaderElementKind {
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CustomHeaderReusableView", for: indexPath) as! CustomHeaderReusableView
+            header.setup(with: viewModel.headerImageURL)
+            return header
+        } else if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CollectionViewHeaderReusableView", for: indexPath) as! CollectionViewHeaderReusableView
             header.setup(viewModel.model.sections[indexPath.section].title)
             return header
-        default:
-            return UICollectionReusableView()
         }
+        return UICollectionReusableView()
     }
 }
-
 #Preview {
     let router = HomeRouter()
     let viewModel = HomeViewModel(router: router)

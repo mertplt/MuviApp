@@ -50,7 +50,6 @@
 		41B40C272B6E966700F5697C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C262B6E966700F5697C /* Assets.xcassets */; };
 		41B40C2A2B6E966700F5697C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41B40C292B6E966700F5697C /* LaunchScreen.storyboard */; };
 		41BC708A2B9340F6005048B0 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70892B9340F6005048B0 /* RegisterViewModel.swift */; };
-		41C9A9972B70FC3D00CCA223 /* TinyConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = 41C9A9962B70FC3D00CCA223 /* TinyConstraints */; };
 		41CBB5BD2B9E262C00F15580 /* FirstOnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CBB5BC2B9E262C00F15580 /* FirstOnboardingRouter.swift */; };
 		41CBB5BF2B9E263600F15580 /* FirstOnboardingRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CBB5BE2B9E263600F15580 /* FirstOnboardingRoute.swift */; };
 		41FAD4082B90B6E300E316C1 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FAD4072B90B6E300E316C1 /* LoginRouter.swift */; };
@@ -77,9 +76,11 @@
 		7C7332BA2C3441140091ED66 /* PortraitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7332B92C3441140091ED66 /* PortraitCollectionViewCell.swift */; };
 		7C7332BC2C34412C0091ED66 /* LandscapeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7332BB2C34412C0091ED66 /* LandscapeCollectionViewCell.swift */; };
 		7C7332BE2C3441440091ED66 /* CollectionViewHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7332BD2C3441440091ED66 /* CollectionViewHeaderReusableView.swift */; };
+		7C982E992C45864300A8B2D6 /* CustomHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C982E982C45864300A8B2D6 /* CustomHeaderReusableView.swift */; };
 		7CAB5CE82C403EA10049D446 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB5CE72C403EA10049D446 /* Config.swift */; };
 		7CAB5CED2C4065F90049D446 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7CAB5CEC2C4065F90049D446 /* SDWebImage */; };
 		7CAB5CEF2C4065F90049D446 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7CAB5CEE2C4065F90049D446 /* SDWebImageMapKit */; };
+		7CABC7272C43322B00DD7472 /* TinyConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = 7CABC7262C43322B00DD7472 /* TinyConstraints */; };
 		7CCDA58E2C4163F000D38B1E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7CCDA58D2C4163F000D38B1E /* Alamofire */; };
 		7CD1432F2C395AD40089BAE7 /* MediumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1432E2C395AD40089BAE7 /* MediumCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -155,6 +156,7 @@
 		7C7332B92C3441140091ED66 /* PortraitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitCollectionViewCell.swift; sourceTree = "<group>"; };
 		7C7332BB2C34412C0091ED66 /* LandscapeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeCollectionViewCell.swift; sourceTree = "<group>"; };
 		7C7332BD2C3441440091ED66 /* CollectionViewHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeaderReusableView.swift; sourceTree = "<group>"; };
+		7C982E982C45864300A8B2D6 /* CustomHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderReusableView.swift; sourceTree = "<group>"; };
 		7CAB5CE72C403EA10049D446 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		7CD1432E2C395AD40089BAE7 /* MediumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,7 +168,7 @@
 			files = (
 				7CCDA58E2C4163F000D38B1E /* Alamofire in Frameworks */,
 				7CAB5CED2C4065F90049D446 /* SDWebImage in Frameworks */,
-				41C9A9972B70FC3D00CCA223 /* TinyConstraints in Frameworks */,
+				7CABC7272C43322B00DD7472 /* TinyConstraints in Frameworks */,
 				7CAB5CEF2C4065F90049D446 /* SDWebImageMapKit in Frameworks */,
 				416D45532B764A5800D3908A /* MobilliumIntroduction in Frameworks */,
 			);
@@ -473,6 +475,7 @@
 				7C7332BB2C34412C0091ED66 /* LandscapeCollectionViewCell.swift */,
 				7C7332BD2C3441440091ED66 /* CollectionViewHeaderReusableView.swift */,
 				7CD1432E2C395AD40089BAE7 /* MediumCollectionViewCell.swift */,
+				7C982E982C45864300A8B2D6 /* CustomHeaderReusableView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -494,11 +497,11 @@
 			);
 			name = MovieApp;
 			packageProductDependencies = (
-				41C9A9962B70FC3D00CCA223 /* TinyConstraints */,
 				416D45522B764A5800D3908A /* MobilliumIntroduction */,
 				7CAB5CEC2C4065F90049D446 /* SDWebImage */,
 				7CAB5CEE2C4065F90049D446 /* SDWebImageMapKit */,
 				7CCDA58D2C4163F000D38B1E /* Alamofire */,
+				7CABC7262C43322B00DD7472 /* TinyConstraints */,
 			);
 			productName = MovieApp;
 			productReference = 41B40BFB2B6E966600F5697C /* MovieApp.app */;
@@ -529,10 +532,10 @@
 			);
 			mainGroup = 41B40BF22B6E966600F5697C;
 			packageReferences = (
-				41C9A9952B70FC3D00CCA223 /* XCRemoteSwiftPackageReference "TinyConstraints" */,
 				416D45512B764A5800D3908A /* XCRemoteSwiftPackageReference "MobilliumIntroduction" */,
 				7C361A6B2C3F0D71006A5AFC /* XCRemoteSwiftPackageReference "Alamofire" */,
 				7CAB5CEB2C4065F90049D446 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				7CABC7252C43322B00DD7472 /* XCRemoteSwiftPackageReference "TinyConstraints" */,
 			);
 			productRefGroup = 41B40BFC2B6E966600F5697C /* Products */;
 			projectDirPath = "";
@@ -568,6 +571,7 @@
 				417174E32B98E57B0028F2FA /* AppRouter.swift in Sources */,
 				7C361A852C3F16FD006A5AFC /* GetTVShowDetailsRequest.swift in Sources */,
 				4179E3042B87F05400F0FEEE /* RegisterView.swift in Sources */,
+				7C982E992C45864300A8B2D6 /* CustomHeaderReusableView.swift in Sources */,
 				7C361A812C3F16CB006A5AFC /* GetPopularTVShowsRequest.swift in Sources */,
 				417174EE2B98F5430028F2FA /* ForgotPasswordRoute.swift in Sources */,
 				7C7332B52C343FF10091ED66 /* MockData.swift in Sources */,
@@ -839,14 +843,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		41C9A9952B70FC3D00CCA223 /* XCRemoteSwiftPackageReference "TinyConstraints" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/roberthein/TinyConstraints";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.2;
-			};
-		};
 		7C361A6B2C3F0D71006A5AFC /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -863,6 +859,14 @@
 				minimumVersion = 5.19.4;
 			};
 		};
+		7CABC7252C43322B00DD7472 /* XCRemoteSwiftPackageReference "TinyConstraints" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/roberthein/TinyConstraints";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -870,11 +874,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 416D45512B764A5800D3908A /* XCRemoteSwiftPackageReference "MobilliumIntroduction" */;
 			productName = MobilliumIntroduction;
-		};
-		41C9A9962B70FC3D00CCA223 /* TinyConstraints */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 41C9A9952B70FC3D00CCA223 /* XCRemoteSwiftPackageReference "TinyConstraints" */;
-			productName = TinyConstraints;
 		};
 		7CAB5CEC2C4065F90049D446 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -885,6 +884,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7CAB5CEB2C4065F90049D446 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImageMapKit;
+		};
+		7CABC7262C43322B00DD7472 /* TinyConstraints */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7CABC7252C43322B00DD7472 /* XCRemoteSwiftPackageReference "TinyConstraints" */;
+			productName = TinyConstraints;
 		};
 		7CCDA58D2C4163F000D38B1E /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

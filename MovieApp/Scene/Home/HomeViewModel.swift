@@ -13,7 +13,8 @@ class HomeViewModel {
     private let apiKey = Config.shared.apiKey
     
     private(set) var model: HomeModel = HomeModel(sections: MockData.shared.pageData)
-    
+    private(set) var headerImageURL: String?
+
     var updateHandler: (() -> Void)?
     
     init(router: HomeRouter) {
@@ -35,6 +36,7 @@ class HomeViewModel {
                 let popularMovies = response.results.map { movie in
                     ListItem(title: movie.title, image: "https://image.tmdb.org/t/p/w500" + (movie.posterPath ?? ""), backdrop: movie.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + movie.backdropPath! : nil)
                 }
+                self?.headerImageURL = popularMovies.randomElement()?.backdrop 
                 self?.updatePopularMovies(with: popularMovies)
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
@@ -64,6 +66,7 @@ class HomeViewModel {
             }
         }
     }
+    
     private func updatePopularMovies(with movies: [ListItem]) {
         if let index = model.sections.firstIndex(where: {
             if case .popular = $0 {
