@@ -20,7 +20,7 @@ class HomeView: UIViewController {
         return collectionView
     }()
     
-    private let customHeaderElementKind = "customHeaderElementKind"  // Custom element kind
+    private let customHeaderElementKind = "customHeaderElementKind"
 
     init(viewModel: HomeViewModel, router: HomeRouter) {
         self.viewModel = viewModel
@@ -34,6 +34,8 @@ class HomeView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = ColorManager.dark
         
         view.addSubview(collectionView)
         collectionView.edgesToSuperview()
@@ -49,7 +51,6 @@ class HomeView: UIViewController {
         collectionView.register(CustomHeaderReusableView.self, forSupplementaryViewOfKind: customHeaderElementKind, withReuseIdentifier: "CustomHeaderReusableView")
 
         collectionView.collectionViewLayout = createLayout()
-        configureUI()
         
         viewModel.updateHandler = { [weak self] in
             self?.collectionView.reloadData()
@@ -57,6 +58,8 @@ class HomeView: UIViewController {
         
         viewModel.fetchPopularMovies()
         viewModel.fetchPopularTVShows()
+        
+        configureNavigationBar()
     }
 
     private func createLayout() -> UICollectionViewCompositionalLayout {
@@ -84,7 +87,6 @@ class HomeView: UIViewController {
         section.interGroupSpacing = 0
         section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
         
-
         let supplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(259)), elementKind: customHeaderElementKind, alignment: .bottom)
         section.boundarySupplementaryItems = [supplementaryItem]
         section.supplementariesFollowContentInsets = false
@@ -131,8 +133,35 @@ class HomeView: UIViewController {
         .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
     }
 
-    func configureUI() {
-        view.backgroundColor = ColorManager.dark
+ 
+    
+    private func configureNavigationBar() {
+        let logoImage = UIImage(named: "whiteLogo")
+        let logoImageView = UIImageView(image: logoImage)
+        logoImageView.contentMode = .scaleAspectFit
+
+        let titleView = UIView()
+        titleView.addSubview(logoImageView)
+
+        logoImageView.edgesToSuperview(excluding: .trailing, insets: .left(20))
+        logoImageView.width(121)
+        logoImageView.height(35)
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleView)
+        
+        let notificationButton = UIBarButtonItem(image: UIImage(systemName: "bell")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(notificationTapped))
+        notificationButton.tintColor = .white
+        
+        let bookmarkButton = UIBarButtonItem(image: UIImage(systemName: "bookmark")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(bookmarkTapped))
+        bookmarkButton.tintColor = .white
+        
+        self.navigationItem.rightBarButtonItems = [notificationButton, bookmarkButton]
+    }
+
+    @objc private func notificationTapped() {
+    }
+
+    @objc private func bookmarkTapped() {
     }
 }
 
