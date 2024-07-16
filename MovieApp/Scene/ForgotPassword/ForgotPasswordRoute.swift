@@ -12,14 +12,13 @@ protocol ForgotPasswordRoute {
 }
 
 extension ForgotPasswordRoute where Self: RouterProtocol {
-    
     func pushForgotPasswordViewController() {
         let router = ForgotPasswordRouter()
-        let forgotPasswordVC = ForgotPasswordView(router: router)
+        let viewModel = ForgotPasswordViewModel(router: router)
+        let forgotPasswordVC = ForgotPasswordView(viewModel: viewModel, router: router)
         let transition = PushTransition()
         
         router.presentingViewController = forgotPasswordVC
-
         open(forgotPasswordVC, transition: transition)
     }
 }
