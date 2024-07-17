@@ -139,9 +139,20 @@ class HomeView: UIViewController {
         let logoImage = UIImage(named: "whiteLogo")
         let logoImageView = UIImageView(image: logoImage)
         logoImageView.contentMode = .scaleAspectFit
+        
+        navigationController?.navigationBar.barTintColor = ColorManager.dark
+        navigationController?.navigationBar.isTranslucent = false
 
         let titleView = UIView()
         titleView.addSubview(logoImageView)
+        
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = ColorManager.dark
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
 
         logoImageView.edgesToSuperview(excluding: .trailing, insets: .left(20))
         logoImageView.width(121)
