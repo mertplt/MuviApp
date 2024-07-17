@@ -12,7 +12,7 @@ final class CollectionViewHeaderReusableView: UICollectionReusableView {
     private let cellTitleLbl: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.font = .boldSystemFont(ofSize: 25)
         label.textColor = ColorManager.surfaceLight
         return label
@@ -21,7 +21,9 @@ final class CollectionViewHeaderReusableView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(cellTitleLbl)
-        cellTitleLbl.edgesToSuperview()
+        
+        cellTitleLbl.edgesToSuperview(excluding: .left)
+        cellTitleLbl.leftToSuperview(offset: 15)
     }
     
     required init?(coder: NSCoder) {

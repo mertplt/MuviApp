@@ -54,7 +54,7 @@ struct MockData {
     }()
     
     var pageData: [ListSection] {
-        [stories, popular, comingSoon, upcoming]
+        [stories, comingSoon,popular , upcoming]
     }
     
     mutating func updatePopularMovies(with movies: [ListItem]) {

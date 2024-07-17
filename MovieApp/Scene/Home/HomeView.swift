@@ -85,7 +85,7 @@ class HomeView: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 0
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 10)
         
         let supplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(259)), elementKind: customHeaderElementKind, alignment: .bottom)
         section.boundarySupplementaryItems = [supplementaryItem]
@@ -99,7 +99,7 @@ class HomeView: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered
         section.interGroupSpacing = 10
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: -15, bottom: 30, trailing: 10)
         section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
         section.supplementariesFollowContentInsets = false
         return section
@@ -107,11 +107,11 @@ class HomeView: UIViewController {
 
     private func createComingSoonSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(240), heightDimension: .absolute(135)), subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(110), heightDimension: .absolute(165)), subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 10
-        section.contentInsets = .init(top: 0, leading: 20, bottom: 55, trailing: 20)
+        section.contentInsets = .init(top: 0, leading: 15, bottom: 30, trailing: 20)
         section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
         section.supplementariesFollowContentInsets = false
         return section
@@ -123,7 +123,7 @@ class HomeView: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 10
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 30, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 15, bottom: 30, trailing: 10)
         section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
         section.supplementariesFollowContentInsets = false
         return section
@@ -133,8 +133,6 @@ class HomeView: UIViewController {
         .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
     }
 
- 
-    
     private func configureNavigationBar() {
         let logoImage = UIImage(named: "whiteLogo")
         let logoImageView = UIImageView(image: logoImage)

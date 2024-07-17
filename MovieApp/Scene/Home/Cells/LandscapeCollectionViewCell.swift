@@ -30,7 +30,7 @@ final class LandscapeCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(_ item: ListItem) {
-        if let url = URL(string: item.backdrop ?? item.image) {
+        if let url = URL(string: item.image) {
             cellImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
         } else {
             cellImageView.image = UIImage(named: "placeholder")
