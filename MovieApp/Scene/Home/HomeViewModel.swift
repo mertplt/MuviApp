@@ -59,6 +59,7 @@ class HomeViewModel {
                 let popularTVShows = response.results.map { tvShow in
                     ListItem(title: tvShow.name, image: "https://image.tmdb.org/t/p/w500" + (tvShow.posterPath ?? ""), backdrop: tvShow.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + tvShow.backdropPath! : nil)
                 }
+                self?.updatePopularTVShows(with: popularTVShows)
                 self?.updateUpcomingMovies(with: popularTVShows)
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
@@ -122,6 +123,20 @@ class HomeViewModel {
             model.sections[index] = .comingSoon(movies)
             updateHandler?()
         }
+    }
+    
+    private func updatePopularTVShows(with tvShows: [ListItem]) {
+        if let index = model.sections.firstIndex(where: {
+            if case .popularTVShows = $0 {
+                return true
+            }
+            return false
+        }) {
+            model.sections[index] = .popularTVShows(tvShows)
+        } else {
+            model.sections.append(.popularTVShows(tvShows))
+        }
+        updateHandler?()
     }
     
 }

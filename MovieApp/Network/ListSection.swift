@@ -12,12 +12,14 @@ enum ListSection {
     case popular([ListItem])
     case comingSoon([ListItem])
     case upcoming([ListItem])
+    case popularTVShows([ListItem])
     
     var items: [ListItem] {
         switch self {
         case .stories(let items),
              .popular(let items),
              .comingSoon(let items),
+             .popularTVShows(let items),
              .upcoming(let items):
             return items
         }
@@ -35,6 +37,8 @@ enum ListSection {
             return "Popular Movies"
         case .comingSoon:
             return "Trending Movies"
+        case .popularTVShows:
+            return "Popular TV Shows"
         case .upcoming:
             return "Upcoming Movies"
         }

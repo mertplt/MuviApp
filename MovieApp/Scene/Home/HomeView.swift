@@ -57,8 +57,8 @@ class HomeView: UIViewController {
         }
         
         viewModel.fetchPopularMovies()
-        viewModel.fetchPopularTVShows()
-        
+        viewModel.fetchPopularTVShows()  
+        viewModel.fetchTrendingMovies()
         configureNavigationBar()
     }
 
@@ -75,6 +75,8 @@ class HomeView: UIViewController {
                 return self.createComingSoonSection()
             case .upcoming:
                 return self.createUpcomingSection()
+            case .popularTVShows:
+                return self.createPopularTVShowsSection()
             }
         }
     }
@@ -89,6 +91,18 @@ class HomeView: UIViewController {
         
         let supplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(259)), elementKind: customHeaderElementKind, alignment: .bottom)
         section.boundarySupplementaryItems = [supplementaryItem]
+        section.supplementariesFollowContentInsets = false
+        return section
+    }
+    
+    private func createPopularTVShowsSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(110), heightDimension: .absolute(165)), subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 10
+        section.contentInsets = .init(top: 0, leading: 15, bottom: 30, trailing: 20)
+        section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
         section.supplementariesFollowContentInsets = false
         return section
     }
@@ -201,6 +215,10 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediumCollectionViewCell", for: indexPath) as! MediumCollectionViewCell
             cell.setup(items[indexPath.row])
             return cell
+        case .popularTVShows(let items):
+               let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LandscapeCollectionViewCell", for: indexPath) as! LandscapeCollectionViewCell
+               cell.setup(items[indexPath.row])
+               return cell
         }
     }
 
