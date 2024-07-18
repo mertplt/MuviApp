@@ -61,8 +61,8 @@ struct MockData {
         popular = .popular(movies)
     }
     
-    mutating func updateComingSoon(with tvShows: [ListItem]) {
-        comingSoon = .comingSoon(tvShows)
+    mutating func updateComingSoon(with movies: [ListItem]) {
+        comingSoon = .comingSoon(movies)
     }
     
     mutating func updateUpcomingMovies(with tvShows: [ListItem]) {

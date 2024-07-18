@@ -59,8 +59,29 @@ class HomeViewModel {
                 let popularTVShows = response.results.map { tvShow in
                     ListItem(title: tvShow.name, image: "https://image.tmdb.org/t/p/w500" + (tvShow.posterPath ?? ""), backdrop: tvShow.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + tvShow.backdropPath! : nil)
                 }
-                self?.updateComingSoon(with: popularTVShows)
                 self?.updateUpcomingMovies(with: popularTVShows)
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func fetchTrendingMovies() {
+        guard let apiKey = apiKey else {
+            print("API Key is missing")
+            return
+        }
+        
+        let request = GetTrendingMoviesRequest(apiKey: apiKey, page: 1)
+        
+        networkManager.requestWithAlamofire(for: request) { [weak self] result in
+            switch result {
+            case .success(let response):
+                print("Page: \(response.page)")
+                let TrendingMovies = response.results.map { movie in
+                    ListItem(title: movie.title, image: "https://image.tmdb.org/t/p/w500" + (movie.posterPath ?? ""), backdrop: movie.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + movie.backdropPath! : nil)
+                }
+                self?.updateComingSoon(with: TrendingMovies)
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
             }
@@ -91,15 +112,16 @@ class HomeViewModel {
         }
     }
     
-    private func updateComingSoon(with tvShows: [ListItem]) {
+    private func updateComingSoon(with movies: [ListItem]) {
         if let index = model.sections.firstIndex(where: {
             if case .comingSoon = $0 {
                 return true
             }
             return false
         }) {
-            model.sections[index] = .comingSoon(tvShows)
+            model.sections[index] = .comingSoon(movies)
             updateHandler?()
         }
     }
+    
 }

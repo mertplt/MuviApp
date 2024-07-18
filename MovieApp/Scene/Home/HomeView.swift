@@ -43,7 +43,7 @@ class HomeView: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
 
-        collectionView.register(StoryCollectionViewCell.self, forCellWithReuseIdentifier: "StoryCollectionViewCell")
+        collectionView.register(PopularMoviesCollectionViewCell.self, forCellWithReuseIdentifier: "StoryCollectionViewCell")
         collectionView.register(PortraitCollectionViewCell.self, forCellWithReuseIdentifier: "PortraitCollectionViewCell")
         collectionView.register(LandscapeCollectionViewCell.self, forCellWithReuseIdentifier: "LandscapeCollectionViewCell")
         collectionView.register(MediumCollectionViewCell.self, forCellWithReuseIdentifier: "MediumCollectionViewCell")
@@ -186,7 +186,7 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch viewModel.model.sections[indexPath.section] {
         case .stories(let items):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StoryCollectionViewCell", for: indexPath) as! StoryCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StoryCollectionViewCell", for: indexPath) as! PopularMoviesCollectionViewCell
             cell.setup(items[indexPath.row])
             return cell
         case .popular(let items):

@@ -32,9 +32,9 @@ enum ListSection {
         case .stories:
             return "Stories"
         case .popular:
-            return "Popular"
+            return "Popular Movies"
         case .comingSoon:
-            return "Coming Soon"
+            return "Trending Movies"
         case .upcoming:
             return "Upcoming Movies"
         }

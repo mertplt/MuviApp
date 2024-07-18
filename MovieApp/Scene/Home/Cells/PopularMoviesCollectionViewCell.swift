@@ -8,7 +8,7 @@
 import UIKit
 import TinyConstraints
 
-final class StoryCollectionViewCell: UICollectionViewCell {
+final class PopularMoviesCollectionViewCell: UICollectionViewCell {
     private let cellLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
