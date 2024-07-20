@@ -19,6 +19,12 @@ final class PopularMoviesCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    override var isSelected: Bool {
+        didSet {
+            updateAppearance()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(cellLabel)
@@ -32,5 +38,10 @@ final class PopularMoviesCollectionViewCell: UICollectionViewCell {
     
     func setup(_ item: ListItem) {
         cellLabel.text = item.title
+        updateAppearance()
+    }
+    
+    private func updateAppearance() {
+        cellLabel.textColor = isSelected ? ColorManager.primary : ColorManager.surfaceLight
     }
 }

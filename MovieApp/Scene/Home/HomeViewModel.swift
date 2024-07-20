@@ -12,131 +12,136 @@ class HomeViewModel {
     let networkManager = NetworkManager()
     private let apiKey = Config.shared.apiKey
     
+    enum Category {
+        case series
+        case films
+    }
+    
+    private var currentCategory: Category = .films
+    
     private(set) var model: HomeModel = HomeModel(sections: MockData.shared.pageData)
     private(set) var headerImageURL: String?
-
+    
     var updateHandler: (() -> Void)?
     
     init(router: HomeRouter) {
         self.router = router
     }
     
-    func fetchPopularMovies() {
-        guard let apiKey = apiKey else {
-            print("API Key is missing")
-            return
+    func fetchInitialData() {
+        fetchMovies()
+        fetchTVShows()
+    }
+
+    func fetchTVShows() {
+        fetchTrendingTVShows()
+        fetchPopularTVShows()
+        fetchTopRatedTVShows()
+        fetchOnTheAirTVShows()
+    }
+    
+    func fetchMovies() {
+        fetchTrendingMovies()
+        fetchPopularMovies()
+        fetchTopRatedMovies()
+        fetchNowPlayingMovies()
+    }
+    
+    func updateCategory(_ category: Category) {
+        currentCategory = category
+        switch category {
+        case .series:
+            fetchTVShows()
+        case .films:
+            fetchMovies()
         }
-        
-        let request = GetPopularMoviesRequest(apiKey: apiKey, page: 1)
-        
-        networkManager.requestWithAlamofire(for: request) { [weak self] result in
-            switch result {
-            case .success(let response):
-                print("Page: \(response.page)")
-                let popularMovies = response.results.map { movie in
-                    ListItem(title: movie.title, image: "https://image.tmdb.org/t/p/w500" + (movie.posterPath ?? ""), backdrop: movie.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + movie.backdropPath! : nil)
-                }
-                self?.headerImageURL = popularMovies.randomElement()?.backdrop 
-                self?.updatePopularMovies(with: popularMovies)
-            case .failure(let error):
-                print("Error: \(error.localizedDescription)")
-            }
+    }
+    
+    func fetchPopularMovies() {
+        fetchItems(request: GetPopularMoviesRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
+            self?.headerImageURL = items.randomElement()?.backdrop
+            self?.updateItems(with: items, for: .popular([]))
         }
     }
     
     func fetchPopularTVShows() {
-        guard let apiKey = apiKey else {
-            print("API Key is missing")
-            return
-        }
-        
-        let request = GetPopularTVShowsRequest(apiKey: apiKey, page: 1)
-        
-        networkManager.requestWithAlamofire(for: request) { [weak self] result in
-            switch result {
-            case .success(let response):
-                print("Page: \(response.page)")
-                let popularTVShows = response.results.map { tvShow in
-                    ListItem(title: tvShow.name, image: "https://image.tmdb.org/t/p/w500" + (tvShow.posterPath ?? ""), backdrop: tvShow.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + tvShow.backdropPath! : nil)
-                }
-                self?.updatePopularTVShows(with: popularTVShows)
-                self?.updateUpcomingMovies(with: popularTVShows)
-            case .failure(let error):
-                print("Error: \(error.localizedDescription)")
-            }
+        fetchItems(request: GetPopularTVShowsRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
+            self?.updateItems(with: items, for: .nowPlaying([]))
+            self?.headerImageURL = items.randomElement()?.backdrop
+
         }
     }
     
     func fetchTrendingMovies() {
-        guard let apiKey = apiKey else {
+        fetchItems(request: GetTrendingMoviesRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
+            self?.updateItems(with: items, for: .trending([]))
+        }
+    }
+    
+    func fetchTrendingTVShows() {
+        fetchItems(request: GetTrendingTVShowsRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
+            self?.updateItems(with: items, for: .topRated([]))
+        }
+    }
+    
+    func fetchTopRatedMovies() {
+        fetchItems(request: GetTopRatedMoviesRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
+            self?.updateItems(with: items, for: .topRated([]))
+        }
+    }
+    
+    func fetchTopRatedTVShows() {
+        fetchItems(request: GetTopRatedTVShowsRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
+            self?.updateItems(with: items, for: .topRated([]))
+        }
+    }
+    
+    func fetchNowPlayingMovies() {
+        fetchItems(request: GetNowPlayingMoviesRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
+            self?.updateItems(with: items, for: .trending([]))
+        }
+    }
+    
+    func fetchOnTheAirTVShows() {
+        fetchItems(request: GetOnTheAirTVShowsRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
+            self?.updateItems(with: items, for: .trending([]))
+        }
+    }
+    
+    private func fetchItems<T: RequestProtocol>(request: T, completion: @escaping ([ListItem]) -> Void) {
+        guard apiKey != nil else {
             print("API Key is missing")
             return
         }
         
-        let request = GetTrendingMoviesRequest(apiKey: apiKey, page: 1)
-        
-        networkManager.requestWithAlamofire(for: request) { [weak self] result in
+        networkManager.requestWithAlamofire(for: request) { result in
             switch result {
             case .success(let response):
-                print("Page: \(response.page)")
-                let TrendingMovies = response.results.map { movie in
+                let items = (response as? BaseResponse<Movie>)?.results.map { movie in
                     ListItem(title: movie.title, image: "https://image.tmdb.org/t/p/w500" + (movie.posterPath ?? ""), backdrop: movie.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + movie.backdropPath! : nil)
-                }
-                self?.updateComingSoon(with: TrendingMovies)
+                } ?? (response as? BaseResponse<TVShow>)?.results.map { tvShow in
+                    ListItem(title: tvShow.name, image: "https://image.tmdb.org/t/p/w500" + (tvShow.posterPath ?? ""), backdrop: tvShow.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + tvShow.backdropPath! : nil)
+                } ?? []
+                completion(items)
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
+                completion([])
             }
         }
     }
     
-    private func updatePopularMovies(with movies: [ListItem]) {
-        if let index = model.sections.firstIndex(where: {
-            if case .popular = $0 {
-                return true
+    private func updateItems(with items: [ListItem], for section: ListSection) {
+        if let index = model.sections.firstIndex(where: { $0.title == section.title }) {
+            switch section {
+            case .stories: model.sections[index] = .stories(items)
+            case .popular: model.sections[index] = .popular(items)
+            case .trending: model.sections[index] = .trending(items)
+            case .topRated: model.sections[index] = .topRated(items)
+            case .nowPlaying: model.sections[index] = .nowPlaying(items)
             }
-            return false
-        }) {
-            model.sections[index] = .popular(movies)
-            updateHandler?()
-        }
-    }
-    
-    private func updateUpcomingMovies(with tvShows: [ListItem]) {
-        if let index = model.sections.firstIndex(where: {
-            if case .upcoming = $0 {
-                return true
-            }
-            return false
-        }) {
-            model.sections[index] = .upcoming(tvShows)
-            updateHandler?()
-        }
-    }
-    
-    private func updateComingSoon(with movies: [ListItem]) {
-        if let index = model.sections.firstIndex(where: {
-            if case .comingSoon = $0 {
-                return true
-            }
-            return false
-        }) {
-            model.sections[index] = .comingSoon(movies)
-            updateHandler?()
-        }
-    }
-    
-    private func updatePopularTVShows(with tvShows: [ListItem]) {
-        if let index = model.sections.firstIndex(where: {
-            if case .popularTVShows = $0 {
-                return true
-            }
-            return false
-        }) {
-            model.sections[index] = .popularTVShows(tvShows)
         } else {
-            model.sections.append(.popularTVShows(tvShows))
+            model.sections.append(section)
         }
         updateHandler?()
     }
-    
 }

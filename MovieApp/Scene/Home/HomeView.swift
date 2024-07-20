@@ -53,12 +53,12 @@ class HomeView: UIViewController {
         collectionView.collectionViewLayout = createLayout()
         
         viewModel.updateHandler = { [weak self] in
-            self?.collectionView.reloadData()
-        }
+              DispatchQueue.main.async {
+                  self?.collectionView.reloadData()
+              }
+          }
         
-        viewModel.fetchPopularMovies()
-        viewModel.fetchPopularTVShows()  
-        viewModel.fetchTrendingMovies()
+        viewModel.fetchInitialData()
         configureNavigationBar()
     }
 
@@ -71,11 +71,11 @@ class HomeView: UIViewController {
                 return self.createStoriesSection()
             case .popular:
                 return self.createPopularSection()
-            case .comingSoon:
+            case .trending:
                 return self.createComingSoonSection()
-            case .upcoming:
+            case .topRated:
                 return self.createUpcomingSection()
-            case .popularTVShows:
+            case .nowPlaying:
                 return self.createPopularTVShowsSection()
             }
         }
@@ -194,7 +194,21 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.model.sections[section].count
+        return viewModel.model.sections[section].items.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 { 
+            let selectedItem = viewModel.model.sections[indexPath.section].items[indexPath.row]
+            switch selectedItem.title {
+            case "Series":
+                viewModel.updateCategory(.series)
+            case "Films":
+                viewModel.updateCategory(.films)
+            default:
+                break
+            }
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -207,15 +221,15 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PortraitCollectionViewCell", for: indexPath) as! PortraitCollectionViewCell
             cell.setup(items[indexPath.row])
             return cell
-        case .comingSoon(let items):
+        case .trending(let items):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LandscapeCollectionViewCell", for: indexPath) as! LandscapeCollectionViewCell
             cell.setup(items[indexPath.row])
             return cell
-        case .upcoming(let items):
+        case .topRated(let items):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediumCollectionViewCell", for: indexPath) as! MediumCollectionViewCell
             cell.setup(items[indexPath.row])
             return cell
-        case .popularTVShows(let items):
+        case .nowPlaying(let items):
                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LandscapeCollectionViewCell", for: indexPath) as! LandscapeCollectionViewCell
                cell.setup(items[indexPath.row])
                return cell

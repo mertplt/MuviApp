@@ -12,14 +12,10 @@ struct MockData {
     
     private let stories: ListSection = {
         .stories([
-            .init(title: "Naruto", image: "https://via.placeholder.com/104x150", backdrop: nil),
-            .init(title: "Itadori", image: "https://via.placeholder.com/104x150", backdrop: nil),
-            .init(title: "Kakashi", image: "https://via.placeholder.com/104x150", backdrop: nil),
-            .init(title: "Tanjiro", image: "https://via.placeholder.com/104x150", backdrop: nil),
-            .init(title: "Nezuko", image: "https://via.placeholder.com/104x150", backdrop: nil),
-            .init(title: "Sasuke", image: "https://via.placeholder.com/104x150", backdrop: nil),
-            .init(title: "Sakura", image: "https://via.placeholder.com/104x150", backdrop: nil),
-            .init(title: "Inosuke", image: "https://via.placeholder.com/104x150", backdrop: nil)
+            .init(title: "Featured", image: "https://via.placeholder.com/104x150", backdrop: nil),
+            .init(title: "Series", image: "https://via.placeholder.com/104x150", backdrop: nil),
+            .init(title: "Films", image: "https://via.placeholder.com/104x150", backdrop: nil),
+            .init(title: "Originals", image: "https://via.placeholder.com/104x150", backdrop: nil),
         ])
     }()
     
@@ -33,8 +29,8 @@ struct MockData {
         ])
     }()
     
-    private var comingSoon: ListSection = {
-        .comingSoon([
+    private var trending: ListSection = {
+        .trending([
             .init(title: "Tokyo Ghoul", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439"),
             .init(title: "Record of Ragnarok", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439"),
             .init(title: "Kaisen Returns", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439"),
@@ -43,8 +39,8 @@ struct MockData {
         ])
     }()
     
-    private var upcoming: ListSection = {
-        .upcoming([
+    private var topRated: ListSection = {
+        .topRated([
             .init(title: "Naruto", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
             .init(title: "Jujutsu Kaisen", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
             .init(title: "Demon Slayer", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
@@ -53,19 +49,33 @@ struct MockData {
         ])
     }()
     
+    private var nowPlaying: ListSection = {
+        .nowPlaying([
+            .init(title: "Naruto", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
+            .init(title: "Jujutsu Kaisen", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
+            .init(title: "Demon Slayer", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
+            .init(title: "One Piece", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
+            .init(title: "Seven Deadly Sins", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439")
+        ])
+    }()
+
     var pageData: [ListSection] {
-        [stories, comingSoon,popular , upcoming]
+        [stories, trending, popular , topRated, nowPlaying]
     }
     
     mutating func updatePopularMovies(with movies: [ListItem]) {
         popular = .popular(movies)
     }
     
-    mutating func updateComingSoon(with movies: [ListItem]) {
-        comingSoon = .comingSoon(movies)
+    mutating func updateTrendingMovies(with movies: [ListItem]) {
+        trending = .trending(movies)
     }
     
-    mutating func updateUpcomingMovies(with tvShows: [ListItem]) {
-        upcoming = .upcoming(tvShows)
+    mutating func updateTopRatedMovies(with movies: [ListItem]) {
+        topRated = .topRated(movies)
+    }
+    
+    mutating func updateNowPlayingMovies(with movies: [ListItem]) {
+        nowPlaying = .nowPlaying(movies)
     }
 }
