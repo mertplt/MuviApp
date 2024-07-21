@@ -13,8 +13,10 @@ class HomeViewModel {
     private let apiKey = Config.shared.apiKey
     
     enum Category {
+        case featured
         case series
         case films
+        case originals
     }
     
     private var currentCategory: Category = .films
@@ -31,6 +33,15 @@ class HomeViewModel {
     func fetchInitialData() {
         fetchMovies()
         fetchTVShows()
+        fetchOriginal()
+        fetchFeatured()
+    }
+    
+    func fetchFeatured() {
+        fetchTrendingTVShows()
+        fetchPopularMovies()
+        fetchTopRatedTVShows()
+        fetchNowPlayingMovies()
     }
 
     func fetchTVShows() {
@@ -47,6 +58,13 @@ class HomeViewModel {
         fetchNowPlayingMovies()
     }
     
+    func fetchOriginal() {
+        fetchTrendingMovies()
+        fetchPopularTVShows()
+        fetchTopRatedMovies()
+        fetchOnTheAirTVShows()
+    }
+    
     func updateCategory(_ category: Category) {
         currentCategory = category
         switch category {
@@ -54,6 +72,10 @@ class HomeViewModel {
             fetchTVShows()
         case .films:
             fetchMovies()
+        case .originals:
+            fetchOriginal()
+        case .featured:
+                fetchFeatured()
         }
     }
     

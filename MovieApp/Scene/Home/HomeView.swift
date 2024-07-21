@@ -201,10 +201,14 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
         if indexPath.section == 0 { 
             let selectedItem = viewModel.model.sections[indexPath.section].items[indexPath.row]
             switch selectedItem.title {
+            case "Featured":
+                viewModel.updateCategory(.featured)
             case "Series":
                 viewModel.updateCategory(.series)
             case "Films":
                 viewModel.updateCategory(.films)
+            case "Originals":
+                viewModel.updateCategory(.originals)
             default:
                 break
             }
