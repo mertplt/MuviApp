@@ -66,9 +66,8 @@ class HomeViewModel {
     
     func fetchPopularTVShows() {
         fetchItems(request: GetPopularTVShowsRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
-            self?.updateItems(with: items, for: .nowPlaying([]))
             self?.headerImageURL = items.randomElement()?.backdrop
-
+            self?.updateItems(with: items, for: .popular([]))
         }
     }
     
@@ -80,7 +79,7 @@ class HomeViewModel {
     
     func fetchTrendingTVShows() {
         fetchItems(request: GetTrendingTVShowsRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
-            self?.updateItems(with: items, for: .topRated([]))
+            self?.updateItems(with: items, for: .trending([]))
         }
     }
     
@@ -98,13 +97,13 @@ class HomeViewModel {
     
     func fetchNowPlayingMovies() {
         fetchItems(request: GetNowPlayingMoviesRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
-            self?.updateItems(with: items, for: .trending([]))
+            self?.updateItems(with: items, for: .nowPlaying([]))
         }
     }
     
     func fetchOnTheAirTVShows() {
         fetchItems(request: GetOnTheAirTVShowsRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
-            self?.updateItems(with: items, for: .trending([]))
+            self?.updateItems(with: items, for: .nowPlaying([]))
         }
     }
     
