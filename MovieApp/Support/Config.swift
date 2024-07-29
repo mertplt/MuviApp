@@ -18,4 +18,13 @@ class Config {
         }
         return nil
     }
+    
+    var youtubeApiKey: String? {
+        if let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
+           let config = NSDictionary(contentsOfFile: path) as? [String: AnyObject],
+           let apiKey = config["YoutubeAPI_KEY"] as? String {
+            return apiKey
+        }
+        return nil
+    }
 }

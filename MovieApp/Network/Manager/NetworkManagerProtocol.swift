@@ -8,5 +8,5 @@
 import Foundation
 
 protocol NetworkManagerProtocol {
-    func requestWithAlamofire<T: RequestProtocol>(for request: T, result: ((Result<T.ResponseType, Error>) -> Void)?)
+    func requestWithAlamofire<T: RequestProtocol>(for request: T, result: @escaping (Result<T.ResponseType, Error>) -> Void)
 }

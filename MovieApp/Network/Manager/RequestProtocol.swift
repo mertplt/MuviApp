@@ -23,13 +23,13 @@ protocol RequestProtocol {
 
 extension RequestProtocol {
     var url: String {
-        return "https://api.themoviedb.org/3/" + path
+        return Constants.base_url + "/3/" + path
     }
     
     var parameters: RequestParameters {
         return [:]
     }
-    
+     
     var headers: RequestHeaders {
         return [:]
     }

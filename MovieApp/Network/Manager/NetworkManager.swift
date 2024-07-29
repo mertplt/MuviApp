@@ -8,7 +8,11 @@
 import Foundation
 import Alamofire
 
-class NetworkManager {
+class NetworkManager: NetworkManagerProtocol {
+    static let shared = NetworkManager()
+    
+    private init() {}
+    
     private func createRequestForAlamofire<T: RequestProtocol>(_ request: T) -> DataRequest {
         var headersForAlamofire: HTTPHeaders = [:]
         request.headers.forEach({ headersForAlamofire[$0.key] = $0.value })
@@ -29,15 +33,15 @@ class NetworkManager {
         return requestAF
     }
     
-    func requestWithAlamofire<T: RequestProtocol>(for request: T, result: ((Result<T.ResponseType, Error>) -> Void)?) {
+    func requestWithAlamofire<T: RequestProtocol>(for request: T, result: @escaping (Result<T.ResponseType, Error>) -> Void) {
         let request = createRequestForAlamofire(request)
         request.validate()
         request.responseDecodable(of: T.ResponseType.self) { (response) in
             switch response.result {
             case .success(let value):
-                result?(.success(value))
+                result(.success(value))
             case .failure(let error):
-                result?(.failure(error))
+                result(.failure(error))
             }
         }
     }

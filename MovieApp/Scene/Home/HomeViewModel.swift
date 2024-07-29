@@ -9,7 +9,7 @@ import Foundation
 
 class HomeViewModel {
     var router: HomeRouter
-    let networkManager = NetworkManager()
+    let networkManager = NetworkManager.shared
     private let apiKey = Config.shared.apiKey
     
     enum Category {

@@ -10,12 +10,12 @@ import Foundation
 struct GetMovieDetailsRequest: RequestProtocol {
     typealias ResponseType = Movie
 
-    var path: String = ""
+    var path: String
     var method: RequestMethod = .get
-    var parameters: RequestParameters = [:]
+    var parameters: RequestParameters
     
     init(apiKey: String, movieId: Int) {
-        path = "movie/\(movieId)"
-        parameters["api_key"] = apiKey
+        self.path = "movie/\(movieId)"
+        self.parameters = ["api_key": apiKey]
     }
 }

@@ -14,12 +14,12 @@ class MainTabBarViewController: UITabBarController {
         let router = HomeRouter()
         let viewModel = HomeViewModel(router: router)
         
-        tabBar.barTintColor = UIColor.black // Tab bar arka plan rengi
-        tabBar.tintColor = ColorManager.primary // Seçilen item rengi
-        tabBar.unselectedItemTintColor = ColorManager.highEmphasis // Seçilmeyen item rengi
+        tabBar.barTintColor = UIColor.black
+        tabBar.tintColor = ColorManager.primary
+        tabBar.unselectedItemTintColor = ColorManager.highEmphasis 
         
         let vc1 = UINavigationController(rootViewController: HomeView(viewModel: viewModel, router: router))
-        let vc2 = UINavigationController(rootViewController: SearchView())
+        let vc2 = UINavigationController(rootViewController: SearchViewController())
         let vc3 = UINavigationController(rootViewController: ListView())
         let vc4 = UINavigationController(rootViewController: ProfileView())
         
