@@ -82,6 +82,7 @@ class TitlePreviewViewController: UIViewController {
         }
         webView.load(URLRequest(url: url))
     }
+    
     private func configureConstraints() {
         let webViewConstraints = [
             webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

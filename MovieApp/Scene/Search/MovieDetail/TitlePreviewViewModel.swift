@@ -13,7 +13,6 @@ class TitlePreviewViewModel {
     private var videoID: String?
     private let youtubeApiKey = Config.shared.youtubeApiKey
 
-    
     init(title: String, titleOverview: String, videoID: String? = nil) {
         self.title = title
         self.titleOverview = titleOverview
@@ -21,11 +20,7 @@ class TitlePreviewViewModel {
     }
     
     func fetchYoutubeVideo(for title: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let query = title.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-            completion(.failure(APIError.failedToGetData))
-            return
-        }
-        
+        let query = "\(title) official trailer video"
         let request = GetMovieTrailerRequest(apiKey: youtubeApiKey ?? "", query: query)
         NetworkManager.shared.requestWithAlamofire(for: request) { [weak self] (result: Result<YoutubeSearchResponse, Error>) in
             switch result {
