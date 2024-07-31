@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchMoviesRequest: RequestProtocol {
+struct GetSearchMoviesRequest: RequestProtocol {
     typealias ResponseType = BaseResponse<Movie>
     var path: String = "search/movie"
     var method: RequestMethod = .get

@@ -82,12 +82,10 @@ final class SearchViewController: UIViewController, SearchResultViewControllerDe
     
     func searchResultViewControllerDidTapItem(_ viewModel: TitlePreviewViewModel) {
         DispatchQueue.main.async { [weak self] in
-            let vc = TitlePreviewViewController()
-            vc.configure(with: viewModel)
+            let vc = TitlePreviewViewController(viewModel: viewModel)
             self?.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
     private func configureNavigationBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
@@ -131,11 +129,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let movie = viewModel.movies[indexPath.row]
-        let viewModel = TitlePreviewViewModel(title: movie.title, titleOverview: movie.overview)
+        let titlePreviewViewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService())
+        titlePreviewViewModel.fetchMovieDetails(for: movie.id)
         
         DispatchQueue.main.async { [weak self] in
-            let vc = TitlePreviewViewController()
-            vc.configure(with: viewModel)
+            let vc = TitlePreviewViewController(viewModel: titlePreviewViewModel)
             self?.navigationController?.pushViewController(vc, animated: true)
         }
     }

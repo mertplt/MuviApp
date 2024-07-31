@@ -74,7 +74,8 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         collectionView.deselectItem(at: indexPath, animated: true)
         
         let movie = viewModel.movie(at: indexPath.row)
-        let titlePreviewViewModel = TitlePreviewViewModel(title: movie.title, titleOverview: movie.overview)
+        let titlePreviewViewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService())
+        titlePreviewViewModel.fetchMovieDetails(for: movie.id)
         delegate?.searchResultViewControllerDidTapItem(titlePreviewViewModel)
     }
 }

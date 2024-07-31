@@ -8,36 +8,75 @@
 import Foundation
 
 class TitlePreviewViewModel {
-    let title: String
-    let titleOverview: String
-    private var videoID: String?
-    private let youtubeApiKey = Config.shared.youtubeApiKey
-
-    init(title: String, titleOverview: String, videoID: String? = nil) {
-        self.title = title
-        self.titleOverview = titleOverview
-        self.videoID = videoID
+    private let movieService: MovieService
+    private let youtubeService: YoutubeService
+    
+    private(set) var movieDetails: Movie?
+    private(set) var credits: Credits?
+    private(set) var videoID: String?
+    
+    var onDataUpdated: (() -> Void)?
+    var onError: ((Error) -> Void)?
+    
+    init(movieService: MovieService, youtubeService: YoutubeService) {
+        self.movieService = movieService
+        self.youtubeService = youtubeService
     }
     
-    func fetchYoutubeVideo(for title: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let query = "\(title) official trailer video"
-        let request = GetMovieTrailerRequest(apiKey: youtubeApiKey ?? "", query: query)
-        NetworkManager.shared.requestWithAlamofire(for: request) { [weak self] (result: Result<YoutubeSearchResponse, Error>) in
+    func fetchMovieDetails(for movieId: Int) {
+        movieService.fetchMovieDetails(for: movieId) { [weak self] result in
             switch result {
-            case .success(let youtubeResult):
-                guard let videoID = youtubeResult.items.first?.id.videoId else {
-                    completion(.failure(APIError.failedToGetData))
-                    return
-                }
-                self?.videoID = videoID
-                completion(.success(videoID))
+            case .success(let movie):
+                self?.movieDetails = movie
+                self?.onDataUpdated?()
+                self?.fetchMovieCredits(for: movieId)
+                self?.fetchYoutubeVideo(for: movie.title)
             case .failure(let error):
-                completion(.failure(error))
+                self?.onError?(error)
             }
         }
     }
     
-    func getVideoID() -> String? {
-        return videoID
+    func fetchMovieCredits(for movieId: Int) {
+        movieService.fetchMovieCredits(for: movieId) { [weak self] result in
+            switch result {
+            case .success(let credits):
+                self?.credits = credits
+                self?.onDataUpdated?()
+            case .failure(let error):
+                self?.onError?(error)
+            }
+        }
+    }
+    
+    func fetchYoutubeVideo(for title: String) {
+        youtubeService.fetchVideoID(for: title + " trailer") { [weak self] result in
+            switch result {
+            case .success(let videoID):
+                self?.videoID = videoID
+                self?.onDataUpdated?()
+            case .failure(let error):
+                self?.onError?(error)
+            }
+        }
+    }
+    
+    func getFormattedGenres() -> String {
+        return movieDetails?.genres?.map { $0.name }.joined(separator: ", ") ?? "N/A"
+    }
+    
+    func getFormattedRuntime() -> String {
+        guard let runtime = movieDetails?.runtime else { return "N/A" }
+        let hours = runtime / 60
+        let minutes = runtime % 60
+        return "\(hours)h \(minutes)m"
+    }
+    
+    func getFormattedCast() -> String {
+        return credits?.cast.prefix(5).map { $0.name }.joined(separator: ", ") ?? "N/A"
+    }
+    
+    func getDirector() -> String {
+        return credits?.crew.first(where: { $0.job == "Director" })?.name ?? "N/A"
     }
 }

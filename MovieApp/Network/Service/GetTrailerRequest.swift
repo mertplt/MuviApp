@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetMovieTrailerRequest: RequestProtocol {
+struct GetTrailerRequest: RequestProtocol {
     typealias ResponseType = YoutubeSearchResponse
 
     var path: String = ""

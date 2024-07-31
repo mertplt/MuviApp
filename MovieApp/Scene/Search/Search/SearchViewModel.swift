@@ -46,7 +46,7 @@ class SearchViewModel {
     }
     
     func searchMovies(query: String) {
-        let request = SearchMoviesRequest(apiKey: apiKey ?? "", query: query, page: 1)
+        let request = GetSearchMoviesRequest(apiKey: apiKey ?? "", query: query, page: 1)
         networkManager.requestWithAlamofire(for: request) { [weak self] (result: Result<BaseResponse<Movie>, Error>) in
             switch result {
             case .success(let response):
