@@ -79,4 +79,13 @@ class TitlePreviewViewModel {
     func getDirector() -> String {
         return credits?.crew.first(where: { $0.job == "Director" })?.name ?? "N/A"
     }
+        
+    func getFormattedReleaseDate() -> String {
+        guard let releaseDate = movieDetails?.releaseDate else { return "N/A" }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        guard let date = dateFormatter.date(from: releaseDate) else { return "N/A" }
+        dateFormatter.dateFormat = "MMM d, yyyy"
+        return dateFormatter.string(from: date)
+    }
 }

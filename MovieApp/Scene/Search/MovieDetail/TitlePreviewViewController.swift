@@ -9,98 +9,112 @@ import UIKit
 import WebKit
 import TinyConstraints
 import SDWebImage
+import SafariServices
 
 class TitlePreviewViewController: UIViewController {
     private var viewModel: TitlePreviewViewModel
     
     init(viewModel: TitlePreviewViewModel) {
-         self.viewModel = viewModel
-         super.init(nibName: nil, bundle: nil)
-     }
-     
-     required init?(coder: NSCoder) {
-         fatalError("init(coder:) has not been implemented")
-     }
-     
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
-    private let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private let backdropImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
     }()
     
-    private let contentView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private let gradientLayer: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.colors = [UIColor.clear.cgColor, ColorManager.surfaceDark.withAlphaComponent(1).cgColor]
+        layer.locations = [0.0, 1.0]
+        return layer
     }()
     
     private let posterImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
+        imageView.layer.borderColor = ColorManager.surfaceLight.cgColor
+        imageView.layer.borderWidth = 2
         return imageView
     }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 22, weight: .bold)
+        label.font = FontManager.headline1()
         label.textColor = ColorManager.surfaceLight
-        label.numberOfLines = 0
+        label.numberOfLines = 3
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
+    
+    private let infoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 10
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+    
+    private let ratingView = MaRatingView()
+    private let runtimeLabel = UILabel()
+    private let releaseDateLabel = UILabel()
     
     private let genresLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = ColorManager.surfaceLight
-        label.textColor = .gray
-        return label
-    }()
-    
-    private let runtimeLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = ColorManager.surfaceLight
-        label.textColor = .gray
+        label.font = FontManager.bodyAndForms()
+        label.textColor = ColorManager.highEmphasis
         return label
     }()
     
     private let overviewLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = FontManager.subtitleAndMenu()
         label.textColor = ColorManager.surfaceLight
-        label.numberOfLines = 0
+        label.numberOfLines = 8
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
     private let castLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 16, weight: .medium)
-        label.textColor = ColorManager.surfaceLight
-        label.textColor = ColorManager.surfaceLight
+        label.font = FontManager.bodyAndForms()
+        label.textColor = ColorManager.highEmphasis
         label.numberOfLines = 0
         return label
     }()
     
     private let directorLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 16, weight: .medium)
-        label.textColor = ColorManager.surfaceLight
+        label.font = FontManager.bodyAndForms()
+        label.textColor = ColorManager.highEmphasis
         return label
     }()
     
-    private let webView: WKWebView = {
-        let webView = WKWebView()
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        return webView
+    private lazy var trailerButton: MaButton = {
+       let button = MaButton()
+        button.style = .smallButtonYellow
+        button.buttonTitle = "Watch Trailer"
+        button.addTarget(self, action: #selector(watchTrailerTapped), for: .touchUpInside)
+        return button
     }()
+    
+    private lazy var addListButton: MaButton = {
+       let button = MaButton()
+        button.style = .smallButtonDark
+        button.Icon = .plus
+        button.buttonTitle = "My List"
+        return button
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,51 +122,47 @@ class TitlePreviewViewController: UIViewController {
         bindViewModel()
     }
     
+    override func viewDidLayoutSubviews() {
+         super.viewDidLayoutSubviews()
+         updateGradientFrame()
+     }
+
+    
     private func setupUI() {
+        view.backgroundColor = ColorManager.surfaceDark
         
-        contentView.addSubview(webView)
-        contentView.addSubview(posterImageView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(genresLabel)
-        contentView.addSubview(runtimeLabel)
-        contentView.addSubview(overviewLabel)
-        contentView.addSubview(castLabel)
-        contentView.addSubview(directorLabel)
+        [backdropImageView, posterImageView, titleLabel, infoStackView, genresLabel, overviewLabel, castLabel, directorLabel, trailerButton, addListButton].forEach {
+            view.addSubview($0)
+        }
         
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
+        backdropImageView.edgesToSuperview(excluding: .bottom)
+        backdropImageView.height(250)
+        backdropImageView.layer.addSublayer(gradientLayer)
         
-        scrollView.edgesToSuperview()
-        contentView.edgesToSuperview()
-        contentView.width(to: scrollView)
+        posterImageView.topToBottom(of: backdropImageView, offset: -50)
+        posterImageView.leadingToSuperview(offset: 20)
+        posterImageView.size(CGSize(width: 120, height: 180))
         
-        let heightConstraint = contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
-        heightConstraint.priority = .defaultLow
-        heightConstraint.isActive = true
+        titleLabel.topToBottom(of: backdropImageView, offset: 20)
+        titleLabel.leadingToTrailing(of: posterImageView, offset: 20)
+        titleLabel.trailingToSuperview(offset: 5)
         
-        webView.topToSuperview(offset: 20)
-        webView.leadingToSuperview(offset: 20)
-        webView.trailingToSuperview(offset: 20)
-        webView.height(250)
+        infoStackView.topToBottom(of: titleLabel, offset: 10)
+        infoStackView.leadingToTrailing(of: posterImageView, offset: 20)
+        infoStackView.trailingToSuperview(offset: 20)
         
-        posterImageView.topToBottom(of: webView, offset: 20)
-        posterImageView.centerXToSuperview()
-        posterImageView.width(200)
-        posterImageView.height(300)
+        [ratingView, runtimeLabel, releaseDateLabel].forEach { view in
+            infoStackView.addArrangedSubview(view)
+            if let label = view as? UILabel {
+                label.textColor = ColorManager.highEmphasis
+                label.font = FontManager.bodyAndForms()            }
+        }
         
-        titleLabel.topToBottom(of: posterImageView, offset: 20)
-        titleLabel.leadingToSuperview(offset: 20)
-        titleLabel.trailingToSuperview(offset: 20)
-        
-        genresLabel.topToBottom(of: titleLabel, offset: 10)
-        genresLabel.leadingToSuperview(offset: 20)
+        genresLabel.topToBottom(of: posterImageView, offset: 20)
+        genresLabel.leading(to: posterImageView)
         genresLabel.trailingToSuperview(offset: 20)
         
-        runtimeLabel.topToBottom(of: genresLabel, offset: 5)
-        runtimeLabel.leadingToSuperview(offset: 20)
-        runtimeLabel.trailingToSuperview(offset: 20)
-        
-        overviewLabel.topToBottom(of: runtimeLabel, offset: 20)
+        overviewLabel.topToBottom(of: genresLabel, offset: 20)
         overviewLabel.leadingToSuperview(offset: 20)
         overviewLabel.trailingToSuperview(offset: 20)
         
@@ -163,8 +173,13 @@ class TitlePreviewViewController: UIViewController {
         directorLabel.topToBottom(of: castLabel, offset: 10)
         directorLabel.leadingToSuperview(offset: 20)
         directorLabel.trailingToSuperview(offset: 20)
-        directorLabel.bottomToSuperview(offset: -20)
-      }
+        
+        trailerButton.topToBottom(of: directorLabel, offset: 20)
+        trailerButton.leadingToSuperview(offset: 20)
+        
+        addListButton.top(to: trailerButton)
+        addListButton.trailingToSuperview(offset: 20)
+    }
     
     private func bindViewModel() {
         viewModel.onDataUpdated = { [weak self] in
@@ -180,42 +195,58 @@ class TitlePreviewViewController: UIViewController {
         }
     }
     
- 
-    private func updateUI() {
-         if let movie = viewModel.movieDetails {
-             titleLabel.text = movie.title
-             overviewLabel.text = movie.overview
-             genresLabel.text = viewModel.getFormattedGenres()
-             runtimeLabel.text = viewModel.getFormattedRuntime()
-             
-             if let posterPath = movie.posterPath {
-                 let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
-                 posterImageView.sd_setImage(with: url, completed: nil)
-             }
-         }
-         
-         if let credits = viewModel.credits {
-             castLabel.text = "Cast: \(viewModel.getFormattedCast())"
-             directorLabel.text = "Director: \(viewModel.getDirector())"
-         }
-         
-         if let videoID = viewModel.videoID {
-             configureWebView(with: videoID)
-         }
-     }
-        
-    private func configureWebView(with videoID: String) {
-         guard let url = URL(string: "https://www.youtube.com/embed/\(videoID)") else {
-             print("Invalid video URL")
-             return
-         }
-         webView.load(URLRequest(url: url))
-     }
-     
-     private func showError(_ error: Error) {
-         let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-         present(alert, animated: true, completion: nil)
-     }
+    private func updateGradientFrame() {
+        let height = backdropImageView.bounds.height
+        let gradientHeight = height * 0.3
+        gradientLayer.frame = CGRect(x: 0, y: height - gradientHeight, width: backdropImageView.bounds.width, height: gradientHeight)
+    }
     
+    private func updateUI() {
+        if let movie = viewModel.movieDetails {
+            titleLabel.text = movie.title
+            overviewLabel.text = movie.overview
+            ratingView.configure(with: movie.voteAverage ?? 0.0, voteCount: movie.voteCount ?? 0)
+            genresLabel.text = viewModel.getFormattedGenres()
+            runtimeLabel.text = viewModel.getFormattedRuntime()
+            releaseDateLabel.text = viewModel.getFormattedReleaseDate()
+            
+            if let posterPath = movie.posterPath {
+                let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
+                posterImageView.sd_setImage(with: url, completed: nil)
+            }
+            
+            if let backdropPath = movie.backdropPath {
+                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(backdropPath)")
+                backdropImageView.sd_setImage(with: url, completed: nil)
+            }
+        }
+        
+        if viewModel.credits != nil {
+            castLabel.text = "Cast: \(viewModel.getFormattedCast())"
+            directorLabel.text = "Director: \(viewModel.getDirector())"
+        }
+    }
+    
+    @objc private func watchTrailerTapped() {
+        if let videoID = viewModel.videoID {
+            guard let url = URL(string: "https://www.youtube.com/watch?v=\(videoID)") else {
+                showAlert(title: "Trailer Unavailable", message: "Invalid video URL.")
+                return
+            }
+            let safariVC = SFSafariViewController(url: url)
+            present(safariVC, animated: true, completion: nil)
+        } else {
+            showAlert(title: "Trailer Unavailable", message: "Sorry, the trailer is not available at the moment.")
+        }
+    }
+    
+    private func showError(_ error: Error) {
+        showAlert(title: "Error", message: error.localizedDescription)
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }
