@@ -6,11 +6,60 @@
 //
 
 import UIKit
+import TinyConstraints
 
 class MaRatingView: UIView {
     private let ratingLabel = UILabel()
     private let starImageView = UIImageView()
     private let voteCountLabel = UILabel()
+    
+    var rating: Double = 0.0 {
+        didSet {
+            updateRatingLabel()
+        }
+    }
+    
+    var voteCount: Int = 0 {
+        didSet {
+            updateVoteCountLabel()
+        }
+    }
+    
+    var isVoteCountHidden: Bool = false {
+        didSet {
+            voteCountLabel.isHidden = isVoteCountHidden
+        }
+    }
+    
+    var ratingFont: UIFont = FontManager.bodyAndForms() {
+        didSet {
+            ratingLabel.font = ratingFont
+        }
+    }
+    
+    var voteCountFont: UIFont = FontManager.paragraphAndButton() {
+        didSet {
+            voteCountLabel.font = voteCountFont
+        }
+    }
+    
+    var ratingColor: UIColor = ColorManager.surfaceLight {
+        didSet {
+            ratingLabel.textColor = ratingColor
+        }
+    }
+    
+    var voteCountColor: UIColor = ColorManager.highEmphasis {
+        didSet {
+            voteCountLabel.textColor = voteCountColor
+        }
+    }
+    
+    var starImage: UIImage = .star {
+        didSet {
+            starImageView.image = starImage
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -18,7 +67,8 @@ class MaRatingView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setupUI()
     }
     
     private func setupUI() {
@@ -26,14 +76,20 @@ class MaRatingView: UIView {
         addSubview(ratingLabel)
         addSubview(voteCountLabel)
         
-        starImageView.image = .star
+        starImageView.image = starImage
         
-        ratingLabel.font = FontManager.bodyAndForms()
-        ratingLabel.textColor = ColorManager.surfaceLight
+        ratingLabel.font = ratingFont
+        ratingLabel.textColor = ratingColor
         
-        voteCountLabel.font = FontManager.paragraphAndButton()
-        voteCountLabel.textColor = ColorManager.highEmphasis
+        voteCountLabel.font = voteCountFont
+        voteCountLabel.textColor = voteCountColor
         
+        setupConstraints()
+        updateRatingLabel()
+        updateVoteCountLabel()
+    }
+    
+    private func setupConstraints() {
         starImageView.leadingToSuperview()
         starImageView.centerY(to: self)
         starImageView.width(16)
@@ -41,18 +97,27 @@ class MaRatingView: UIView {
         
         ratingLabel.leadingToTrailing(of: starImageView, offset: 4)
         ratingLabel.centerY(to: self)
-        ratingLabel.trailingToSuperview()
         
-        voteCountLabel.leading(to: starImageView,offset: 3)
-        voteCountLabel.topToBottom(of: ratingLabel,offset: 5)
+        voteCountLabel.leading(to: starImageView, offset: 3)
+        voteCountLabel.topToBottom(of: ratingLabel, offset: 5)
+        voteCountLabel.trailingToSuperview()
     }
     
-    func configure(with rating: Double,voteCount:Int) {
+    private func updateRatingLabel() {
         ratingLabel.text = String(format: "%.1f", rating)
+    }
+    
+    private func updateVoteCountLabel() {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         numberFormatter.groupingSeparator = "."
         numberFormatter.groupingSize = 3
-        voteCountLabel.text = numberFormatter.string(from: NSNumber(value: voteCount)) ?? String(voteCount)    }
+        voteCountLabel.text = numberFormatter.string(from: NSNumber(value: voteCount)) ?? String(voteCount)
+    }
     
+    func configure(rating: Double, voteCount: Int, isVoteCountHidden: Bool = false) {
+        self.rating = rating
+        self.voteCount = voteCount
+        self.isVoteCountHidden = isVoteCountHidden
+    }
 }
