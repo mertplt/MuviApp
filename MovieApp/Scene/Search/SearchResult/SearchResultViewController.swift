@@ -22,13 +22,14 @@ class SearchResultViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = ColorManager.surfaceDark
         view.addSubview(searchResultCollectionView)
         
         searchResultCollectionView.delegate = self

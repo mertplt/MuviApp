@@ -26,8 +26,9 @@ final class SearchViewController: UIViewController {
         let controller = UISearchController(searchResultsController: searchResultViewController)
         controller.searchBar.placeholder = "Search for a Movie or a TV show"
         controller.searchBar.searchBarStyle = .minimal
-        controller.searchBar.tintColor = ColorManager.surfaceLight
-        configureSearchBarTextField(controller.searchBar)
+        controller.searchBar.tintColor = .white
+        controller.searchBar.setImage(UIImage(named: "search"), for: .search, state: .normal)
+        controller.searchBar.setImage(UIImage(systemName: "xmark")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .clear, state: .normal)
         return controller
     }()
 
@@ -36,6 +37,7 @@ final class SearchViewController: UIViewController {
         setupUI()
         setupBindings()
         viewModel.fetchDiscoverMovies()
+        configureSearchBar()
     }
     
     private func setupUI() {
@@ -48,6 +50,26 @@ final class SearchViewController: UIViewController {
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         searchResultViewController.delegate = self
+    }
+    
+    private func configureSearchBar() {
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            textField.textColor = .white
+            textField.tintColor = .white
+            textField.attributedPlaceholder = NSAttributedString(
+                string: "Search for a Movie or a TV show",
+                attributes: [.foregroundColor: ColorManager.mediumEmphasis]
+            )
+            
+            textField.backgroundColor = ColorManager.surfaceDark.withAlphaComponent(0.5)
+            
+            textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        }
+        
+    }
+
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        textField.textColor = ColorManager.surfaceLight
     }
     
     private func setupBindings() {
