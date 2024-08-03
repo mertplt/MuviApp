@@ -126,7 +126,6 @@ class TitlePreviewViewController: UIViewController {
          super.viewDidLayoutSubviews()
          updateGradientFrame()
      }
-
     
     private func setupUI() {
         view.backgroundColor = ColorManager.surfaceDark
@@ -205,7 +204,7 @@ class TitlePreviewViewController: UIViewController {
         if let movie = viewModel.movieDetails {
             titleLabel.text = movie.title
             overviewLabel.text = movie.overview
-            ratingView.configure(with: movie.voteAverage ?? 0.0, voteCount: movie.voteCount ?? 0)
+            ratingView.configure(rating: movie.voteAverage ?? 0.0, voteCount: movie.voteCount ?? 0)
             genresLabel.text = viewModel.getFormattedGenres()
             runtimeLabel.text = viewModel.getFormattedRuntime()
             releaseDateLabel.text = viewModel.getFormattedReleaseDate()

@@ -6,57 +6,99 @@
 //
 
 import UIKit
+import SDWebImage
+import TinyConstraints
 
 class TitleTableViewCell: UITableViewCell {
+    static let identifier = "TitleTableViewCell"
+    let viewModel = SearchViewModel()
 
-    static let identifer = "TitleTableViewCell"
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = ColorManager.surfaceDark
+        view.layer.cornerRadius = 8
+        return view
+    }()
     
-    private let cellImageView: UIImageView = {
-       let imageView = UIImageView()
+    private let posterImageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 3
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 3
         return imageView
     }()
     
-    private let titlesLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = ColorManager.surfaceLight
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = FontManager.bodyAndForms()
+        label.numberOfLines = 2
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = ColorManager.mediumEmphasis
+        label.font = FontManager.bodyAndForms()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var ratingView = MaRatingView()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(cellImageView)
-        contentView.addSubview(titlesLabel)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupUI() {
         contentView.backgroundColor = ColorManager.surfaceDark
-        applyConstraints()
-
-    }
-    
-    private func applyConstraints(){
-            cellImageView.width(168)
-            cellImageView.height(89)
-            cellImageView.leadingToSuperview(offset: 10)
-            cellImageView.topToSuperview(offset: 0)
-            
-            titlesLabel.leadingToTrailing(of: cellImageView,offset: 10)
-            titlesLabel.topToSuperview(offset: 0)
+        contentView.addSubview(containerView)
+        containerView.edgesToSuperview(insets: TinyEdgeInsets(top: 0, left: 10, bottom: 10, right: 0))
         
+        containerView.addSubview(posterImageView)
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(dateLabel)
+        containerView.addSubview(ratingView)
+        
+        posterImageView.leadingToSuperview(offset: 10)
+        posterImageView.topToSuperview(offset: 10)
+        posterImageView.bottomToSuperview(offset: 10)
+        posterImageView.width(178)
+        
+        titleLabel.top(to: posterImageView)
+        titleLabel.leadingToTrailing(of: posterImageView, offset: 10)
+        titleLabel.trailingToSuperview(offset: 10)
+        
+        dateLabel.topToBottom(of: titleLabel, offset: 8)
+        dateLabel.leading(to: titleLabel)
+        
+        ratingView.topToBottom(of: dateLabel, offset: 15)
+        ratingView.leading(to: dateLabel)
     }
     
-    func setup(_ item: ListItem) {
-        if let url = URL(string: item.image) {
-            cellImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
-            titlesLabel.text = item.title
+    func configure(with movie: Movie) {
+        titleLabel.text = movie.title
+        dateLabel.text = viewModel.getFormattedReleaseDate(for: movie)
+        ratingView.configure(rating: movie.voteAverage ?? 0, voteCount: movie.voteCount ?? 0, isVoteCountHidden: true)
+
+        if let backdropPath = movie.backdropPath,
+           let url = URL(string: "https://image.tmdb.org/t/p/w500\(backdropPath)") {
+            posterImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
         } else {
-            cellImageView.image = UIImage(named: "placeholder")
+            posterImageView.image = UIImage(named: "placeholder")
         }
     }
 
-    required init?(coder: NSCoder) {
-        fatalError()
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        posterImageView.image = nil
+        titleLabel.text = nil
+        dateLabel.text = nil
     }
 }
