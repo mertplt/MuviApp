@@ -12,7 +12,7 @@ import TinyConstraints
 class TitleTableViewCell: UITableViewCell {
     static let identifier = "TitleTableViewCell"
     let viewModel = SearchViewModel()
-
+    
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = ColorManager.surfaceDark
@@ -46,7 +46,7 @@ class TitleTableViewCell: UITableViewCell {
     }()
     
     private lazy var ratingView = MaRatingView()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -86,7 +86,7 @@ class TitleTableViewCell: UITableViewCell {
         titleLabel.text = movie.title
         dateLabel.text = viewModel.getFormattedReleaseDate(for: movie)
         ratingView.configure(rating: movie.voteAverage ?? 0, voteCount: movie.voteCount ?? 0, isVoteCountHidden: true)
-
+        
         if let backdropPath = movie.backdropPath,
            let url = URL(string: "https://image.tmdb.org/t/p/w500\(backdropPath)") {
             posterImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
@@ -94,7 +94,7 @@ class TitleTableViewCell: UITableViewCell {
             posterImageView.image = UIImage(named: "placeholder")
         }
     }
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         posterImageView.image = nil

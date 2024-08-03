@@ -148,7 +148,6 @@ class TitlePreviewViewController: UIViewController {
         
         infoStackView.topToBottom(of: titleLabel, offset: 10)
         infoStackView.leadingToTrailing(of: posterImageView, offset: 20)
-        infoStackView.trailingToSuperview(offset: 20)
         
         [ratingView, runtimeLabel, releaseDateLabel].forEach { view in
             infoStackView.addArrangedSubview(view)
@@ -157,7 +156,7 @@ class TitlePreviewViewController: UIViewController {
                 label.font = FontManager.bodyAndForms()            }
         }
         
-        genresLabel.topToBottom(of: posterImageView, offset: 20)
+        genresLabel.topToBottom(of: posterImageView, offset: 40)
         genresLabel.leading(to: posterImageView)
         genresLabel.trailingToSuperview(offset: 20)
         
@@ -208,6 +207,7 @@ class TitlePreviewViewController: UIViewController {
             genresLabel.text = viewModel.getFormattedGenres()
             runtimeLabel.text = viewModel.getFormattedRuntime()
             releaseDateLabel.text = viewModel.getFormattedReleaseDate()
+            infoStackView.trailingToSuperview(offset: 20)
             
             if let posterPath = movie.posterPath {
                 let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
@@ -218,11 +218,33 @@ class TitlePreviewViewController: UIViewController {
                 let url = URL(string: "https://image.tmdb.org/t/p/w1280\(backdropPath)")
                 backdropImageView.sd_setImage(with: url, completed: nil)
             }
+        } else if let tvShow = viewModel.tvShowDetails {
+            titleLabel.text = tvShow.name
+            overviewLabel.text = tvShow.overview
+            ratingView.configure(rating: tvShow.voteAverage ?? 0.0, voteCount: tvShow.voteCount ?? 0)
+            genresLabel.text = viewModel.getFormattedGenres()
+            runtimeLabel.isHidden = true
+            releaseDateLabel.text = viewModel.getFormattedReleaseDate()
+            infoStackView.trailingToSuperview(offset: 75)
+
+            
+            if let posterPath = tvShow.posterPath {
+                let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
+                posterImageView.sd_setImage(with: url, completed: nil)
+            }
+            
+            if let backdropPath = tvShow.backdropPath {
+                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(backdropPath)")
+                backdropImageView.sd_setImage(with: url, completed: nil)
+            }
         }
         
         if viewModel.credits != nil {
             castLabel.text = "Cast: \(viewModel.getFormattedCast())"
             directorLabel.text = "Director: \(viewModel.getDirector())"
+        } else if viewModel.tvCredits != nil {
+            castLabel.text = "Cast: \(viewModel.getFormattedCast())"
+            directorLabel.text = "\(viewModel.getDirector())"
         }
     }
     

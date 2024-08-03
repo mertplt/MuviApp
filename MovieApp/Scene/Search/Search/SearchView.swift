@@ -63,9 +63,9 @@ final class SearchViewController: UIViewController {
             }
         }
         
-        viewModel.onSearchResultsChanged = { [weak self] movies in
+        viewModel.onSearchResultsChanged = { [weak self] results in
             DispatchQueue.main.async {
-                self?.searchResultViewController.updateSearchResults(movies)
+                self?.searchResultViewController.updateSearchResults(results)
             }
         }
     }
@@ -135,7 +135,7 @@ extension SearchViewController: UISearchResultsUpdating {
             return
         }
         
-        viewModel.searchMovies(query: query)
+        viewModel.search(query: query)
     }
 }
 
@@ -171,7 +171,7 @@ extension SearchViewController: SearchResultViewControllerDelegate {
 
 extension SearchViewController {
     private func presentTitlePreviewViewController(for movie: Movie) {
-        let titlePreviewViewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService())
+        let titlePreviewViewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService(), tvShowService: TVShowService())
         titlePreviewViewModel.fetchMovieDetails(for: movie.id)
         
         DispatchQueue.main.async { [weak self] in

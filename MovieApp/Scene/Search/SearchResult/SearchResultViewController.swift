@@ -50,14 +50,14 @@ class SearchResultViewController: UIViewController {
         }
     }
     
-    public func updateSearchResults(_ movies: [Movie]) {
-        viewModel.updateMovies(movies)
+    public func updateSearchResults(_ results: [SearchResult]) {
+        viewModel.updateMovies(results)
     }
 }
 
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.movies.count
+        return viewModel.results.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -65,17 +65,30 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
             return UICollectionViewCell()
         }
         
-        let movie = viewModel.movie(at: indexPath.row)
-        cell.configure(with: movie.posterPath ?? "")
+        let result = viewModel.result(at: indexPath.row)
+        if let movie = result.item as? Movie {
+            cell.configure(with: movie.posterPath ?? "")
+        } else if let tvShow = result.item as? TVShow {
+            cell.configure(with: tvShow.posterPath ?? "")
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
-        let movie = viewModel.movie(at: indexPath.row)
-        let titlePreviewViewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService())
-        titlePreviewViewModel.fetchMovieDetails(for: movie.id)
+        let result = viewModel.result(at: indexPath.row)
+        let titlePreviewViewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService(), tvShowService: TVShowService())
+        
+        switch result.type {
+        case .movie:
+            guard let movie = result.item as? Movie else { return }
+            titlePreviewViewModel.fetchMovieDetails(for: movie.id)
+        case .tvShow:
+            guard let tvShow = result.item as? TVShow else { return }
+            titlePreviewViewModel.fetchTVShowDetails(for: tvShow.id)
+        }
+        
         delegate?.searchResultViewControllerDidTapItem(titlePreviewViewModel)
     }
 }

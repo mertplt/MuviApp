@@ -7,10 +7,8 @@
 
 import Foundation
 
-import Foundation
-
 class SearchResultViewModel {
-    private(set) var movies: [Movie] = [] {
+    private(set) var results: [SearchResult] = [] {
         didSet {
             self.onMoviesChanged?()
         }
@@ -18,11 +16,21 @@ class SearchResultViewModel {
     
     var onMoviesChanged: (() -> Void)?
     
-    func updateMovies(_ newMovies: [Movie]) {
-        self.movies = newMovies
+    func updateMovies(_ newResults: [SearchResult]) {
+        self.results = newResults
     }
     
-    func movie(at index: Int) -> Movie {
-        return movies[index]
+    func result(at index: Int) -> SearchResult {
+        return results[index]
     }
+}
+
+enum SearchResultType {
+    case movie
+    case tvShow
+}
+
+struct SearchResult {
+    let type: SearchResultType
+    let item: Any
 }

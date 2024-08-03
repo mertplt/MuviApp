@@ -1,20 +1,21 @@
 //
-//  GetTVShowDetailsRequest.swift
+//  GetTVShowCreditsRequest.swift
 //  MovieApp
 //
-//  Created by Mert Polat on 10.07.2024.
+//  Created by Mert Polat on 03.08.24.
 //
 
 import Foundation
 
-struct GetTVShowDetailsRequest: RequestProtocol {
-    typealias ResponseType = TVShow
+struct GetTVShowCreditsRequest: RequestProtocol {
+    typealias ResponseType = TVCredits
+    
     var path: String
     var method: RequestMethod = .get
     var parameters: RequestParameters
     
     init(apiKey: String, tvShowId: Int) {
-        self.path = "tv/\(tvShowId)"
+        self.path = "tv/\(tvShowId)/credits"
         self.parameters = ["api_key": apiKey]
     }
 }
