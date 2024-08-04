@@ -23,6 +23,15 @@ class TitlePreviewViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private let backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "arrow-left"), for: .normal)
+        button.tintColor = ColorManager.primary
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     private let backdropImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -115,11 +124,15 @@ class TitlePreviewViewController: UIViewController {
         return button
     }()
     
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         bindViewModel()
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -133,6 +146,12 @@ class TitlePreviewViewController: UIViewController {
         [backdropImageView, posterImageView, titleLabel, infoStackView, genresLabel, overviewLabel, castLabel, directorLabel, trailerButton, addListButton].forEach {
             view.addSubview($0)
         }
+        
+        view.addSubview(backButton)
+        backButton.topToSuperview(view.safeAreaLayoutGuide.topAnchor, offset: 10)
+        backButton.leadingToSuperview(offset: 10)
+        backButton.width(44)
+        backButton.height(44)
         
         backdropImageView.edgesToSuperview(excluding: .bottom)
         backdropImageView.height(250)
@@ -153,7 +172,8 @@ class TitlePreviewViewController: UIViewController {
             infoStackView.addArrangedSubview(view)
             if let label = view as? UILabel {
                 label.textColor = ColorManager.highEmphasis
-                label.font = FontManager.bodyAndForms()            }
+                label.font = FontManager.bodyAndForms()
+            }
         }
         
         genresLabel.topToBottom(of: posterImageView, offset: 40)
@@ -178,7 +198,7 @@ class TitlePreviewViewController: UIViewController {
         addListButton.top(to: trailerButton)
         addListButton.trailingToSuperview(offset: 20)
     }
-    
+
     private func bindViewModel() {
         viewModel.onDataUpdated = { [weak self] in
             DispatchQueue.main.async {
@@ -269,5 +289,10 @@ class TitlePreviewViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 }

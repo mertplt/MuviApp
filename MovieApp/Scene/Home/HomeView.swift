@@ -113,7 +113,7 @@ class HomeView: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered
         section.interGroupSpacing = 10
-        section.contentInsets = .init(top: 0, leading: -15, bottom: 30, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: -20, bottom: 30, trailing: 10)
         section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
         section.supplementariesFollowContentInsets = false
         return section
@@ -198,7 +198,7 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0 { 
+        if indexPath.section == 0 {
             let selectedItem = viewModel.model.sections[indexPath.section].items[indexPath.row]
             switch selectedItem.title {
             case "Featured":
@@ -211,8 +211,21 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
                 viewModel.updateCategory(.originals)
             default:
                 break
+                }
+            } else {
+                let selectedItem = viewModel.model.sections[indexPath.section].items[indexPath.row]
+                
+                let titlePreviewViewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService(), tvShowService: TVShowService())
+                
+                if let movie = selectedItem.movie {
+                    titlePreviewViewModel.fetchMovieDetails(for: movie.id)
+                } else if let tvShow = selectedItem.tvShow {
+                    titlePreviewViewModel.fetchTVShowDetails(for: tvShow.id)
+                }
+                
+                let titlePreviewViewController = TitlePreviewViewController(viewModel: titlePreviewViewModel)
+                navigationController?.pushViewController(titlePreviewViewController, animated: true)
             }
-        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

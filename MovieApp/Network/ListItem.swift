@@ -11,4 +11,6 @@ struct ListItem {
     let title: String
     let image: String
     let backdrop: String?
+    let movie: Movie?
+    let tvShow: TVShow? 
 }

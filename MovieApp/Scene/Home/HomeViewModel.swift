@@ -139,9 +139,9 @@ class HomeViewModel {
             switch result {
             case .success(let response):
                 let items = (response as? BaseResponse<Movie>)?.results.map { movie in
-                    ListItem(title: movie.title, image: "https://image.tmdb.org/t/p/w500" + (movie.posterPath ?? ""), backdrop: movie.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + movie.backdropPath! : nil)
+                    ListItem(title: movie.title, image: "https://image.tmdb.org/t/p/w500" + (movie.posterPath ?? ""), backdrop: movie.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + movie.backdropPath! : nil, movie: movie, tvShow: nil)
                 } ?? (response as? BaseResponse<TVShow>)?.results.map { tvShow in
-                    ListItem(title: tvShow.name, image: "https://image.tmdb.org/t/p/w500" + (tvShow.posterPath ?? ""), backdrop: tvShow.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + tvShow.backdropPath! : nil)
+                    ListItem(title: tvShow.name, image: "https://image.tmdb.org/t/p/w500" + (tvShow.posterPath ?? ""), backdrop: tvShow.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + tvShow.backdropPath! : nil, movie: nil, tvShow: tvShow)
                 } ?? []
                 completion(items)
             case .failure(let error):

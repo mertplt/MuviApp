@@ -12,50 +12,50 @@ struct MockData {
     
     private let stories: ListSection = {
         .stories([
-            .init(title: "Featured", image: "https://via.placeholder.com/104x150", backdrop: nil),
-            .init(title: "Series", image: "https://via.placeholder.com/104x150", backdrop: nil),
-            .init(title: "Films", image: "https://via.placeholder.com/104x150", backdrop: nil),
-            .init(title: "Originals", image: "https://via.placeholder.com/104x150", backdrop: nil),
+            .init(title: "Featured", image: "https://via.placeholder.com/104x150", backdrop: nil, movie: nil, tvShow: nil),
+            .init(title: "Series", image: "https://via.placeholder.com/104x150", backdrop: nil, movie: nil, tvShow: nil),
+            .init(title: "Films", image: "https://via.placeholder.com/104x150", backdrop: nil, movie: nil, tvShow: nil),
+            .init(title: "Originals", image: "https://via.placeholder.com/104x150", backdrop: nil, movie: nil, tvShow: nil),
         ])
     }()
     
     private var popular: ListSection = {
         .popular([
-            .init(title: "Naruto", image: "https://via.placeholder.com/335x189", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Jujutsu Kaisen", image: "https://via.placeholder.com/335x189", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Demon Slayer", image: "https://via.placeholder.com/335x189", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "One Piece", image: "https://via.placeholder.com/335x189", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Seven Deadly Sins", image: "https://via.placeholder.com/335x189", backdrop: "https://via.placeholder.com/780x439")
+            .init(title: "Movie Name", image: "https://via.placeholder.com/335x189", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/335x189", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/335x189", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/335x189", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/335x189", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil)
         ])
     }()
     
     private var trending: ListSection = {
         .trending([
-            .init(title: "Tokyo Ghoul", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Record of Ragnarok", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Kaisen Returns", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "No Idea", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Looks interesting", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439")
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x135", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil)
         ])
     }()
     
     private var topRated: ListSection = {
         .topRated([
-            .init(title: "Naruto", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Jujutsu Kaisen", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Demon Slayer", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "One Piece", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Seven Deadly Sins", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439")
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name Sins", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil)
         ])
     }()
     
     private var nowPlaying: ListSection = {
         .nowPlaying([
-            .init(title: "Naruto", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Jujutsu Kaisen", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Demon Slayer", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "One Piece", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439"),
-            .init(title: "Seven Deadly Sins", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439")
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil),
+            .init(title: "Movie Name", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil)
         ])
     }()
 
