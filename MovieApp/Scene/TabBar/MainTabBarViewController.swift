@@ -21,7 +21,7 @@ class MainTabBarViewController: UITabBarController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let homeRouter = HomeRouter()
@@ -31,7 +31,7 @@ class MainTabBarViewController: UITabBarController {
         
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = ColorManager.primary
-        tabBar.unselectedItemTintColor = ColorManager.highEmphasis 
+        tabBar.unselectedItemTintColor = ColorManager.highEmphasis
         
         let vc1 = UINavigationController(rootViewController: HomeView(viewModel: homeViewModel, router: homeRouter))
         let vc2 = UINavigationController(rootViewController: SearchViewController())

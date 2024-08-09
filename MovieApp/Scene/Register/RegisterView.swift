@@ -22,7 +22,7 @@ class RegisterView: UIViewController {
     }
     
     let mainLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "Create Account"
         label.font = FontManager.headline1()
         label.textColor = ColorManager.surfaceLight
@@ -31,22 +31,22 @@ class RegisterView: UIViewController {
     
     let expLabel: UILabel = {
         let label = UILabel()
-         label.text = "Enter information below or login with social\naccount to get started"
-         label.textAlignment = .left
-         label.numberOfLines = 2
-         label.font = FontManager.paragraphAndButton()
-         label.textColor = ColorManager.surfaceLight
-         return label
+        label.text = "Enter information below or login with social\naccount to get started"
+        label.textAlignment = .left
+        label.numberOfLines = 2
+        label.font = FontManager.paragraphAndButton()
+        label.textColor = ColorManager.surfaceLight
+        return label
     }()
     
     let emailTextField : MaTextField = {
-      let textField = MaTextField()
+        let textField = MaTextField()
         textField.style = .email
         return textField
     }()
     
     let emailLineView : UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.12)
         view.height(1.5)
         view.alpha = 0.12
@@ -55,13 +55,13 @@ class RegisterView: UIViewController {
     }()
     
     let passwordTextField : MaTextField = {
-      let textField = MaTextField()
+        let textField = MaTextField()
         textField.style = .password
         return textField
     }()
     
     let passwordLineView : UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.12)
         view.height(1.5)
         view.alpha = 0.12
@@ -70,14 +70,14 @@ class RegisterView: UIViewController {
     }()
     
     let confirmPasswordTextField : MaTextField = {
-      let textField = MaTextField()
+        let textField = MaTextField()
         textField.style = .password
         textField.placeholderText = "Confirm Password"
         return textField
     }()
     
     let confirmPasswordLineView : UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.12)
         view.height(1.5)
         view.alpha = 0.12
@@ -102,7 +102,7 @@ class RegisterView: UIViewController {
     }()
     
     let googleButton : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setImage(.google, for: .normal)
         button.backgroundColor = UIColor(red: 0.176, green: 0.186, blue: 0.2, alpha: 1)
         button.size(CGSize(width: 44, height: 44))
@@ -110,7 +110,7 @@ class RegisterView: UIViewController {
     }()
     
     let faceBookButton : UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setImage(.facebook1, for: .normal)
         button.backgroundColor = UIColor(red: 0.176, green: 0.186, blue: 0.2, alpha: 1)
         button.size(CGSize(width: 44, height: 44))
@@ -152,7 +152,7 @@ class RegisterView: UIViewController {
         view.addSubview(registerButton)
         
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-
+        
         mainLabel.topToSuperview(offset: 127)
         mainLabel.leftToSuperview(offset: 20)
         
@@ -204,7 +204,7 @@ class RegisterView: UIViewController {
         let password = passwordTextField.text ?? ""
         let confirmPassword = confirmPasswordTextField.text ?? ""
         
-    registerViewModel.register(email: email, password: password, confirmPassword: confirmPassword)
+        registerViewModel.register(email: email, password: password, confirmPassword: confirmPassword)
     }
     
     private func setupGoogleButton() {

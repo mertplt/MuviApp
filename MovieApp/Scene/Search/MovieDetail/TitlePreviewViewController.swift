@@ -109,7 +109,7 @@ class TitlePreviewViewController: UIViewController {
     }()
     
     private lazy var trailerButton: MaButton = {
-       let button = MaButton()
+        let button = MaButton()
         button.style = .smallButtonYellow
         button.buttonTitle = "Watch Trailer"
         button.addTarget(self, action: #selector(watchTrailerTapped), for: .touchUpInside)
@@ -117,7 +117,7 @@ class TitlePreviewViewController: UIViewController {
     }()
     
     private lazy var addListButton: MaButton = {
-       let button = MaButton()
+        let button = MaButton()
         button.style = .smallButtonDark
         button.Icon = .plus
         button.buttonTitle = "My List"
@@ -136,9 +136,9 @@ class TitlePreviewViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-         super.viewDidLayoutSubviews()
-         updateGradientFrame()
-     }
+        super.viewDidLayoutSubviews()
+        updateGradientFrame()
+    }
     
     private func setupUI() {
         view.backgroundColor = ColorManager.surfaceDark
@@ -198,7 +198,7 @@ class TitlePreviewViewController: UIViewController {
         addListButton.top(to: trailerButton)
         addListButton.trailingToSuperview(offset: 20)
     }
-
+    
     private func bindViewModel() {
         viewModel.onDataUpdated = { [weak self] in
             DispatchQueue.main.async {
@@ -246,7 +246,7 @@ class TitlePreviewViewController: UIViewController {
             runtimeLabel.isHidden = true
             releaseDateLabel.text = viewModel.getFormattedReleaseDate()
             infoStackView.trailingToSuperview(offset: 75)
-
+            
             
             if let posterPath = tvShow.posterPath {
                 let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")

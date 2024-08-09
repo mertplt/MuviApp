@@ -20,24 +20,24 @@ final class FirstOnboardingViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     let signInButton: MaButton = {
-       let button = MaButton()
+        let button = MaButton()
         button.style = .largeButtonDark
         button.buttonTitle = "Sign In"
         return button
     }()
-
+    
     let watchMovieButton: MaButton = {
-       let button = MaButton()
+        let button = MaButton()
         button.style = .largeButtonYellow
         button.buttonTitle = "Watch Movie"
-
+        
         return button
     }()
     
     let headlineLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = FontManager.headline1()
         label.textColor = .surfaceLight
         label.text = "Welcome to Muvi"
@@ -45,7 +45,7 @@ final class FirstOnboardingViewController: UIViewController {
     }()
     
     let subHeadlineLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = FontManager.subtitleAndMenu()
         label.textColor = .surfaceLight
         label.text = "Free movie streaming all your needs \n everytime and everywhere."
@@ -58,13 +58,13 @@ final class FirstOnboardingViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         watchMovieButton.addTarget(self, action: #selector(watchMovieButtonTapped(_:)), for: .touchUpInside)
         
         signInButton.addTarget(self, action: #selector(signInButtonTapped(_:)), for: .touchUpInside)
-
+        
         view.backgroundColor = ColorManager.surfaceDark
         view.addSubview(imageView)
         view.addSubview(subHeadlineLabel)
@@ -74,7 +74,7 @@ final class FirstOnboardingViewController: UIViewController {
         
         updateConstraints()
     }
-
+    
     private func updateConstraints() {
         imageView.leadingToSuperview(offset: 68)
         imageView.topToSuperview(offset: 180)
@@ -91,10 +91,8 @@ final class FirstOnboardingViewController: UIViewController {
         watchMovieButton.leading(to: signInButton)
         watchMovieButton.bottomToTop(of: signInButton,offset: 0)
     }
-
-    @objc func watchMovieButtonTapped(_ button: UIButton) {
-//        router.placeOnOnboardingViewController()
-
+    
+    @objc func watchMovieButtonTapped(_ button: UIButton) {        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let onboardingVC = OnboardingViewController(collectionViewLayout: layout)

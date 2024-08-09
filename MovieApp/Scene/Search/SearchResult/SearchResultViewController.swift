@@ -25,7 +25,7 @@ class SearchResultViewController: UIViewController {
         collectionView.backgroundColor = .clear
         return collectionView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

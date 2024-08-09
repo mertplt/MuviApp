@@ -8,5 +8,5 @@
 import UIKit
 
 final class RegisterRouter: Router, RegisterRouter.Routes {
-    typealias Routes = LoginRoute & ForgotPasswordRoute & HomeRoute
+    typealias Routes = LoginRoute & ForgotPasswordRoute & TabBarRoute
 }

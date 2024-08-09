@@ -8,7 +8,7 @@
 import UIKit
 
 final class AppRouter: Router, AppRouter.Routes {
-
+    
     typealias Routes = LoginRoute
     
     static let shared = AppRouter()

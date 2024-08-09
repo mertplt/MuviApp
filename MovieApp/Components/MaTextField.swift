@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import TinyConstraints
- 
+
 enum MaTextFieldStyle{
     case email
     case password
@@ -78,7 +78,7 @@ extension MaTextField{
             configureName()
         case .phone:
             configurePhone()
-       
+            
         }
     }
     
@@ -89,7 +89,7 @@ extension MaTextField{
         self.rightIcon = .mail
         addIconsToTextField()
     }
-
+    
     
     private func configurePassword(){
         self.placeholderText = "Password"
@@ -124,7 +124,7 @@ extension MaTextField{
         self.rightViewMode = .always;
     }
     
-   private func setPlaceholderColor(_ color: UIColor) {
+    private func setPlaceholderColor(_ color: UIColor) {
         guard let placeholderText = placeholderText else { return }
         
         let attributes: [NSAttributedString.Key: Any] = [

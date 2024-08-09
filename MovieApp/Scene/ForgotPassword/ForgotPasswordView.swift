@@ -72,11 +72,11 @@ final class ForgotPasswordView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-
+        
         let backBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = backBarButtonItem
     }
-
+    
     func configureUI() {
         view.backgroundColor = ColorManager.surfaceDark
         view.addSubview(mainLabel)

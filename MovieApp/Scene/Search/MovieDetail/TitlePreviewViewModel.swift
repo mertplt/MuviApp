@@ -123,7 +123,7 @@ class TitlePreviewViewModel {
         }
         return "N/A"
     }
-
+    
     func getFormattedReleaseDate() -> String {
         if let movie = movieDetails {
             guard let releaseDate = movie.releaseDate else { return "N/A" }
@@ -135,19 +135,19 @@ class TitlePreviewViewModel {
         } else if let tvShow = tvShowDetails {
             guard let releaseDate = tvShow.firstAirDate else { return "N/A" }
             guard let lastReleaseDate = tvShow.lastAirDate else { return "N/A" }
-
+            
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             guard let date = dateFormatter.date(from: releaseDate) else { return "N/A" }
             guard let lastDate = dateFormatter.date(from: lastReleaseDate) else { return "N/A" }
-
+            
             dateFormatter.dateFormat = "yyyy"
             let formattedFirstDate = dateFormatter.string(from: date)
             let formattedLastDate = dateFormatter.string(from: lastDate)
-
+            
             return "\(formattedFirstDate) - \(formattedLastDate)"
         }
-
+        
         return "N/A"
     }
 }

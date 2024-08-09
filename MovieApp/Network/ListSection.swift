@@ -17,10 +17,10 @@ enum ListSection {
     var items: [ListItem] {
         switch self {
         case .stories(let items),
-             .popular(let items),
-             .trending(let items),
-             .topRated(let items),
-             .nowPlaying(let items):
+                .popular(let items),
+                .trending(let items),
+                .topRated(let items),
+                .nowPlaying(let items):
             return items
         }
     }

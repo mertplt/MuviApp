@@ -43,7 +43,7 @@ class HomeViewModel {
         fetchTopRatedTVShows()
         fetchNowPlayingMovies()
     }
-
+    
     func fetchTVShows() {
         fetchTrendingTVShows()
         fetchPopularTVShows()
@@ -75,7 +75,7 @@ class HomeViewModel {
         case .originals:
             fetchOriginal()
         case .featured:
-                fetchFeatured()
+            fetchFeatured()
         }
     }
     

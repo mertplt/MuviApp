@@ -211,7 +211,7 @@ final class LoginView: UIViewController {
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
         viewModel.login(email: email, password: password)
-        }
+    }
     
     private func setupGoogleButton() {
         googleButton.addTarget(self, action: #selector(googleButtonTapped), for: .touchUpInside)
@@ -219,8 +219,8 @@ final class LoginView: UIViewController {
     
     @objc func googleButtonTapped() {
         viewModel.signInWithGoogle(presenting: self)
-        }
     }
+}
 
 #Preview {
     let router = LoginRouter()

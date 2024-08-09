@@ -50,7 +50,7 @@ class SearchViewModel {
             }
         }
     }
-
+    
     
     private func fetchMovies<T: RequestProtocol>(with request: T, completion: @escaping (Result<[Movie], Error>) -> Void) where T.ResponseType == BaseResponse<Movie> {
         networkManager.requestWithAlamofire(for: request) { (result: Result<BaseResponse<Movie>, Error>) in
@@ -95,5 +95,5 @@ class SearchViewModel {
         dateFormatter.dateFormat = "yyyy"
         return dateFormatter.string(from: date)
     }
-
+    
 }

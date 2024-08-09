@@ -9,7 +9,7 @@ import UIKit
 import TinyConstraints
 
 final class SearchViewController: UIViewController {
-
+    
     private let viewModel = SearchViewModel()
     private let searchResultViewController = SearchResultViewController()
     
@@ -31,7 +31,7 @@ final class SearchViewController: UIViewController {
         controller.searchBar.setImage(UIImage(systemName: "xmark")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .clear, state: .normal)
         return controller
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -67,7 +67,7 @@ final class SearchViewController: UIViewController {
         }
         
     }
-
+    
     @objc private func textFieldDidChange(_ textField: UITextField) {
         textField.textColor = ColorManager.surfaceLight
     }

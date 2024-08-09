@@ -58,7 +58,7 @@ struct MockData {
             .init(title: "Movie Name", image: "https://via.placeholder.com/240x136", backdrop: "https://via.placeholder.com/780x439", movie: nil, tvShow: nil)
         ])
     }()
-
+    
     var pageData: [ListSection] {
         [stories, trending, popular , topRated, nowPlaying]
     }

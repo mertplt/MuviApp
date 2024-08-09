@@ -37,7 +37,7 @@ class RegisterViewModel {
         // Use Firebase Authentication to register the user
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
-
+                
                 print("Registration Error: \(error.localizedDescription)")
             } else {
                 print("User successfully registered.")

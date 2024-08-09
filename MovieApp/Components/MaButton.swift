@@ -87,7 +87,7 @@ extension MaButton{
         setTitleColor(ColorManager.surfaceDark, for: .normal)
         self.height(36)
         self.width(160)
-
+        
     }
     
     private func configureSmallDarkStyle(){
