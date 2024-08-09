@@ -6,6 +6,10 @@
 //
 
 import Foundation
+import FirebaseAuth
+import GoogleSignIn
+import Firebase
+import FirebaseCore
 
 class LoginViewModel {
     var router: LoginRouter
@@ -38,9 +42,37 @@ class LoginViewModel {
         }
     }
     
-    private func loginUser(_ model: LoginModel, completion: @escaping (Bool) -> Void) {
-        DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
-            completion(true)
+    func signInWithGoogle(presenting viewController: UIViewController) {
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: viewController) { [weak self] result, error in
+            guard error == nil else {
+                print("Google Sign-In Error: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard let user = result?.user,
+                  let idToken = user.idToken?.tokenString
+            else {
+                print("Failed to get ID token from Google Sign-In")
+                return
+            }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                           accessToken: user.accessToken.tokenString)
+            
+            Auth.auth().signIn(with: credential) { authResult, error in
+                if let error = error {
+                    print("Firebase sign-in error: \(error.localizedDescription)")
+                    return
+                }
+                
+                print("User successfully signed in with Google.")
+                self?.router.pushTabBarViewController()
+            }
         }
     }
     

@@ -203,11 +203,16 @@ class RegisterView: UIViewController {
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
         let confirmPassword = confirmPasswordTextField.text ?? ""
-        registerViewModel.register(email: email, password: password, confirmPassword: confirmPassword)
         
-        let mainTabBarVC = MainTabBarViewController()
-        mainTabBarVC.modalPresentationStyle = .fullScreen
-        present(mainTabBarVC, animated: true)
+    registerViewModel.register(email: email, password: password, confirmPassword: confirmPassword)
+    }
+    
+    private func setupGoogleButton() {
+        googleButton.addTarget(self, action: #selector(googleButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func googleButtonTapped() {
+        registerViewModel.signInWithGoogle(presenting: self)
     }
 }
 

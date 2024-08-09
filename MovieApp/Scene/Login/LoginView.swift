@@ -135,6 +135,7 @@ final class LoginView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        setupGoogleButton()
     }
     
     private func configureUI() {
@@ -210,12 +211,16 @@ final class LoginView: UIViewController {
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
         viewModel.login(email: email, password: password)
-        
-        let mainTabBarVC = MainTabBarViewController()
-        mainTabBarVC.modalPresentationStyle = .fullScreen
-        present(mainTabBarVC, animated: true)
+        }
+    
+    private func setupGoogleButton() {
+        googleButton.addTarget(self, action: #selector(googleButtonTapped), for: .touchUpInside)
     }
-}
+    
+    @objc func googleButtonTapped() {
+        viewModel.signInWithGoogle(presenting: self)
+        }
+    }
 
 #Preview {
     let router = LoginRouter()
