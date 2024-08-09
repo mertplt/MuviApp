@@ -8,17 +8,32 @@
 import UIKit
 
 class MainTabBarViewController: UITabBarController {
+    
+    var viewModel: TabBarViewModel
+    var router: TabBarRouter
+    
+    init(viewModel: TabBarViewModel, router: TabBarRouter) {
+        self.viewModel = viewModel
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let router = HomeRouter()
-        let viewModel = HomeViewModel(router: router)
+        let homeRouter = HomeRouter()
+        let homeViewModel = HomeViewModel(router: homeRouter)
+        
+        self.navigationItem.hidesBackButton = true
         
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = ColorManager.primary
         tabBar.unselectedItemTintColor = ColorManager.highEmphasis 
         
-        let vc1 = UINavigationController(rootViewController: HomeView(viewModel: viewModel, router: router))
+        let vc1 = UINavigationController(rootViewController: HomeView(viewModel: homeViewModel, router: homeRouter))
         let vc2 = UINavigationController(rootViewController: SearchViewController())
         let vc3 = UINavigationController(rootViewController: ListView())
         let vc4 = UINavigationController(rootViewController: ProfileView())
