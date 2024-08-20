@@ -94,6 +94,45 @@ class SearchTableViewCell: UITableViewCell {
             posterImageView.image = UIImage(named: "placeholder")
         }
     }
+
+    func configure(with tvShow: TVShow) {
+        titleLabel.text = tvShow.name
+        dateLabel.text = getFormattedReleaseDate(movie: nil, tvShow: tvShow)
+        ratingView.configure(rating: tvShow.voteAverage ?? 0, voteCount: tvShow.voteCount ?? 0, isVoteCountHidden: true)
+        
+        if let backdropPath = tvShow.backdropPath,
+           let url = URL(string: "https://image.tmdb.org/t/p/w500\(backdropPath)") {
+            posterImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
+        } else {
+            posterImageView.image = UIImage(named: "placeholder")
+        }
+    }
+
+    
+    private func getFormattedReleaseDate(movie: Movie?, tvShow: TVShow?) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        if let movie = movie, let releaseDate = movie.releaseDate {
+            guard let date = dateFormatter.date(from: releaseDate) else { return "N/A" }
+            dateFormatter.dateFormat = "yyyy"
+            return dateFormatter.string(from: date)
+        }
+        
+        if let tvShow = tvShow, let firstAirDate = tvShow.firstAirDate, let lastAirDate = tvShow.lastAirDate {
+            guard let firstDate = dateFormatter.date(from: firstAirDate),
+                  let lastDate = dateFormatter.date(from: lastAirDate) else { return "N/A" }
+            
+            dateFormatter.dateFormat = "yyyy"
+            let formattedFirstDate = dateFormatter.string(from: firstDate)
+            let formattedLastDate = dateFormatter.string(from: lastDate)
+            
+            return "\(formattedFirstDate) - \(formattedLastDate)"
+        }
+        
+        return "N/A"
+    }
+
     
     override func prepareForReuse() {
         super.prepareForReuse()

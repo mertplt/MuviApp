@@ -14,7 +14,7 @@ import SafariServices
 class TitlePreviewViewController: UIViewController {
     private var viewModel: TitlePreviewViewModel
     
-    init(viewModel: TitlePreviewViewController) {
+    init(viewModel: TitlePreviewViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

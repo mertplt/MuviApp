@@ -15,7 +15,7 @@ final class SearchViewController: UIViewController {
     
     private lazy var discoverTable: UITableView = {
         let table = UITableView()
-        table.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.identifier)
+        table.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         table.backgroundColor = ColorManager.surfaceDark
         table.delegate = self
         table.dataSource = self
@@ -28,7 +28,7 @@ final class SearchViewController: UIViewController {
         controller.searchBar.searchBarStyle = .minimal
         controller.searchBar.tintColor = .white
         controller.searchBar.setImage(UIImage(named: "search"), for: .search, state: .normal)
-        controller.searchBar.setImage(UIImage(systemName: "xmark")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .clear, state: .normal)
+        controller.searchBar.setImage(UIImage(named: "x")?.withTintColor(ColorManager.primary, renderingMode: .alwaysOriginal), for: .clear, state: .normal)
         return controller
     }()
     
@@ -92,21 +92,6 @@ final class SearchViewController: UIViewController {
         }
     }
     
-    private func configureNavigationBar() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.largeTitleTextAttributes = [.foregroundColor: ColorManager.surfaceLight]
-        appearance.titleTextAttributes = [.foregroundColor: ColorManager.surfaceLight]
-        
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.tintColor = ColorManager.surfaceLight
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
-    }
-    
     private func configureSearchBarTextField(_ searchBar: UISearchBar) {
         if let textField = searchBar.value(forKey: "searchField") as? UITextField {
             textField.textColor = ColorManager.surfaceLight
@@ -130,7 +115,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.identifier, for: indexPath) as? TitleTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell else {
             return UITableViewCell()
         }
         
@@ -202,6 +187,26 @@ extension SearchViewController {
         }
     }
 }
+
+extension SearchViewController {
+    private func configureNavigationBar() {
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.largeTitleTextAttributes = [.foregroundColor: ColorManager.surfaceLight]
+        appearance.titleTextAttributes = [.foregroundColor: ColorManager.surfaceLight]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.tintColor = ColorManager.surfaceLight
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+    }
+}
+
+
 #Preview {
     SearchViewController()
 }

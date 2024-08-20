@@ -20,6 +20,7 @@ class ListView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigationBar()
         view.backgroundColor = ColorManager.surfaceDark
         setupUI()
     }
@@ -65,7 +66,7 @@ class ListView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let item = listItems[indexPath.row]
-        let viewModel = MovieDetailViewModel(movieService: MovieService(), youtubeService: YoutubeService(), tvShowService: TVShowService())
+        let viewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService(), tvShowService: TVShowService())
         
         if let movie = item.movie {
             viewModel.fetchMovieDetails(for: movie.id)
@@ -73,7 +74,7 @@ class ListView: UIViewController, UITableViewDataSource, UITableViewDelegate {
             viewModel.fetchTVShowDetails(for: tvShow.id)
         }
         
-        let titlePreviewVC = MovieDetailViewController(viewModel: viewModel)
+        let titlePreviewVC = TitlePreviewViewController(viewModel: viewModel)
         navigationController?.pushViewController(titlePreviewVC, animated: true)
     }
     
@@ -86,5 +87,23 @@ class ListView: UIViewController, UITableViewDataSource, UITableViewDelegate {
             ListViewModel.shared.removeFromList(item)
             loadListItems()
         }
+    }
+}
+
+extension ListView {
+    private func configureNavigationBar() {
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.largeTitleTextAttributes = [.foregroundColor: ColorManager.surfaceLight]
+        appearance.titleTextAttributes = [.foregroundColor: ColorManager.surfaceLight]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.tintColor = ColorManager.surfaceLight
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
     }
 }
