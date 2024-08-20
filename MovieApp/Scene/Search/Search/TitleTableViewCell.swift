@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 import TinyConstraints
 
-class TitleTableViewCell: UITableViewCell {
+class SearchTableViewCell: UITableViewCell {
     static let identifier = "TitleTableViewCell"
     let viewModel = SearchViewModel()
     
@@ -84,7 +84,7 @@ class TitleTableViewCell: UITableViewCell {
     
     func configure(with movie: Movie) {
         titleLabel.text = movie.title
-        dateLabel.text = viewModel.getFormattedReleaseDate(for: movie)
+        dateLabel.text = getFormattedReleaseDate(movie: movie, tvShow: nil)
         ratingView.configure(rating: movie.voteAverage ?? 0, voteCount: movie.voteCount ?? 0, isVoteCountHidden: true)
         
         if let backdropPath = movie.backdropPath,

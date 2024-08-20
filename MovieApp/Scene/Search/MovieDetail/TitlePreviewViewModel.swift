@@ -30,7 +30,7 @@ class TitlePreviewViewModel {
     func fetchMovieDetails(for movieId: Int) {
         movieService.fetchMovieDetails(for: movieId) { [weak self] result in
             switch result {
-            case .success(let movie):
+            case .success(let    movie):
                 self?.movieDetails = movie
                 self?.onDataUpdated?()
                 self?.fetchMovieCredits(for: movieId)

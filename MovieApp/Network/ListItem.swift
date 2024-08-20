@@ -7,10 +7,11 @@
 
 import Foundation
 
-struct ListItem {
+struct ListItem: Codable {
+    let id: Int
     let title: String
     let image: String
     let backdrop: String?
     let movie: Movie?
-    let tvShow: TVShow? 
+    let tvShow: TVShow?
 }

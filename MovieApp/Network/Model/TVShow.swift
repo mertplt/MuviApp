@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TVShow: Decodable {
+struct TVShow: Codable {
     let id: Int
     let name: String
     let overview: String
@@ -49,7 +49,7 @@ struct TVShow: Decodable {
     }
 }
 
-struct Season: Decodable {
+struct Season: Codable {
     let seasonNumber: Int
     let episodeCount: Int
     let airDate: String?

@@ -14,7 +14,7 @@ import SafariServices
 class TitlePreviewViewController: UIViewController {
     private var viewModel: TitlePreviewViewModel
     
-    init(viewModel: TitlePreviewViewModel) {
+    init(viewModel: TitlePreviewViewController) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -121,6 +121,7 @@ class TitlePreviewViewController: UIViewController {
         button.style = .smallButtonDark
         button.Icon = .plus
         button.buttonTitle = "My List"
+        button.addTarget(self, action: #selector(addListButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -220,6 +221,7 @@ class TitlePreviewViewController: UIViewController {
     }
     
     private func updateUI() {
+        updateAddListButton()
         if let movie = viewModel.movieDetails {
             titleLabel.text = movie.title
             overviewLabel.text = movie.overview
@@ -279,6 +281,35 @@ class TitlePreviewViewController: UIViewController {
         } else {
             showAlert(title: "Trailer Unavailable", message: "Sorry, the trailer is not available at the moment.")
         }
+    }
+    
+    private func updateAddListButton() {
+        if let listItem = createListItem() {
+            let isInList = ListViewModel.shared.isInList(listItem)
+            addListButton.Icon = isInList ? .check : .plus
+            addListButton.buttonTitle = isInList ? "In My List" : "My List"
+        }
+    }
+    
+    @objc private func addListButtonTapped() {
+        guard let listItem = createListItem() else { return }
+        
+        if ListViewModel.shared.isInList(listItem) {
+            ListViewModel.shared.removeFromList(listItem)
+        } else {
+            ListViewModel.shared.addToList(listItem)
+        }
+        
+        updateAddListButton()
+    }
+    
+    private func createListItem() -> ListItem? {
+        if let movie = viewModel.movieDetails {
+            return ListItem(id: movie.id, title: movie.title, image: movie.posterPath ?? "", backdrop: movie.backdropPath, movie: movie, tvShow: nil)
+        } else if let tvShow = viewModel.tvShowDetails {
+            return ListItem(id: tvShow.id, title: tvShow.name, image: tvShow.posterPath ?? "", backdrop: tvShow.backdropPath, movie: nil, tvShow: tvShow)
+        }
+        return nil
     }
     
     private func showError(_ error: Error) {
