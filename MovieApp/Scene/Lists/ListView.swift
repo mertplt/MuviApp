@@ -16,18 +16,33 @@ class ListView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return tableView
     }()
     
-    private var listItems: [ListItem] = []
+    private var listItems: [ListItem] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
         view.backgroundColor = ColorManager.surfaceDark
         setupUI()
+        loadListItems()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadListItems()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if listItems.isEmpty {
+            loadListItems()
+        }
+        tableView.reloadData()
     }
     
     private func setupUI() {
@@ -38,10 +53,11 @@ class ListView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     private func loadListItems() {
-        listItems = ListViewModel.shared.getList()
-        tableView.reloadData()
+        ListViewModel.shared.getList { [weak self] items in
+            guard let self = self else { return }
+            self.listItems = items
+        }
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listItems.count

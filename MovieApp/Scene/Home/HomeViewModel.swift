@@ -139,9 +139,9 @@ class HomeViewModel {
             switch result {
             case .success(let response):
                 let items = (response as? BaseResponse<Movie>)?.results.map { movie in
-                    ListItem(id: movie.id, title: movie.title, image: "https://image.tmdb.org/t/p/w500" + (movie.posterPath ?? ""), backdrop: movie.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + movie.backdropPath! : nil, movie: movie, tvShow: nil)
+                    ListItem(id: movie.id, title: movie.title, image: "https://image.tmdb.org/t/p/w500" + (movie.posterPath ?? ""), backdrop: movie.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + movie.backdropPath! : nil, movie: movie, tvShow: nil,firstAirDate: nil,lastAirDate: nil,voteAverage: movie.voteAverage,releaseDate: movie.releaseDate)
                 } ?? (response as? BaseResponse<TVShow>)?.results.map { tvShow in
-                    ListItem(id: tvShow.id, title: tvShow.name, image: "https://image.tmdb.org/t/p/w500" + (tvShow.posterPath ?? ""), backdrop: tvShow.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + tvShow.backdropPath! : nil, movie: nil, tvShow: tvShow)
+                    ListItem(id: tvShow.id, title: tvShow.name, image: "https://image.tmdb.org/t/p/w500" + (tvShow.posterPath ?? ""), backdrop: tvShow.backdropPath != nil ? "https://image.tmdb.org/t/p/w780" + tvShow.backdropPath! : nil, movie: nil, tvShow: tvShow,firstAirDate: tvShow.firstAirDate,lastAirDate: tvShow.lastAirDate,voteAverage: tvShow.voteAverage,releaseDate: nil)
                 } ?? []
                 completion(items)
             case .failure(let error):
