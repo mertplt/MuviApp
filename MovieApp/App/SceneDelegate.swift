@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -14,16 +15,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let  window = UIWindow(windowScene: windowScene)
-        let vc = FirstOnboardingViewController(router: FirstOnboardingRouter())
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let nav = UINavigationController(rootViewController: vc)
+        let window = UIWindow(windowScene: windowScene)
         
+        if let user = Auth.auth().currentUser {
+            let router = TabBarRouter()
+            let viewModel = TabBarViewModel(router: router)
+            let vc = MainTabBarViewController(viewModel: viewModel, router: router)
+            window.rootViewController = vc
+        } else {
+            let vc = FirstOnboardingViewController(router: FirstOnboardingRouter())
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            let nav = UINavigationController(rootViewController: vc)
+            window.rootViewController = nav
+        }
         
-        window.rootViewController = nav
         window.backgroundColor = ColorManager.dark
-        
         self.window = window
         self.window?.makeKeyAndVisible()
     }
