@@ -15,6 +15,7 @@ enum MaButtonStyle{
     case smallButtonYellow
     case smallButtonDark
     case bigButton
+    case listButton
 }
 
 class MaButton: UIButton{
@@ -62,6 +63,8 @@ extension MaButton{
             configureSmallDarkStyle()
         case .bigButton:
             configureBigStyle()
+        case .listButton:
+            configureListStyle()
         }
     }
     
@@ -104,7 +107,14 @@ extension MaButton{
         self.height(46)
         self.width(335)
     }
-    
+    private func configureListStyle(){
+        self.backgroundColor = ColorManager.surfaceDark
+        titleLabel?.font = FontManager.bodyAndForms()
+        setTitleColor(ColorManager.surfaceLight, for: .normal)
+        titleLabel?.textAlignment = .right
+        self.height(48)
+        
+    }
     private func setButton(){
         self.layer.cornerRadius = 4
     }

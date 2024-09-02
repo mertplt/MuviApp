@@ -14,4 +14,8 @@ struct ListItem: Codable {
     let backdrop: String?
     let movie: Movie?
     let tvShow: TVShow?
+    let firstAirDate: String?
+    let lastAirDate: String?
+    let voteAverage: Double?
+    let releaseDate: String?
 }

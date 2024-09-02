@@ -88,7 +88,7 @@ class TitlePreviewViewController: UIViewController {
         let label = UILabel()
         label.font = FontManager.subtitleAndMenu()
         label.textColor = ColorManager.surfaceLight
-        label.numberOfLines = 8
+        label.numberOfLines = 7
         label.lineBreakMode = .byTruncatingTail
         return label
     }()
@@ -132,6 +132,7 @@ class TitlePreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        self.navigationItem.hidesBackButton = true
         bindViewModel()
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
@@ -144,11 +145,10 @@ class TitlePreviewViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = ColorManager.surfaceDark
         
-        [backdropImageView, posterImageView, titleLabel, infoStackView, genresLabel, overviewLabel, castLabel, directorLabel, trailerButton, addListButton].forEach {
+        [backdropImageView, posterImageView, titleLabel, infoStackView, genresLabel, overviewLabel, castLabel, directorLabel, trailerButton, addListButton,backButton].forEach {
             view.addSubview($0)
         }
         
-        view.addSubview(backButton)
         backButton.topToSuperview(view.safeAreaLayoutGuide.topAnchor, offset: 10)
         backButton.leadingToSuperview(offset: 10)
         backButton.width(44)

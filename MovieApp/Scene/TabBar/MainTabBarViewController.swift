@@ -36,7 +36,7 @@ class MainTabBarViewController: UITabBarController {
         let vc1 = UINavigationController(rootViewController: HomeView(viewModel: homeViewModel, router: homeRouter))
         let vc2 = UINavigationController(rootViewController: SearchViewController())
         let vc3 = UINavigationController(rootViewController: ListView())
-        let vc4 = UINavigationController(rootViewController: ProfileView())
+        let vc4 = UINavigationController(rootViewController: MoreView())
         
         vc1.tabBarItem.image = UIImage(named: "home")
         vc2.tabBarItem.image = UIImage(named: "search")
@@ -44,7 +44,7 @@ class MainTabBarViewController: UITabBarController {
         vc4.tabBarItem.image = UIImage(named: "grid")
         
         vc1.title = "Home"
-        vc2.title = "Top Search"
+        vc2.title = "Search"
         vc3.title = "Lists"
         vc4.title = "Profile"
         

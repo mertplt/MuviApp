@@ -85,7 +85,7 @@ extension MaTextField{
     private func configureEmail(){
         self.placeholderText = "Email"
         self.textContentType = .emailAddress
-        self.setPlaceholderColor(ColorManager.surfaceLight)
+        self.setPlaceholderColor(ColorManager.disabled)
         self.rightIcon = .mail
         addIconsToTextField()
     }
@@ -94,7 +94,7 @@ extension MaTextField{
     private func configurePassword(){
         self.placeholderText = "Password"
         self.textContentType = .password
-        self.setPlaceholderColor(ColorManager.surfaceLight)
+        self.setPlaceholderColor(ColorManager.disabled)
         self.rightIcon = .eyeOff
         addIconsToTextField()
     }
@@ -102,8 +102,8 @@ extension MaTextField{
     private func configureName(){
         self.placeholderText = "Full Name"
         self.textContentType = .name
-        self.setPlaceholderColor(ColorManager.surfaceLight)
-        self.leftIcon = .user
+        self.setPlaceholderColor(ColorManager.disabled)
+        self.rightIcon = .user
         addIconsToTextField()
     }
     
@@ -111,13 +111,13 @@ extension MaTextField{
         self.placeholderText = "Phone"
         self.isSecureTextEntryValue = false
         self.textContentType = .telephoneNumber
-        self.setPlaceholderColor(ColorManager.surfaceLight)
-        self.leftIcon = .phone
+        self.setPlaceholderColor(ColorManager.disabled)
+        self.rightIcon = .phone
         addIconsToTextField()
     }
     
     func addPaddingToTextField() {
-        let paddingView: UIView = UIView.init(frame: CGRect(x: 18, y: 18, width: 18, height: 18))
+        let paddingView: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         self.leftView = paddingView;
         self.leftViewMode = .always;
         self.rightView = paddingView;
@@ -138,14 +138,14 @@ extension MaTextField{
     func addIconsToTextField() {
         if let leftIcon = leftIcon {
             let leftImageView = UIImageView(image: leftIcon)
-            leftImageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+            leftImageView.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
             leftImageView.contentMode = .scaleAspectFit
             self.leftView = leftImageView
             self.leftViewMode = .always
         }
         if let rightIcon = rightIcon {
             let rightImageView = UIImageView(image: rightIcon)
-            rightImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+            rightImageView.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
             rightImageView.contentMode = .scaleAspectFit
             self.rightView = rightImageView
             self.rightViewMode = .always
