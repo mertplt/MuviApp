@@ -17,17 +17,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
-        if let user = Auth.auth().currentUser {
-            let router = TabBarRouter()
-            let viewModel = TabBarViewModel(router: router)
-            let vc = MainTabBarViewController(viewModel: viewModel, router: router)
-            window.rootViewController = vc
+        if Auth.auth().currentUser != nil {
+            // Kullanıcı giriş yapmışsa ana ekrana yönlendir
+            let tabBarRouter = TabBarRouter()
+            let mainTabBarVC = MainTabBarViewController(router: tabBarRouter)
+            window.rootViewController = mainTabBarVC
         } else {
-            let vc = FirstOnboardingViewController(router: FirstOnboardingRouter())
-            let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .horizontal
-            let nav = UINavigationController(rootViewController: vc)
-            window.rootViewController = nav
+            // Kullanıcı giriş yapmamışsa onboarding ekranına yönlendir
+            let firstOnboardingRouter = FirstOnboardingRouter()
+            let firstOnboardingVC = FirstOnboardingViewController(router: firstOnboardingRouter)
+            window.rootViewController = UINavigationController(rootViewController: firstOnboardingVC)
         }
         
         window.backgroundColor = ColorManager.dark

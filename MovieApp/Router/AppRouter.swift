@@ -6,15 +6,19 @@
 //
 
 import UIKit
+import FirebaseAuth
 
-final class AppRouter: Router, AppRouter.Routes {
-    
-    typealias Routes = LoginRoute
+typealias AppRoutes = FirstOnboardingRoute & TabBarRoute
+
+final class AppRouter: Router, AppRoutes {
     
     static let shared = AppRouter()
     
-    func startApp(){
-        placeOnLoginViewController()
+    func startApp() {
+        if Auth.auth().currentUser != nil {
+            pushTabBarViewController()
+        } else {
+            placeOnFirstOnboardingViewController()
+        }
     }
 }
-
