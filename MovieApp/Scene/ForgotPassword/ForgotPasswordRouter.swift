@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class ForgotPasswordRouter: Router, ForgotPasswordRouter.Routes {
-    typealias Routes = LoginRoute
-    
+    typealias ForgotPasswordRoutes = RegisterRoute & LoginRoute
+
+final class ForgotPasswordRouter: Router, ForgotPasswordRoutes {    
     func navigateBack() {
         presentingViewController?.navigationController?.popViewController(animated: true)
     }

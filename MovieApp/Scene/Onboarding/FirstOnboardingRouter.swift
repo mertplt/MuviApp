@@ -7,7 +7,10 @@
 
 import UIKit
 
-final class FirstOnboardingRouter: Router, FirstOnboardingRouter.Routes {
-typealias Routes = LoginRoute 
+
+typealias FirstOnboardingRoutes = RegisterRoute & LoginRoute
+
+
+final class FirstOnboardingRouter: Router, FirstOnboardingRoutes {    
 }
 

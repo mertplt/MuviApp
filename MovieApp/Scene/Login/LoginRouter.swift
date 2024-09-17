@@ -7,7 +7,9 @@
 
 import UIKit
 
-final class LoginRouter: Router, LoginRouter.Routes {
-typealias Routes = RegisterRoute & ForgotPasswordRoute & TabBarRoute
+typealias LoginRoutes = RegisterRoute & ForgotPasswordRoute & TabBarRoute
+
+final class LoginRouter: Router, LoginRoutes {
 }
+
 		

@@ -23,5 +23,3 @@ extension FirstOnboardingRoute where Self: RouterProtocol{
         open(navigationController, transition: transition)
     }
 }
-
-

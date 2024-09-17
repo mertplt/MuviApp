@@ -7,6 +7,7 @@
 
 import UIKit
 
-final class TabBarRouter: Router, TabBarRouter.Routes {
-    typealias Routes = RegisterRoute & LoginRoute
+typealias TabBarRoutes = RegisterRoute & LoginRoute
+
+final class TabBarRouter: Router, TabBarRoutes {
 }
