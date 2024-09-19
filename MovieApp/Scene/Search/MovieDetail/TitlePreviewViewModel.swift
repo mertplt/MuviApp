@@ -30,7 +30,7 @@ class TitlePreviewViewModel {
     func fetchMovieDetails(for movieId: Int) {
         movieService.fetchMovieDetails(for: movieId) { [weak self] result in
             switch result {
-            case .success(let    movie):
+            case .success(let movie):
                 self?.movieDetails = movie
                 self?.onDataUpdated?()
                 self?.fetchMovieCredits(for: movieId)
@@ -86,7 +86,7 @@ class TitlePreviewViewModel {
                 self?.videoID = videoID
                 self?.onDataUpdated?()
             case .failure(let error):
-                self?.onError?(error)
+                print(error.localizedDescription)
             }
         }
     }
@@ -113,7 +113,8 @@ class TitlePreviewViewModel {
         } else if let tvCredits = tvCredits {
             return tvCredits.cast.prefix(5).map { $0.name }.joined(separator: ", ")
         }
-        return "N/A"}
+        return "N/A"
+    }
     
     func getDirector() -> String {
         if let credits = credits {
