@@ -11,7 +11,6 @@ import TinyConstraints
 class MaRatingView: UIView {
     private let ratingLabel = UILabel()
     private let starImageView = UIImageView()
-    private let voteCountLabel = UILabel()
     
     var rating: Double = 0.0 {
         didSet {
@@ -19,17 +18,6 @@ class MaRatingView: UIView {
         }
     }
     
-    var voteCount: Int = 0 {
-        didSet {
-            updateVoteCountLabel()
-        }
-    }
-    
-    var isVoteCountHidden: Bool = false {
-        didSet {
-            voteCountLabel.isHidden = isVoteCountHidden
-        }
-    }
     
     var ratingFont: UIFont = FontManager.bodyAndForms() {
         didSet {
@@ -37,11 +25,6 @@ class MaRatingView: UIView {
         }
     }
     
-    var voteCountFont: UIFont = FontManager.paragraphAndButton() {
-        didSet {
-            voteCountLabel.font = voteCountFont
-        }
-    }
     
     var ratingColor: UIColor = ColorManager.surfaceLight {
         didSet {
@@ -49,11 +32,6 @@ class MaRatingView: UIView {
         }
     }
     
-    var voteCountColor: UIColor = ColorManager.highEmphasis {
-        didSet {
-            voteCountLabel.textColor = voteCountColor
-        }
-    }
     
     var starImage: UIImage = .star {
         didSet {
@@ -74,15 +52,11 @@ class MaRatingView: UIView {
     private func setupUI() {
         addSubview(starImageView)
         addSubview(ratingLabel)
-        addSubview(voteCountLabel)
         
         starImageView.image = starImage
         
         ratingLabel.font = ratingFont
         ratingLabel.textColor = ratingColor
-        
-        voteCountLabel.font = voteCountFont
-        voteCountLabel.textColor = voteCountColor
         
         setupConstraints()
         updateRatingLabel()
@@ -98,9 +72,6 @@ class MaRatingView: UIView {
         ratingLabel.leadingToTrailing(of: starImageView, offset: 4)
         ratingLabel.centerY(to: self)
         
-        voteCountLabel.leading(to: starImageView, offset: 3)
-        voteCountLabel.topToBottom(of: ratingLabel, offset: 5)
-        voteCountLabel.trailingToSuperview()
     }
     
     private func updateRatingLabel() {
@@ -112,12 +83,9 @@ class MaRatingView: UIView {
         numberFormatter.numberStyle = .decimal
         numberFormatter.groupingSeparator = "."
         numberFormatter.groupingSize = 3
-        voteCountLabel.text = numberFormatter.string(from: NSNumber(value: voteCount)) ?? String(voteCount)
     }
     
     func configure(rating: Double, voteCount: Int, isVoteCountHidden: Bool = false) {
         self.rating = rating
-        self.voteCount = voteCount
-        self.isVoteCountHidden = isVoteCountHidden
     }
 }
