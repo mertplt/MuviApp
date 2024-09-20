@@ -24,6 +24,8 @@ class ListView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    private let viewModel = ListViewModel.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
@@ -46,18 +48,22 @@ class ListView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     private func setupUI() {
-        view.addSubview(tableView)
-        tableView.edgesToSuperview()
-        tableView.dataSource = self
-        tableView.delegate = self
-    }
-    
-    private func loadListItems() {
-        ListViewModel.shared.getList { [weak self] items in
-            guard let self = self else { return }
-            self.listItems = items
-        }
-    }
+           view.addSubview(tableView)
+           tableView.edgesToSuperview()
+           tableView.dataSource = self
+           tableView.delegate = self
+        
+            title = "Watchlist"
+           
+           let filterButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(filterButtonTapped))
+           navigationItem.rightBarButtonItem = filterButton
+       }
+              
+       private func loadListItems() {
+           viewModel.getList { [weak self] items in
+               self?.listItems = items
+           }
+       }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listItems.count
@@ -103,6 +109,23 @@ class ListView: UIViewController, UITableViewDataSource, UITableViewDelegate {
             ListViewModel.shared.removeFromList(item)
             loadListItems()
         }
+    }
+    
+    @objc private func filterButtonTapped() {
+        let alertController = UIAlertController(title: "Sort By", message: nil, preferredStyle: .actionSheet)
+        
+        ListViewModel.SortOption.allCases.forEach { option in
+            let action = UIAlertAction(title: option.rawValue, style: .default) { [weak self] _ in
+                self?.viewModel.currentSortOption = option
+                self?.loadListItems()
+            }
+            alertController.addAction(action)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }
 

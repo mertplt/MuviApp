@@ -18,4 +18,6 @@ struct ListItem: Codable {
     let lastAirDate: String?
     let voteAverage: Double?
     let releaseDate: String?
+    let addedDate: Date?
+
 }

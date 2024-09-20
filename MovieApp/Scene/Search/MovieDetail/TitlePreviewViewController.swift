@@ -439,7 +439,8 @@ class TitlePreviewViewController: UIViewController {
                 firstAirDate: nil,
                 lastAirDate: nil,
                 voteAverage: movie.voteAverage,
-                releaseDate: movie.releaseDate
+                releaseDate: movie.releaseDate,
+                addedDate: Date() 
             )
         } else if let tvShow = viewModel.tvShowDetails {
             return ListItem(
@@ -452,7 +453,8 @@ class TitlePreviewViewController: UIViewController {
                 firstAirDate: tvShow.firstAirDate,
                 lastAirDate: tvShow.lastAirDate,
                 voteAverage: tvShow.voteAverage,
-                releaseDate: nil
+                releaseDate: nil,
+                addedDate: Date()
             )
         }
         return nil
