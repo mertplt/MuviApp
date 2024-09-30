@@ -8,38 +8,26 @@
 import Foundation
 
 protocol PersonServiceProtocol {
-    func fetchPersonDetails(for personId: Int, apiKey: String, completion: @escaping (Result<Person, Error>) -> Void)
+    func fetchPersonDetails(for personId: Int, completion: @escaping (Result<Person, Error>) -> Void)
+    func fetchPersonCredits(for personId: Int, completion: @escaping (Result<UserCredits, Error>) -> Void)
 }
 
 class PersonService: PersonServiceProtocol {
     private let networkManager: NetworkManagerProtocol
-    
-    init(networkManager: NetworkManagerProtocol = NetworkManager.shared) {
+    private let apiKey: String
+
+    init(networkManager: NetworkManagerProtocol = NetworkManager.shared, apiKey: String = Config.shared.apiKey ?? "") {
         self.networkManager = networkManager
+        self.apiKey = apiKey
     }
-    
-    func fetchPersonDetails(for personId: Int, apiKey: String, completion: @escaping (Result<Person, Error>) -> Void) {
+
+    func fetchPersonDetails(for personId: Int, completion: @escaping (Result<Person, Error>) -> Void) {
         let request = GetPersonDetailsRequest(apiKey: apiKey, personId: personId)
-        networkManager.requestWithAlamofire(for: request) { (result: Result<Person, Error>) in
-            switch result {
-            case .success(let person):
-                completion(.success(person))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        networkManager.requestWithAlamofire(for: request, result: completion)
     }
-    
-    func fetchPersonCredits(for personId: Int, apiKey: String, completion: @escaping (Result<UserCredits, Error>) -> Void) {
+
+    func fetchPersonCredits(for personId: Int, completion: @escaping (Result<UserCredits, Error>) -> Void) {
         let request = GetPersonCreditsRequest(apiKey: apiKey, personId: personId)
-        networkManager.requestWithAlamofire(for: request) { (result: Result<UserCredits, Error>) in
-            switch result {
-            case .success(let credits):
-                completion(.success(credits))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        networkManager.requestWithAlamofire(for: request, result: completion)
     }
 }
-

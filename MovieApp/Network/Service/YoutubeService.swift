@@ -7,24 +7,28 @@
 
 import Foundation
 
-class YoutubeService {
+protocol YoutubeServiceProtocol {
+    func fetchVideoID(for title: String, completion: @escaping (Result<String, Error>) -> Void)
+}
+
+class YoutubeService: YoutubeServiceProtocol {
     private let networkManager: NetworkManagerProtocol
     private let apiKey: String
-    
+
     init(networkManager: NetworkManagerProtocol = NetworkManager.shared, apiKey: String = Config.shared.youtubeApiKey ?? "") {
         self.networkManager = networkManager
         self.apiKey = apiKey
     }
-    
-    func fetchVideoID(for query: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let request = GetTrailerRequest(apiKey: apiKey, query: query)
+
+    func fetchVideoID(for title: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let request = GetTrailerRequest(apiKey: apiKey, query: title)
         networkManager.requestWithAlamofire(for: request) { (result: Result<YoutubeSearchResponse, Error>) in
             switch result {
             case .success(let response):
                 if let videoID = response.items.first?.id.videoId {
                     completion(.success(videoID))
                 } else {
-                    completion(.failure(APIError.failedToGetData))
+                    completion(.failure(NSError(domain: "No video found", code: -1, userInfo: nil)))
                 }
             case .failure(let error):
                 completion(.failure(error))
