@@ -9,6 +9,7 @@ import UIKit
 import TinyConstraints
 
 final class CollectionViewHeaderReusableView: UICollectionReusableView {
+    
     private let cellTitleLbl: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

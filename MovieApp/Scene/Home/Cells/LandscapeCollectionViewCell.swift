@@ -10,6 +10,7 @@ import SDWebImage
 import TinyConstraints
 
 final class LandscapeCollectionViewCell: UICollectionViewCell {
+    
     private let cellImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill

@@ -18,20 +18,17 @@ class MaRatingView: UIView {
         }
     }
     
-    
     var ratingFont: UIFont = FontManager.bodyAndForms() {
         didSet {
             ratingLabel.font = ratingFont
         }
     }
     
-    
     var ratingColor: UIColor = ColorManager.surfaceLight {
         didSet {
             ratingLabel.textColor = ratingColor
         }
     }
-    
     
     var starImage: UIImage = .star {
         didSet {

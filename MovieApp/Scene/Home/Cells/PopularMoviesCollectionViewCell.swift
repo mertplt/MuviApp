@@ -1,5 +1,5 @@
 //
-//  StoryCollectionViewCell.swift
+//  PopularMoviesCollectionViewCell.swift
 //  MovieApp
 //
 //  Created by Mert Polat on 2.07.2024.
@@ -9,6 +9,7 @@ import UIKit
 import TinyConstraints
 
 final class PopularMoviesCollectionViewCell: UICollectionViewCell {
+    
     private let cellLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

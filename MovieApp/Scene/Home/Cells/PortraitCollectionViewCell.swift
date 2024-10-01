@@ -10,6 +10,7 @@ import TinyConstraints
 import SDWebImage
 
 final class PortraitCollectionViewCell: UICollectionViewCell {
+    
     private let cellImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,6 +25,7 @@ final class PortraitCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
         cellImageView.clipsToBounds = true
+        
         cellImageView.topToSuperview()
         cellImageView.edgesToSuperview()
     }
