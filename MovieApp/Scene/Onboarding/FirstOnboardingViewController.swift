@@ -9,34 +9,33 @@ import UIKit
 import TinyConstraints
 
 final class FirstOnboardingViewController: UIViewController {
-    
-    var router: FirstOnboardingRouter
-    
+
+    private var router: FirstOnboardingRouter
+
     init(router: FirstOnboardingRouter) {
         self.router = router
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    let signInButton: MaButton = {
+
+    private let signInButton: MaButton = {
         let button = MaButton()
         button.style = .largeButtonDark
         button.buttonTitle = "Sign In"
         return button
     }()
     
-    let watchMovieButton: MaButton = {
+    private let watchMovieButton: MaButton = {
         let button = MaButton()
         button.style = .largeButtonYellow
         button.buttonTitle = "Watch Movie"
-        
         return button
     }()
     
-    let headlineLabel: UILabel = {
+    private let headlineLabel: UILabel = {
         let label = UILabel()
         label.font = FontManager.headline1()
         label.textColor = .surfaceLight
@@ -44,38 +43,39 @@ final class FirstOnboardingViewController: UIViewController {
         return label
     }()
     
-    let subHeadlineLabel: UILabel = {
+    private let subHeadlineLabel: UILabel = {
         let label = UILabel()
         label.font = FontManager.subtitleAndMenu()
         label.textColor = .surfaceLight
-        label.text = "Free movie streaming all your needs \n everytime and everywhere."
+        label.text = """
+        Free movie streaming all your needs
+        everytime and everywhere.
+        """
         return label
     }()
     
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .welcome
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        watchMovieButton.addTarget(self, action: #selector(watchMovieButtonTapped(_:)), for: .touchUpInside)
-        
-        signInButton.addTarget(self, action: #selector(signInButtonTapped(_:)), for: .touchUpInside)
-        
-        view.backgroundColor = ColorManager.surfaceDark
-        view.addSubview(imageView)
-        view.addSubview(subHeadlineLabel)
-        view.addSubview(headlineLabel)
-        view.addSubview(watchMovieButton)
-        view.addSubview(signInButton)
-        
-        updateConstraints()
+        configureUI()
+        setupActions()
     }
-    
-    private func updateConstraints() {
+
+    private func configureUI() {
+        view.backgroundColor = ColorManager.surfaceDark
+        [imageView, subHeadlineLabel, headlineLabel, watchMovieButton, signInButton].forEach {
+            view.addSubview($0)
+        }
+        setupConstraints()
+    }
+
+    private func setupConstraints() {
         imageView.leadingToSuperview(offset: 68)
         imageView.topToSuperview(offset: 180)
         
@@ -83,24 +83,29 @@ final class FirstOnboardingViewController: UIViewController {
         headlineLabel.topToSuperview(offset: 468)
         
         subHeadlineLabel.leadingToSuperview(offset: 51)
-        subHeadlineLabel.topToBottom(of: headlineLabel,offset: 8)
+        subHeadlineLabel.topToBottom(of: headlineLabel, offset: 8)
         
         signInButton.centerX(to: self.view)
         signInButton.bottomToSuperview(offset: -50)
         
         watchMovieButton.leading(to: signInButton)
-        watchMovieButton.bottomToTop(of: signInButton,offset: 0)
+        watchMovieButton.bottomToTop(of: signInButton, offset: 0)
     }
-    
-    @objc func watchMovieButtonTapped(_ button: UIButton) {        
+
+    private func setupActions() {
+        watchMovieButton.addTarget(self, action: #selector(watchMovieButtonTapped(_:)), for: .touchUpInside)
+        signInButton.addTarget(self, action: #selector(signInButtonTapped(_:)), for: .touchUpInside)
+    }
+
+    @objc private func watchMovieButtonTapped(_ button: UIButton) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let onboardingVC = OnboardingViewController(collectionViewLayout: layout)
         onboardingVC.modalPresentationStyle = .fullScreen
-        present(onboardingVC,animated: true)
+        present(onboardingVC, animated: true)
     }
-    
-    @objc func signInButtonTapped(_ button: UIButton) {
+
+    @objc private func signInButtonTapped(_ button: UIButton) {
         router.placeOnLoginViewController()
     }
 }

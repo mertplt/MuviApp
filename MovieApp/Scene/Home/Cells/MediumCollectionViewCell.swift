@@ -1,5 +1,5 @@
 //
-//  mediumCollectionViewCell.swift
+//  MediumCollectionViewCell.swift
 //  MovieApp
 //
 //  Created by Mert Polat on 6.07.2024.
@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 
 class MediumCollectionViewCell: UICollectionViewCell {
+    
     private let cellImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -16,13 +17,14 @@ class MediumCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
-        
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(cellImageView)
         contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
         cellImageView.clipsToBounds = true
+        
         cellImageView.edgesToSuperview()
     }
     

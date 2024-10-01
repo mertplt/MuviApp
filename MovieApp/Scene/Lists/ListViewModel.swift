@@ -29,7 +29,7 @@ class ListViewModel {
         Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
             self?.currentUserID = user?.uid
         }
-    }
+    } 
     
     func addToList(_ item: ListItem) {
         guard let userID = currentUserID else { return }

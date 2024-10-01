@@ -9,8 +9,54 @@ import UIKit
 
 final class ForgotPasswordView: UIViewController {
     
-    var viewModel: ForgotPasswordViewModel
-    var router: ForgotPasswordRouter
+    private let viewModel: ForgotPasswordViewModel
+    private let router: ForgotPasswordRouter
+    
+    private let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(.arrowLeft, for: .normal)
+        return button
+    }()
+    
+    private let mainLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Forgot Password?"
+        label.font = FontManager.headline1()
+        label.textColor = ColorManager.surfaceLight
+        return label
+    }()
+    
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Confirm your email and we’ll send\nthe instructions."
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        label.font = FontManager.paragraphAndButton()
+        label.textColor = ColorManager.surfaceLight
+        return label
+    }()
+    
+    private let emailTextField: MaTextField = {
+        let textField = MaTextField()
+        textField.style = .email
+        return textField
+    }()
+    
+    private let emailLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 1, alpha: 0.12)
+        view.height(1.5)
+        view.alpha = 0.12
+        view.width(335)
+        return view
+    }()
+    
+    private let resetPasswordButton: MaButton = {
+        let button = MaButton()
+        button.style = .largeButtonYellow
+        button.buttonTitle = "Reset Password"
+        return button
+    }()
     
     init(viewModel: ForgotPasswordViewModel, router: ForgotPasswordRouter) {
         self.viewModel = viewModel
@@ -22,96 +68,47 @@ final class ForgotPasswordView: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(.arrowLeft, for: .normal)
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    let mainLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Forgot Password?"
-        label.font = FontManager.headline1()
-        label.textColor = ColorManager.surfaceLight
-        return label
-    }()
-    
-    let expLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Confirm your email and we’ll send\nthe instructions."
-        label.textAlignment = .center
-        label.numberOfLines = 2
-        label.font = FontManager.paragraphAndButton()
-        label.textColor = ColorManager.surfaceLight
-        return label
-    }()
-    
-    let emailTextField: MaTextField = {
-        let textField = MaTextField()
-        textField.style = .email
-        return textField
-    }()
-    
-    let emailLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.12)
-        view.height(1.5)
-        view.alpha = 0.12
-        view.width(335)
-        return view
-    }()
-    
-    let resetPasswordButton: MaButton = {
-        let button = MaButton()
-        button.style = .largeButtonYellow
-        button.buttonTitle = "Reset Password"
-        return button
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         configureUI()
-        
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setupNavigationBar() {
         let backBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = backBarButtonItem
     }
     
-    func configureUI() {
+    private func configureUI() {
         view.backgroundColor = ColorManager.surfaceDark
-        view.addSubview(mainLabel)
-        view.addSubview(expLabel)
-        view.addSubview(emailTextField)
-        view.addSubview(backButton)
-        view.addSubview(resetPasswordButton)
-        view.addSubview(emailLineView)
         
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        [mainLabel, descriptionLabel, emailTextField, emailLineView, resetPasswordButton].forEach {
+            view.addSubview($0)
+        }
         
+        layoutUI()
+    }
+    
+    private func layoutUI() {
         mainLabel.topToSuperview(offset: 127)
-        mainLabel.centerX(to: self.view)
+        mainLabel.centerX(to: view)
         
-        expLabel.topToBottom(of: mainLabel, offset: 9)
-        expLabel.leading(to: mainLabel)
+        descriptionLabel.topToBottom(of: mainLabel, offset: 9)
+        descriptionLabel.leading(to: mainLabel)
         
         emailTextField.leadingToSuperview(offset: 20)
-        emailTextField.topToBottom(of: expLabel, offset: 24)
+        emailTextField.topToBottom(of: descriptionLabel, offset: 24)
         
         emailLineView.topToBottom(of: emailTextField, offset: 0)
         emailLineView.leading(to: emailTextField)
         emailLineView.trailing(to: emailTextField)
         
         resetPasswordButton.topToBottom(of: emailTextField, offset: 40)
-        resetPasswordButton.centerX(to: self.view)
+        resetPasswordButton.centerX(to: view)
     }
     
-    @objc func backButtonTapped() {
+    @objc private func backButtonTapped() {
         router.navigateBack()
     }
-}
-
-#Preview {
-    let router = ForgotPasswordRouter()
-    let viewModel = ForgotPasswordViewModel(router: router)
-    return ForgotPasswordView(viewModel: viewModel, router: router)
 }
