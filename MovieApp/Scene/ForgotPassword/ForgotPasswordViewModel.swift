@@ -18,7 +18,5 @@ class ForgotPasswordViewModel {
         guard let email = email, !email.isEmpty else {
             return
         }
-        
-        let model = ForgotPasswordModel(email: email)
     }
 }

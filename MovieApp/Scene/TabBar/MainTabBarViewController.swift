@@ -7,13 +7,11 @@
 
 import UIKit
 
-class MainTabBarViewController: UITabBarController {
+final class MainTabBarViewController: UITabBarController {
     
-    var viewModel: TabBarViewModel
     var router: TabBarRouter
     
-    init(viewModel: TabBarViewModel, router: TabBarRouter) {
-        self.viewModel = viewModel
+    init(router: TabBarRouter) {
         self.router = router
         super.init(nibName: nil, bundle: nil)
     }
@@ -24,30 +22,36 @@ class MainTabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureTabBar()
+        setupViewControllers()
+    }
+    
+    private func configureTabBar() {
+        tabBar.barTintColor = ColorManager.dark
+        tabBar.tintColor = ColorManager.primary
+        tabBar.unselectedItemTintColor = ColorManager.highEmphasis
+        self.navigationItem.hidesBackButton = true
+    }
+
+    private func setupViewControllers() {
         let homeRouter = HomeRouter()
         let homeViewModel = HomeViewModel(router: homeRouter)
         
-        self.navigationItem.hidesBackButton = true
+        let homeVC = UINavigationController(rootViewController: HomeView(viewModel: homeViewModel, router: homeRouter))
+        let searchVC = UINavigationController(rootViewController: SearchViewController())
+        let listVC = UINavigationController(rootViewController: ListView())
+        let profileVC = UINavigationController(rootViewController: MoreView())
         
-        tabBar.barTintColor = UIColor.black
-        tabBar.tintColor = ColorManager.primary
-        tabBar.unselectedItemTintColor = ColorManager.highEmphasis
+        homeVC.tabBarItem.image = UIImage(named: "home")
+        searchVC.tabBarItem.image = UIImage(named: "search")
+        listVC.tabBarItem.image = UIImage(named: "folder")
+        profileVC.tabBarItem.image = UIImage(named: "grid")
         
-        let vc1 = UINavigationController(rootViewController: HomeView(viewModel: homeViewModel, router: homeRouter))
-        let vc2 = UINavigationController(rootViewController: SearchViewController())
-        let vc3 = UINavigationController(rootViewController: ListView())
-        let vc4 = UINavigationController(rootViewController: MoreView())
+        homeVC.title = "Home"
+        searchVC.title = "Search"
+        listVC.title = "Lists"
+        profileVC.title = "Profile"
         
-        vc1.tabBarItem.image = UIImage(named: "home")
-        vc2.tabBarItem.image = UIImage(named: "search")
-        vc3.tabBarItem.image = UIImage(named: "folder")
-        vc4.tabBarItem.image = UIImage(named: "grid")
-        
-        vc1.title = "Home"
-        vc2.title = "Search"
-        vc3.title = "Lists"
-        vc4.title = "Profile"
-        
-        setViewControllers([vc1, vc2, vc3, vc4], animated: true)
+        setViewControllers([homeVC, searchVC, listVC, profileVC], animated: true)
     }
 }

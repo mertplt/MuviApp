@@ -42,6 +42,11 @@ class SearchResultViewController: UIViewController {
         super.viewDidLayoutSubviews()
         searchResultCollectionView.frame = view.bounds
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
     
     private func setupBindings() {
         viewModel.onMoviesChanged = { [weak self] in
@@ -92,8 +97,4 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         
         delegate?.searchResultViewControllerDidTapItem(titlePreviewViewModel)
     }
-}
-
-#Preview{
-    SearchResultViewController()
 }

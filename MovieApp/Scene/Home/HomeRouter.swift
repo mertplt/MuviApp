@@ -7,6 +7,11 @@
 
 import UIKit
 
-final class HomeRouter: Router, HomeRouter.Routes {
-    typealias Routes = RegisterRoute & LoginRoute & ForgotPasswordRoute
+import UIKit
+
+protocol HomeRoutes: AnyObject {
+    typealias Routes = RegisterRoute & LoginRoute
+}
+
+final class HomeRouter: Router, HomeRoutes {
 }

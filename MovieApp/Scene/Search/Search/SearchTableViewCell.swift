@@ -11,7 +11,7 @@ import TinyConstraints
 
 class SearchTableViewCell: UITableViewCell {
     static let identifier = "TitleTableViewCell"
-    let viewModel = SearchViewModel()
+    let viewModel = SearchViewModel(movieService: MovieService(), tvShowService: TVShowService())
     
     private let containerView: UIView = {
         let view = UIView()

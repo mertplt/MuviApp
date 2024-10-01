@@ -114,35 +114,21 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         view.backgroundColor = ColorManager.surfaceDark
         setupUI()
         fetchUserProfile()
+        setupCustomBackButton()
     }
     
-    private func fetchUserProfile() {
-        viewModel.fetchUserProfile { [weak self] result in
-            switch result {
-            case .success():
-                self?.updateUI()
-            case .failure(let error):
-                print("Failed to fetch user profile: \(error.localizedDescription)")
-            }
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        emailTextField.text = Auth.auth().currentUser?.email
     }
     
-    private func updateUI() {
-        if let userProfile = viewModel.userProfile {
-            nameTextField.text = userProfile.name
-            emailTextField.text = Auth.auth().currentUser?.email
-            phoneNumberTextField.text = userProfile.phone
-            if let profileImageURL = userProfile.profileImageURL, let url = URL(string: profileImageURL) {
-                profileImageView.sd_setImage(
-                    with: url,
-                    placeholderImage: UIImage(named: "default_profile_image"),
-                    options: [.progressiveLoad, .refreshCached],
-                    completed: nil
-                )
-            }
-        }
+    private func setupCustomBackButton() {
+        let backButton = UIButton(type: .system)
+        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        backButton.tintColor = ColorManager.primary
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        let backBarButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = backBarButtonItem
     }
-    
     
     private func setupUI() {
         [phoneLineView, phoneLabel, emailLineView, emailLabel, nameLineView, nameLabel, profileImageView, cameraImageView, phoneNumberTextField, emailTextField, nameTextField, saveButton].forEach {
@@ -156,21 +142,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         setupConstraints()
     }
     
-    
-    @objc func chooseImage(){
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        pickerController.sourceType = .photoLibrary
-        present(pickerController, animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        profileImageView.image = info[.originalImage] as? UIImage
-        self.dismiss(animated: true,completion: nil)
-    }
-    
     private func setupConstraints(){
-        
         profileImageView.topToSuperview(offset: 132)
         profileImageView.centerXToSuperview()
         profileImageView.width(100)
@@ -218,6 +190,45 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         saveButton.centerXToSuperview()
     }
     
+    @objc func chooseImage(){
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.sourceType = .photoLibrary
+        present(pickerController, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        profileImageView.image = info[.originalImage] as? UIImage
+        self.dismiss(animated: true,completion: nil)
+    }
+    
+    private func fetchUserProfile() {
+        viewModel.fetchUserProfile { [weak self] result in
+            switch result {
+            case .success():
+                self?.updateUI()
+            case .failure(let error):
+                print("Failed to fetch user profile: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func updateUI() {
+        if let userProfile = viewModel.userProfile {
+            nameTextField.text = userProfile.name
+            emailTextField.text = Auth.auth().currentUser?.email
+            phoneNumberTextField.text = userProfile.phone
+            if let profileImageURL = userProfile.profileImageURL, let url = URL(string: profileImageURL) {
+                profileImageView.sd_setImage(
+                    with: url,
+                    placeholderImage: UIImage(named: "default_profile_image"),
+                    options: [.progressiveLoad, .refreshCached],
+                    completed: nil
+                )
+            }
+        }
+    }
+    
     @objc func saveButtonTapped(_ sender: Any) {
            guard let name = nameTextField.text,
                  let email = emailTextField.text,
@@ -237,14 +248,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                }
            }
        }
-       
-       private func showAlert(title: String, message: String) {
+    
+    private func showAlert(title: String, message: String) {
            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
            present(alert, animated: true, completion: nil)
        }
-}
-
-#Preview{
-    EditProfileViewController()
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
 }

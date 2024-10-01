@@ -33,7 +33,6 @@ final class LoginView: UIViewController {
     private let emailTextField: MaTextField = {
         let textField = MaTextField()
         textField.style = .email
-        textField.text = "test1@test.com"
         return textField
     }()
     
@@ -49,7 +48,6 @@ final class LoginView: UIViewController {
     private let passwordTextField: MaTextField = {
         let textField = MaTextField()
         textField.style = .password
-        textField.text = "Test123"
         return textField
     }()
     

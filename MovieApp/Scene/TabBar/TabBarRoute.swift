@@ -14,8 +14,7 @@ protocol TabBarRoute {
 extension TabBarRoute where Self: RouterProtocol {
     func pushTabBarViewController() {
         let router = TabBarRouter()
-        let viewModel = TabBarViewModel(router: router)
-        let viewController = MainTabBarViewController(viewModel: viewModel, router: router)
+        let viewController = MainTabBarViewController(router: router)
         let transition = PushTransition()
         
         router.presentingViewController = viewController

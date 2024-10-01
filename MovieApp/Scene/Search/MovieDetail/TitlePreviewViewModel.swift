@@ -8,25 +8,25 @@
 import Foundation
 
 class TitlePreviewViewModel {
-    private let movieService: MovieService
-    private let youtubeService: YoutubeService
-    private let tvShowService: TVShowService
-    
+    private let movieService: MovieServiceProtocol
+    private let youtubeService: YoutubeServiceProtocol
+    private let tvShowService: TVShowServiceProtocol
+
     private(set) var movieDetails: Movie?
     private(set) var tvShowDetails: TVShow?
     private(set) var credits: Credits?
     private(set) var tvCredits: TVCredits?
     private(set) var videoID: String?
-    
+
     var onDataUpdated: (() -> Void)?
     var onError: ((Error) -> Void)?
-    
-    init(movieService: MovieService, youtubeService: YoutubeService, tvShowService: TVShowService) {
+
+    init(movieService: MovieServiceProtocol, youtubeService: YoutubeServiceProtocol, tvShowService: TVShowServiceProtocol) {
         self.movieService = movieService
         self.youtubeService = youtubeService
         self.tvShowService = tvShowService
     }
-    
+
     func fetchMovieDetails(for movieId: Int) {
         movieService.fetchMovieDetails(for: movieId) { [weak self] result in
             switch result {
@@ -40,7 +40,7 @@ class TitlePreviewViewModel {
             }
         }
     }
-    
+
     func fetchTVShowDetails(for tvShowId: Int) {
         tvShowService.fetchTVShowDetails(for: tvShowId) { [weak self] result in
             switch result {
@@ -54,8 +54,8 @@ class TitlePreviewViewModel {
             }
         }
     }
-    
-    func fetchMovieCredits(for movieId: Int) {
+
+    private func fetchMovieCredits(for movieId: Int) {
         movieService.fetchMovieCredits(for: movieId) { [weak self] result in
             switch result {
             case .success(let credits):
@@ -66,8 +66,8 @@ class TitlePreviewViewModel {
             }
         }
     }
-    
-    func fetchTVShowCredits(for tvShowId: Int) {
+
+    private func fetchTVShowCredits(for tvShowId: Int) {
         tvShowService.fetchTVShowCredits(for: tvShowId) { [weak self] result in
             switch result {
             case .success(let tvCredits):
@@ -78,9 +78,9 @@ class TitlePreviewViewModel {
             }
         }
     }
-    
-    func fetchYoutubeVideo(for title: String) {
-        youtubeService.fetchVideoID(for: title + " trailer") { [weak self] result in
+
+    private func fetchYoutubeVideo(for title: String) {
+        youtubeService.fetchVideoID(for: "\(title) trailer") { [weak self] result in
             switch result {
             case .success(let videoID):
                 self?.videoID = videoID

@@ -228,4 +228,3 @@ class MoreView: UIViewController {
     }
 
 }
-

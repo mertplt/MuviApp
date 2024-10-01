@@ -34,7 +34,6 @@ class RegisterViewModel {
             return
         }
         
-        // Use Firebase Authentication to register the user
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 
@@ -42,10 +41,6 @@ class RegisterViewModel {
             } else {
                 print("User successfully registered.")
                 
-                //  let user = authResult?.user
-                //  user?.updateProfile(withDisplayName: "YourDisplayName") { error in
-                //      // Handle any errors updating the profile
-                //  }
                 self.router.pushTabBarViewController()
             }
         }

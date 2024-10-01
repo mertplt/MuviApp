@@ -8,34 +8,34 @@
 import Foundation
 
 class CastDetailsViewModel {
-    private let personService: PersonService
-    private let apiKey: String
-    
+    private let personService: PersonServiceProtocol
+    private let personId: Int
     private(set) var castDetails: Person?
     private(set) var movieCredits: UserCredits?
-    
+
     var onDataUpdated: (() -> Void)?
     var onError: ((Error) -> Void)?
-    
-    init(personService: PersonService, apiKey: String) {
+
+    init(personId: Int, personService: PersonServiceProtocol) {
+        self.personId = personId
         self.personService = personService
-        self.apiKey = apiKey
+        fetchCastDetails()
     }
-    
-    func fetchCastDetails(for personId: Int) {
-        personService.fetchPersonDetails(for: personId, apiKey: apiKey) { [weak self] result in
+
+    private func fetchCastDetails() {
+        personService.fetchPersonDetails(for: personId) { [weak self] result in
             switch result {
             case .success(let person):
                 self?.castDetails = person
-                self?.fetchMovieCredits(for: personId)
+                self?.fetchMovieCredits()
             case .failure(let error):
                 self?.onError?(error)
             }
         }
     }
-    
-    private func fetchMovieCredits(for personId: Int) {
-        personService.fetchPersonCredits(for: personId, apiKey: apiKey) { [weak self] result in
+
+    private func fetchMovieCredits() {
+        personService.fetchPersonCredits(for: personId) { [weak self] result in
             switch result {
             case .success(let credits):
                 self?.movieCredits = credits
@@ -44,5 +44,24 @@ class CastDetailsViewModel {
                 self?.onError?(error)
             }
         }
+    }
+
+    func getBirthdayWithAge() -> String {
+        guard let birthday = castDetails?.birthday else {
+            return "N/A"
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        guard let birthDate = dateFormatter.date(from: birthday) else {
+            return birthday
+        }
+
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: Date())
+        let age = ageComponents.year ?? 0
+
+        return "\(birthday) (Age: \(age))"
     }
 }

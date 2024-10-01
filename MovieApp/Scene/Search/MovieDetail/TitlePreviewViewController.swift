@@ -11,20 +11,9 @@ import TinyConstraints
 import SDWebImage
 import SafariServices
 
-class TitlePreviewViewController: UIViewController {
-    private var viewModel: TitlePreviewViewModel
+class TitlePreviewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    private let viewModel: TitlePreviewViewModel
     private var isOverviewExpanded = false
-
-    init(viewModel: TitlePreviewViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - UI Elements
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -179,78 +168,71 @@ class TitlePreviewViewController: UIViewController {
         return button
     }()
 
-    // MARK: - View Lifecycle
+
+    init(viewModel: TitlePreviewViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        bindViewModel()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        bindViewModel()
         setupGradientLayers()
-        setupBackButton()
-    }
-
-    private func setupGradientLayers() {
-        backdropImageView.layer.addSublayer(topGradientLayer)
-        backdropImageView.layer.addSublayer(bottomGradientLayer)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateGradientFrames()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated) // Navigation bar'ı gizliyoruz
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(true, animated: animated) // Navigation bar'ı gizliyoruz
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated) // Navigation bar'ı geri getiriyoruz
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
-    // MARK: - UI Setup
 
     private func setupUI() {
         view.backgroundColor = ColorManager.surfaceDark
 
         view.addSubview(scrollView)
         scrollView.edgesToSuperview()
-        
-        self.navigationItem.hidesBackButton = true
 
         scrollView.addSubview(contentView)
         contentView.edgesToSuperview()
         contentView.width(to: scrollView)
 
-        [
-            backdropImageView,
-            posterImageView,
-            titleLabel,
-            infoStackView,
-            genresLabel,
-            overviewLabel,
-            expandOverviewButton,
-            directorLabel,
-            castCollectionView,
-            trailerButton,
-            addListButton
-        ].forEach {
-            contentView.addSubview($0)
-        }
-
         view.addSubview(backButton)
-
-        backdropImageView.edgesToSuperview(excluding: .bottom)
-        backdropImageView.height(230)
-
         backButton.topToSuperview(offset: 75)
         backButton.leadingToSuperview(offset: 20)
         backButton.size(CGSize(width: 40, height: 40))
+
+        contentView.addSubview(backdropImageView)
+        contentView.addSubview(posterImageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(infoStackView)
+        contentView.addSubview(genresLabel)
+        contentView.addSubview(overviewLabel)
+        contentView.addSubview(expandOverviewButton)
+        contentView.addSubview(directorLabel)
+        contentView.addSubview(castCollectionView)
+        contentView.addSubview(trailerButton)
+        contentView.addSubview(addListButton)
+
+        backdropImageView.topToSuperview()
+        backdropImageView.leadingToSuperview()
+        backdropImageView.trailingToSuperview()
+        backdropImageView.height(230)
 
         posterImageView.topToBottom(of: backdropImageView, offset: -50)
         posterImageView.leadingToSuperview(offset: 20)
@@ -259,7 +241,6 @@ class TitlePreviewViewController: UIViewController {
         titleLabel.topToBottom(of: backdropImageView, offset: -10)
         titleLabel.leadingToTrailing(of: posterImageView, offset: 20)
         titleLabel.trailingToSuperview(offset: 20)
-        
 
         [runtimeLabel, releaseDateLabel, ratingView].forEach { view in
             infoStackView.addArrangedSubview(view)
@@ -270,8 +251,12 @@ class TitlePreviewViewController: UIViewController {
         }
 
         genresLabel.topToBottom(of: titleLabel, offset: 10)
-        genresLabel.leadingToTrailing(of: posterImageView,offset: 20)
+        genresLabel.leadingToTrailing(of: posterImageView, offset: 20)
         genresLabel.trailingToSuperview(offset: 20)
+
+        infoStackView.topToBottom(of: posterImageView, offset: 20)
+        infoStackView.leading(to: posterImageView)
+        infoStackView.trailingToSuperview(offset: 175)
 
         overviewLabel.topToBottom(of: infoStackView, offset: 20)
         overviewLabel.leadingToSuperview(offset: 20)
@@ -280,19 +265,14 @@ class TitlePreviewViewController: UIViewController {
         expandOverviewButton.topToBottom(of: overviewLabel, offset: 5)
         expandOverviewButton.leadingToSuperview(offset: 20)
 
-                
-        infoStackView.topToBottom(of: posterImageView, offset: 20)
-        infoStackView.leading(to: posterImageView)
-        infoStackView.trailingToSuperview(offset: 175)
-        
         directorLabel.topToBottom(of: expandOverviewButton, offset: 10)
         directorLabel.leadingToSuperview(offset: 20)
         directorLabel.trailingToSuperview(offset: 20)
 
-        castCollectionView.topToBottom(of: directorLabel, offset: 20)
+        castCollectionView.topToBottom(of: directorLabel, offset: -30)
         castCollectionView.leadingToSuperview(offset: 20)
         castCollectionView.trailingToSuperview(offset: 20)
-        castCollectionView.height(250)
+        castCollectionView.height(270)
 
         trailerButton.topToBottom(of: castCollectionView, offset: 20)
         trailerButton.leadingToSuperview(offset: 20)
@@ -302,7 +282,19 @@ class TitlePreviewViewController: UIViewController {
         addListButton.bottomToSuperview(offset: -20)
     }
 
-    // MARK: - ViewModel Binding
+    private func setupGradientLayers() {
+        backdropImageView.layer.addSublayer(topGradientLayer)
+        backdropImageView.layer.addSublayer(bottomGradientLayer)
+    }
+
+    private func updateGradientFrames() {
+        let height = backdropImageView.bounds.height
+        let width = backdropImageView.bounds.width
+        let gradientHeight = height * 0.3
+
+        topGradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: gradientHeight)
+        bottomGradientLayer.frame = CGRect(x: 0, y: height - gradientHeight, width: width, height: gradientHeight)
+    }
 
     private func bindViewModel() {
         viewModel.onDataUpdated = { [weak self] in
@@ -318,67 +310,59 @@ class TitlePreviewViewController: UIViewController {
         }
     }
 
-    // MARK: - UI Update Methods
-
-    private func updateGradientFrames() {
-        let height = backdropImageView.bounds.height
-        let width = backdropImageView.bounds.width
-        let gradientHeight = height * 0.3
-
-        topGradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: gradientHeight)
-        bottomGradientLayer.frame = CGRect(x: 0, y: height - gradientHeight, width: width, height: gradientHeight)
-    }
     private func updateUI() {
         updateAddListButton()
 
         if let movie = viewModel.movieDetails {
-            titleLabel.text = movie.title
-            overviewLabel.text = movie.overview
-            ratingView.configure(rating: movie.voteAverage ?? 0.0, voteCount: movie.voteCount ?? 0)
-            genresLabel.text = viewModel.getFormattedGenres()
-            runtimeLabel.text = viewModel.getFormattedRuntime()
-            releaseDateLabel.text = viewModel.getFormattedReleaseDate()
-            infoStackView.trailingToSuperview(offset: 20)
-
-            if let posterPath = movie.posterPath {
-                let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
-                posterImageView.sd_setImage(with: url, completed: nil)
-            }
-
-            if let backdropPath = movie.backdropPath {
-                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(backdropPath)")
-                backdropImageView.sd_setImage(with: url, completed: nil)
-            }
-            
+            configureUI(with: movie)
         } else if let tvShow = viewModel.tvShowDetails {
-            titleLabel.text = tvShow.name
-            overviewLabel.text = tvShow.overview
-            ratingView.configure(rating: tvShow.voteAverage ?? 0.0, voteCount: tvShow.voteCount ?? 0)
-            genresLabel.text = viewModel.getFormattedGenres()
-            runtimeLabel.isHidden = true
-            releaseDateLabel.text = viewModel.getFormattedReleaseDate()
-            infoStackView.trailingToSuperview(offset: 75)
-
-            if let posterPath = tvShow.posterPath {
-                let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
-                posterImageView.sd_setImage(with: url, completed: nil)
-            }
-
-            if let backdropPath = tvShow.backdropPath {
-                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(backdropPath)")
-                backdropImageView.sd_setImage(with: url, completed: nil)
-            }
+            configureUI(with: tvShow)
         }
-
-        if viewModel.credits != nil {
-            directorLabel.text = "Directed by \(viewModel.getDirector())"
-        } else if viewModel.tvCredits != nil {
-            directorLabel.text = "\(viewModel.getDirector())"
-        }
+        
         castCollectionView.reloadData()
     }
 
-    // MARK: - Button Actions
+    private func configureUI(with movie: Movie) {
+        titleLabel.text = movie.title
+        overviewLabel.text = movie.overview
+        ratingView.configure(rating: movie.voteAverage ?? 0.0, voteCount: movie.voteCount ?? 0)
+        genresLabel.text = viewModel.getFormattedGenres()
+        runtimeLabel.text = viewModel.getFormattedRuntime()
+        directorLabel.text = "Directed by \(viewModel.getDirector())"
+        releaseDateLabel.text = viewModel.getFormattedReleaseDate()
+        infoStackView.trailingToSuperview(offset: 20)
+
+        if let posterPath = movie.posterPath {
+            let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
+            posterImageView.sd_setImage(with: url, completed: nil)
+        }
+
+        if let backdropPath = movie.backdropPath {
+            let url = URL(string: "https://image.tmdb.org/t/p/w1280\(backdropPath)")
+            backdropImageView.sd_setImage(with: url, completed: nil)
+        }
+    }
+
+    private func configureUI(with tvShow: TVShow) {
+        titleLabel.text = tvShow.name
+        overviewLabel.text = tvShow.overview
+        ratingView.configure(rating: tvShow.voteAverage ?? 0.0, voteCount: tvShow.voteCount ?? 0)
+        genresLabel.text = viewModel.getFormattedGenres()
+        runtimeLabel.isHidden = true
+        directorLabel.text = "\(viewModel.getDirector())"
+        releaseDateLabel.text = viewModel.getFormattedReleaseDate()
+        infoStackView.trailingToSuperview(offset: 75)
+
+        if let posterPath = tvShow.posterPath {
+            let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
+            posterImageView.sd_setImage(with: url, completed: nil)
+        }
+
+        if let backdropPath = tvShow.backdropPath {
+            let url = URL(string: "https://image.tmdb.org/t/p/w1280\(backdropPath)")
+            backdropImageView.sd_setImage(with: url, completed: nil)
+        }
+    }
 
     @objc private func toggleOverview() {
         isOverviewExpanded.toggle()
@@ -390,16 +374,12 @@ class TitlePreviewViewController: UIViewController {
     }
 
     @objc private func watchTrailerTapped() {
-        if let videoID = viewModel.videoID {
-            guard let url = URL(string: "https://www.youtube.com/watch?v=\(videoID)") else {
-                showAlert(title: "Trailer Unavailable", message: "Invalid video URL.")
-                return
-            }
-            let safariVC = SFSafariViewController(url: url)
-            present(safariVC, animated: true, completion: nil)
-        } else {
+        guard let videoID = viewModel.videoID, let url = URL(string: "https://www.youtube.com/watch?v=\(videoID)") else {
             showAlert(title: "Trailer Unavailable", message: "Sorry, the trailer is not available at the moment.")
+            return
         }
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true, completion: nil)
     }
 
     private func updateAddListButton() {
@@ -425,8 +405,6 @@ class TitlePreviewViewController: UIViewController {
         }
     }
 
-    // MARK: - Helper Methods
-
     private func createListItem() -> ListItem? {
         if let movie = viewModel.movieDetails {
             return ListItem(
@@ -440,7 +418,7 @@ class TitlePreviewViewController: UIViewController {
                 lastAirDate: nil,
                 voteAverage: movie.voteAverage,
                 releaseDate: movie.releaseDate,
-                addedDate: Date() 
+                addedDate: Date()
             )
         } else if let tvShow = viewModel.tvShowDetails {
             return ListItem(
@@ -466,23 +444,14 @@ class TitlePreviewViewController: UIViewController {
 
     private func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-
-    private func setupBackButton() {
-        backButton.removeTarget(nil, action: nil, for: .allEvents)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
-}
 
-// MARK: - UICollectionViewDataSource & Delegate
-
-extension TitlePreviewViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let credits = viewModel.credits {
             return credits.cast.count
@@ -508,23 +477,23 @@ extension TitlePreviewViewController: UICollectionViewDataSource, UICollectionVi
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 230)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let personId: Int
+        if let credits = viewModel.credits {
+            personId = credits.cast[indexPath.row].id
+        } else if let tvCredits = viewModel.tvCredits {
+            personId = tvCredits.cast[indexPath.row].id
+        } else {
+            return
+        }
+
+        let personService = PersonService()
+        let castDetailsViewModel = CastDetailsViewModel(personId: personId, personService: personService)
+        let castDetailsVC = CastDetailsViewController(personId: personId, personService: personService)
+        navigationController?.pushViewController(castDetailsVC, animated: true)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let credits = viewModel.credits {
-            let castMember = credits.cast[indexPath.row]
-            let viewModel = CastDetailsViewModel(personService: PersonService(), apiKey: Config.shared.apiKey ?? "")
-            viewModel.fetchCastDetails(for: castMember.id)
-            let castDetailsVC = CastDetailsViewController(viewModel: viewModel)
-            self.navigationController?.pushViewController(castDetailsVC, animated: true)
-        } else if let tvCredits = viewModel.tvCredits {
-            let castMember = tvCredits.cast[indexPath.row]
-            let viewModel = CastDetailsViewModel(personService: PersonService(), apiKey: Config.shared.apiKey ?? "")
-            viewModel.fetchCastDetails(for: castMember.id)
-            let castDetailsVC = CastDetailsViewController(viewModel: viewModel)
-            self.navigationController?.pushViewController(castDetailsVC, animated: true)
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 150)
     }
 }

@@ -1,30 +1,11 @@
-//
-//  CastDetailViewController.swift
-//  MovieApp
-//
-//  Created by Mert Polat on 03.09.24.
-//
-
 import UIKit
 import SDWebImage
 import TinyConstraints
 
-class CastDetailsViewController: UIViewController {
+class CastDetailsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private let viewModel: CastDetailsViewModel
     private var isBiographyExpanded = false
 
-    // MARK: - Initialization
-
-    init(viewModel: CastDetailsViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - UI Elements
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -101,15 +82,23 @@ class CastDetailsViewController: UIViewController {
         collectionView.delegate = self
         return collectionView
     }()
+    
 
-    // MARK: - View Lifecycle
+    init(personId: Int, personService: PersonServiceProtocol = PersonService()) {
+        self.viewModel = CastDetailsViewModel(personId: personId, personService: personService)
+        super.init(nibName: nil, bundle: nil)
+        bindViewModel()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        bindViewModel()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -120,7 +109,6 @@ class CastDetailsViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
-    // MARK: - UI Setup
 
     private func setupUI() {
         view.backgroundColor = ColorManager.surfaceDark
@@ -167,6 +155,8 @@ class CastDetailsViewController: UIViewController {
          movieCreditsCollectionView.trailingToSuperview(offset: 20)
          movieCreditsCollectionView.height(200)
          movieCreditsCollectionView.bottomToSuperview(offset: -20)
+        
+        self.navigationItem.hidesBackButton = true
     }
 
     private func setupInfoStackView() {
@@ -207,7 +197,6 @@ class CastDetailsViewController: UIViewController {
         return containerView
     }
 
-    // MARK: - ViewModel Binding
 
     private func bindViewModel() {
         viewModel.onDataUpdated = { [weak self] in
@@ -223,36 +212,33 @@ class CastDetailsViewController: UIViewController {
         }
     }
 
-    // MARK: - UI Update Methods
 
     private func updateUI() {
-        if let castDetails = viewModel.castDetails {
-            nameLabel.text = castDetails.name
+        guard let castDetails = viewModel.castDetails else { return }
 
-            if let profilePath = castDetails.profilePath {
-                let url = URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)")
-                profileImageView.sd_setImage(with: url, completed: nil)
-            } else {
-                profileImageView.image = UIImage(named: "default-profile")
-            }
+        nameLabel.text = castDetails.name
 
-            biographyLabel.text = castDetails.biography ?? "No biography available."
+        if let profilePath = castDetails.profilePath {
+            let url = URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)")
+            profileImageView.sd_setImage(with: url, completed: nil)
+        } else {
+            profileImageView.image = UIImage(named: "default-profile")
+        }
 
-            // Update info items
-            if let birthdayLabel = infoStackView.arrangedSubviews[0].subviews.last as? UILabel {
-                birthdayLabel.text = castDetails.birthday ?? "N/A"
-            }
-            if let placeOfBirthLabel = infoStackView.arrangedSubviews[1].subviews.last as? UILabel {
-                placeOfBirthLabel.text = castDetails.placeOfBirth ?? "N/A"
-                placeOfBirthLabel.numberOfLines = 2
-                placeOfBirthLabel.textAlignment = .justified
-            }
+        biographyLabel.text = castDetails.biography ?? "No biography available."
+
+        if let birthdayLabel = infoStackView.arrangedSubviews[0].subviews.last as? UILabel {
+            birthdayLabel.text = viewModel.getBirthdayWithAge()
+        }
+        if let placeOfBirthLabel = infoStackView.arrangedSubviews[1].subviews.last as? UILabel {
+            placeOfBirthLabel.text = castDetails.placeOfBirth ?? "N/A"
+            placeOfBirthLabel.numberOfLines = 2
+            placeOfBirthLabel.textAlignment = .justified
         }
 
         movieCreditsCollectionView.reloadData()
     }
 
-    // MARK: - Button Actions
 
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
@@ -267,18 +253,14 @@ class CastDetailsViewController: UIViewController {
         }
     }
 
-    // MARK: - Helper Methods
 
     private func showError(_ error: Error) {
-        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Error", message: "An error occurred: \(error.localizedDescription)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-}
 
-// MARK: - UICollectionViewDataSource & Delegate
 
-extension CastDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.movieCredits?.cast.count ?? 0
     }
@@ -288,31 +270,36 @@ extension CastDetailsViewController: UICollectionViewDataSource, UICollectionVie
             return UICollectionViewCell()
         }
 
-        if let movie = viewModel.movieCredits?.cast[indexPath.row] {
-            cell.configure(with: movie.id) // Movie ID'sini geçiriyoruz
+        if let credit = viewModel.movieCredits?.cast[indexPath.row] {
+            let posterURL: URL?
+            if let posterPath = credit.posterPath {
+                posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
+            } else {
+                posterURL = nil
+            }
+            cell.configure(with: posterURL)
         }
 
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 150)
-    }
-
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let movieCredits = viewModel.movieCredits else { return }
-
-        let selectedCredit = movieCredits.cast[indexPath.row]
+        guard let credits = viewModel.movieCredits else { return }
+        let selectedCredit = credits.cast[indexPath.row]
 
         let titlePreviewViewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService(), tvShowService: TVShowService())
-        
+
         if selectedCredit.mediaType == .movie {
             titlePreviewViewModel.fetchMovieDetails(for: selectedCredit.id)
-        } else {
+        } else if selectedCredit.mediaType == .tv {
             titlePreviewViewModel.fetchTVShowDetails(for: selectedCredit.id)
         }
 
         let titlePreviewVC = TitlePreviewViewController(viewModel: titlePreviewViewModel)
         navigationController?.pushViewController(titlePreviewVC, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 150)
     }
 }

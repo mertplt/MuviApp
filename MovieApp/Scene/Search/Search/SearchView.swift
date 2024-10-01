@@ -1,5 +1,5 @@
 //
-//  SearchView.swift
+//  SearchViewController.swift
 //  MovieApp
 //
 //  Created by Mert Polat on 30.06.2024.
@@ -10,7 +10,7 @@ import TinyConstraints
 
 final class SearchViewController: UIViewController {
     
-    private let viewModel = SearchViewModel()
+    private let viewModel: SearchViewModel
     private let searchResultViewController = SearchResultViewController()
     
     private lazy var discoverTable: UITableView = {
@@ -32,10 +32,19 @@ final class SearchViewController: UIViewController {
         return controller
     }()
     
+    init(viewModel: SearchViewModel = SearchViewModel(movieService: MovieService(), tvShowService: TVShowService())) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        setupBindings()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupBindings()
         viewModel.fetchDiscoverMovies()
         configureSearchBar()
     }
@@ -60,12 +69,9 @@ final class SearchViewController: UIViewController {
                 string: "Search for a Movie or a TV show",
                 attributes: [.foregroundColor: ColorManager.mediumEmphasis]
             )
-            
             textField.backgroundColor = ColorManager.surfaceDark.withAlphaComponent(0.5)
-            
             textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         }
-        
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
@@ -111,22 +117,23 @@ final class SearchViewController: UIViewController {
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.movies.count
+         return viewModel.movies.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell else {
             return UITableViewCell()
         }
-        
         let movie = viewModel.movies[indexPath.row]
         cell.configure(with: movie)
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 115     }
-    
+        return 115
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let movie = viewModel.movies[indexPath.row]
@@ -137,11 +144,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text,
-              !query.trimmingCharacters(in: .whitespaces).isEmpty,
-              query.trimmingCharacters(in: .whitespaces).count >= 3 else {
-            return
+            !query.trimmingCharacters(in: .whitespaces).isEmpty,
+            query.trimmingCharacters(in: .whitespaces).count >= 3 else {
+                return
         }
-        
         viewModel.search(query: query)
     }
 }
@@ -151,11 +157,11 @@ extension SearchViewController: UIScrollViewDelegate {
         let offset = scrollView.contentOffset.y
         updateNavigationBarAppearance(for: offset)
     }
-    
+
     private func updateNavigationBarAppearance(for offset: CGFloat) {
         let backgroundColor: UIColor = offset > 0 ? ColorManager.surfaceDark : .clear
         let textColor: UIColor = offset > 0 ? ColorManager.surfaceDark : ColorManager.surfaceLight
-        
+
         UIView.animate(withDuration: 0.3) {
             self.navigationController?.navigationBar.standardAppearance.backgroundColor = backgroundColor
             self.navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = backgroundColor
@@ -180,7 +186,7 @@ extension SearchViewController {
     private func presentTitlePreviewViewController(for movie: Movie) {
         let titlePreviewViewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService(), tvShowService: TVShowService())
         titlePreviewViewModel.fetchMovieDetails(for: movie.id)
-        
+
         DispatchQueue.main.async { [weak self] in
             let vc = TitlePreviewViewController(viewModel: titlePreviewViewModel)
             self?.navigationController?.pushViewController(vc, animated: true)
@@ -190,23 +196,17 @@ extension SearchViewController {
 
 extension SearchViewController {
     private func configureNavigationBar() {
-        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         appearance.largeTitleTextAttributes = [.foregroundColor: ColorManager.surfaceLight]
         appearance.titleTextAttributes = [.foregroundColor: ColorManager.surfaceLight]
-        
+
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.tintColor = ColorManager.surfaceLight
-        
+
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
     }
-}
-
-
-#Preview {
-    SearchViewController()
 }
