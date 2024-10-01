@@ -10,17 +10,17 @@ import TinyConstraints
 
 class HomeView: UIViewController {
     
-    var viewModel: HomeViewModel
-    var router: HomeRouter
+    private let viewModel: HomeViewModel
+    private let router: HomeRouter
     
+    private let customHeaderElementKind = "customHeaderElementKind"
+
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = ColorManager.surfaceDark
         return collectionView
     }()
-    
-    private let customHeaderElementKind = "customHeaderElementKind"
     
     init(viewModel: HomeViewModel, router: HomeRouter) {
         self.viewModel = viewModel
@@ -32,9 +32,21 @@ class HomeView: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+        viewModel.fetchInitialData()
+        configureNavigationBar()
         
+        viewModel.updateHandler = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+    }
+    
+  private func configureUI(){
         view.backgroundColor = ColorManager.dark
         
         view.addSubview(collectionView)
@@ -51,15 +63,6 @@ class HomeView: UIViewController {
         collectionView.register(CustomHeaderReusableView.self, forSupplementaryViewOfKind: customHeaderElementKind, withReuseIdentifier: "CustomHeaderReusableView")
         
         collectionView.collectionViewLayout = createLayout()
-        
-        viewModel.updateHandler = { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-        }
-        
-        viewModel.fetchInitialData()
-        configureNavigationBar()
     }
     
     private func createLayout() -> UICollectionViewCompositionalLayout {
@@ -257,6 +260,9 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
         if kind == customHeaderElementKind {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CustomHeaderReusableView", for: indexPath) as! CustomHeaderReusableView
             header.setup(with: viewModel.headerImageURL)
+            header.onTap = { [weak self] in
+                self?.showHeaderMovieDetails()
+            }
             return header
         } else if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CollectionViewHeaderReusableView", for: indexPath) as! CollectionViewHeaderReusableView
@@ -265,9 +271,19 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         return UICollectionReusableView()
     }
+    
+    private func showHeaderMovieDetails() {
+        guard let headerMovie = viewModel.headerItem else { return }
+
+        let titlePreviewViewModel = TitlePreviewViewModel(movieService: MovieService(), youtubeService: YoutubeService(), tvShowService: TVShowService())
+        
+        if let movie = headerMovie.movie {
+            titlePreviewViewModel.fetchMovieDetails(for: movie.id)
+        } else if let tvShow = headerMovie.tvShow {
+            titlePreviewViewModel.fetchTVShowDetails(for: tvShow.id)
+        }
+        
+        let titlePreviewViewController = TitlePreviewViewController(viewModel: titlePreviewViewModel)
+        navigationController?.pushViewController(titlePreviewViewController, animated: true)
+    }
 }
-//#Preview {
-//    let router = HomeRouter()
-//    let viewModel = HomeViewModel(router: router)
-//    return HomeView(viewModel: viewModel, router: router)
-//}

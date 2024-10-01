@@ -8,8 +8,9 @@
 import Foundation
 
 class HomeViewModel {
-    var router: HomeRouter
-    let networkManager = NetworkManager.shared
+    
+    private let router: HomeRouter
+    private let networkManager = NetworkManager.shared
     private let apiKey = Config.shared.apiKey
     
     enum Category {
@@ -23,7 +24,8 @@ class HomeViewModel {
     
     private(set) var model: HomeModel = HomeModel(sections: MockData.shared.pageData)
     private(set) var headerImageURL: String?
-    
+    private(set) var headerItem: ListItem?
+
     var updateHandler: (() -> Void)?
     
     init(router: HomeRouter) {
@@ -81,14 +83,16 @@ class HomeViewModel {
     
     func fetchPopularMovies() {
         fetchItems(request: GetPopularMoviesRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
-            self?.headerImageURL = items.randomElement()?.backdrop
+            self?.headerItem = items.randomElement()
+            self?.headerImageURL = self?.headerItem?.backdrop
             self?.updateItems(with: items, for: .popular([]))
         }
     }
     
     func fetchPopularTVShows() {
         fetchItems(request: GetPopularTVShowsRequest(apiKey: apiKey ?? "", page: 1)) { [weak self] items in
-            self?.headerImageURL = items.randomElement()?.backdrop
+            self?.headerItem = items.randomElement()
+            self?.headerImageURL = self?.headerItem?.backdrop
             self?.updateItems(with: items, for: .popular([]))
         }
     }

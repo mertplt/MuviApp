@@ -10,6 +10,7 @@ import TinyConstraints
 import SDWebImage
 
 final class CustomHeaderReusableView: UICollectionReusableView {
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,15 +26,25 @@ final class CustomHeaderReusableView: UICollectionReusableView {
         return layer
     }()
     
+    var onTap: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(imageView)
+        
         imageView.edgesToSuperview()
         imageView.heightAnchor.constraint(equalToConstant: 259).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 374).isActive = true
         imageView.layer.addSublayer(gradientLayer)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tapGesture)
     }
-    
+
+    @objc private func handleTap() {
+        onTap?()
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = imageView.bounds
