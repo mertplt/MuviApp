@@ -48,6 +48,7 @@ final class LoginView: UIViewController {
     private let passwordTextField: MaTextField = {
         let textField = MaTextField()
         textField.style = .password
+        textField.autocapitalizationType = .none
         return textField
     }()
     

@@ -203,6 +203,8 @@ class TitlePreviewViewController: UIViewController, UICollectionViewDataSource, 
 
 
     private func setupUI() {
+        navigationItem.hidesBackButton = true
+        
         view.backgroundColor = ColorManager.surfaceDark
 
         view.addSubview(scrollView)
