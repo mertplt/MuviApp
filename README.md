@@ -15,7 +15,7 @@ Muvi is a movie streaming app for discovering, watch trailers, and managing your
 - Watchlist functionality
 - Integration with TMDB API for movie and TV series data
 
- ## Technologies Used
+ ## Technologies and Libraries
 
 - Swift
 - UIKit
@@ -24,6 +24,8 @@ Muvi is a movie streaming app for discovering, watch trailers, and managing your
 - Firebase Firestore
 - Google Sign-In
 - Alamofire
+- SDWebImage
+- TinyConstraints
 - TMDB API
 
 
